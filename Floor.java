@@ -25,6 +25,9 @@ public class Floor {
 				if(i==exitX&&j==exitY) {
 					exitRoom=true;
 				}
+				while (itemX == exitX) {
+               				itemX = rand.nextInt(xBound);
+            			}
 				map.get(i).add(new Room((byte)i,(byte)j,(short)rand.nextInt(5),itemRoom,rand.nextInt(11),exitRoom));
 				itemRoom=false;
 				exitRoom=false;
