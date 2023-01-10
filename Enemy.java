@@ -1,0 +1,320 @@
+package genericAdventure;
+
+import java.util.Random;
+
+public class Enemy {
+	private String name;
+	private int maxhp;
+	private int hp;
+	private int atk;
+	private int def;
+	private int afterburn=0;
+	private int poison=0;
+	private int markedForDeath=0;
+	private int unaware=0;
+	private int weight;
+	private int freeze;
+	private int invuln;
+	public Enemy(String biome) {
+		Random rand=new Random();
+		int seed=rand.nextInt(101);
+		switch(biome) {
+			case "forest":
+				if(seed<=30) {
+					nameSelector("Squirrel");
+				}
+				else if(seed<=52) {
+					nameSelector("Branch Manager");
+				}
+				else if(seed<=79) {
+					nameSelector("Cardboard Deer");
+				}
+				else if(seed<=89) {
+					nameSelector("Semi-Sentient Tree");
+				}
+				else {
+					nameSelector("Poacher");
+				}
+				break;
+			case "clown factory":
+				if(seed<=18) {
+					nameSelector("Clown");
+				}
+				else if(seed<=40) {
+					nameSelector("Defective Clown");
+				}
+				else if(seed<=54) {
+					nameSelector("Assembly Line Machine");
+				}
+				else {
+					nameSelector("Weaponized Circus Drone");
+				}
+				break;
+			case "tundra":
+				if(seed<=25) {
+					nameSelector("Polar Camel");
+				}
+				else if(seed<=42) {
+					nameSelector("Psychrophilic Amphibious Jaguar");
+				}
+				else if(seed<=69) {
+					nameSelector("Cheese-Coated Tourist");
+				}
+				else {
+					nameSelector("Completely Normal Shark");
+				}
+				break;
+			case "consulate":
+				if(seed<=40) {
+					nameSelector("Lawyer");
+				}
+				else if(seed<=80) {
+					nameSelector("Consul");
+				}
+				else {
+					nameSelector("Consulate Janitor");
+				}
+				break;
+		}
+	}
+	public void nameSelector(String n) {
+		name=n;
+		switch(name) {
+			case "Squirrel":
+				maxhp=(int)(30+1.9*(Math.pow(Floor.level-1,1.3)));
+				atk=(int)(90+7.2*(Floor.level-1));
+				def=(int)(100+1.6*Math.pow(Floor.level-1,1.4));
+				setWeight(1);
+				break;
+			case "Branch Manager":
+				maxhp=(int)(65+5*Math.pow(Floor.level,1.09));
+				atk=(int)(107+1.1*Floor.level);
+				def=(int)(90+3*Floor.level);
+				setWeight(2);
+				break;
+			case "Cardboard Deer":
+				maxhp=(int)(5+3*Math.pow(Floor.level,1.08));
+				atk=(int)(87+9.1*Math.pow(Floor.level,0.9));
+				def=(int)(93+0.5*Floor.level);
+				setWeight(1);
+				break;
+			case "Semi-Sentient Tree":
+				maxhp=(int)(220+15.5*Math.pow(Floor.level,1.2));
+				atk=(int)(60+3.2*Floor.level);
+				def=(int)(100+0.35*Floor.level);
+				setWeight(4);
+				break;
+			case "Poacher":
+				maxhp=(int)(109+0.6*Floor.level);
+				atk=(int)(100+1.5*Math.pow(Floor.level,1.44));
+				def=(int)(103-0.7*Math.pow(Floor.level,1.21));
+				setWeight(4);
+				break;
+			case "Clown":
+				maxhp=(int)(133+3.25*Math.pow(Floor.level,1.34));
+				atk=(int)(107+0.9*Floor.level);
+				def=(int)(77+15*Math.sqrt(Floor.level));
+				setWeight(3);
+			case "Defective Clown":
+				maxhp=1;
+				atk=(int)(112+3.6*Math.pow(Floor.level, 1.15));
+				def=100;
+				setWeight(2);
+			case "Assembly Line Machine":
+				maxhp=(int)(300+10*Math.pow(Floor.level,1.45));
+				atk=(int)(90+1.7*Math.pow(Floor.level-1,1.03));
+				def=(int)(107+Floor.level);
+				setWeight(5);
+			case "Weaponized Circus Drone":
+				maxhp=(int)(40+2.7*Math.pow(Floor.level-1,1.28));
+				atk=(int)(100+2.5*Floor.level);
+				def=(int)(85+4*Floor.level);
+				setWeight(2);
+			case "Polar Camel":
+				maxhp=(int)(133+3.3*Math.pow(Floor.level,1.2));
+				atk=(int)(80+2.9*Math.pow(Floor.level,1.05));
+				def=(int)(93+1.1*Floor.level);
+				setWeight(3);
+			case "Psychrophilic Amphibious Jaguar":
+				maxhp=(int)(95+5*Math.pow(1.3*Floor.level, 1.05));
+				atk=(int)(100+0.5*Floor.level);
+				def=(int)(97+0.4*Floor.level);
+				setWeight(3);
+			case "Cheese-Coated Tourist":
+				maxhp=(int)(38+Math.pow(1.2*Floor.level, 1.09));
+				atk=(int)(95+2.4*(Floor.level-1));
+				def=(int)(100+Floor.level);
+				setWeight(1);
+			case "Completely Normal Shark":
+				maxhp=(int)(96+Floor.level);
+				atk=(int)(66+17*Math.sqrt(Floor.level));
+				def=(int)(98+1.2*Floor.level);
+				setWeight(2);
+			case "Lawyer":
+				maxhp=(int)(65+1.23*Math.pow(1.23*Floor.level,1.23));
+				atk=(int)(100+Math.sqrt(3*Floor.level));
+				def=(int)(93);
+				setWeight(2);
+			case "Consul":
+				maxhp=(int)(80+3*Floor.level);
+				atk=(int)(91+1.1*Floor.level);
+				def=(int)(93+Floor.level);
+				setWeight(2);
+			case "Consulate Janitor":
+				maxhp=(int)(107+1.8*Floor.level);
+				atk=(int)(80+1.25*Math.pow(Floor.level,1.25));
+				def=(int)(97+0.9*Floor.level);
+				setWeight(3);
+			case "Sapient Grapevine":
+				maxhp=(int)(90+1.05*Math.pow(Floor.level,1.4));
+				atk=(int)(77+1.13*Math.pow(Floor.level,1.23));
+				def=(int)(107+1.1*Floor.level);
+				setWeight(3);
+			case "":
+		}
+		hp=maxhp;
+	}
+	public void damage(int i) {
+		int damage;
+		damage=i*(100/def);
+		if(getMarkForDeath()>0&&damage>0) {
+			damage*=1.35;
+		}
+		if(damage>0) {
+			System.out.println("Did "+damage+" damage.");
+		}
+		else if(damage<0) {
+			System.out.println("Enemy "+name+" healed "+(-damage)+" health.");
+		}
+		else {
+			System.out.println("Didn't do any damage.");
+		}
+		hp-=damage;
+	}
+	public void setAtk(int increment) {
+		atk+=increment;
+	}
+	public void setDef(int increment) {
+		def+=increment;
+	}
+	public int getAtk() {
+		return atk;
+	}
+	public int getDef() {
+		return def;
+	}
+	public int getHp() {
+		return hp;
+	}
+	public int getMaxHp() {
+		return maxhp;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setAfterburn(int increment) {
+		afterburn+=increment;
+	}
+	public int getAfterburn() {
+		return afterburn;
+	}
+	public void setPoison(int increment) {
+		poison+=increment;
+	}
+	public int getPoison() {
+		return poison;
+	}
+	public void setMarkForDeath(int increment) {
+		markedForDeath+=increment;
+	}
+	public int getMarkForDeath() {
+		return markedForDeath;
+	}
+	public void setUnaware(int increment) {
+		unaware+=increment;
+	}
+	public int getUnaware() {
+		return unaware;
+	}
+	public void setFreeze(int increment) {
+		freeze+=increment;
+	}
+	public int getFreeze() {
+		return freeze;
+	}
+	public void setInvuln(int increment) {
+		invuln+=increment;
+	}
+	public int getInvuln() {
+		return invuln;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public void statusTick() {
+		if(afterburn>0) {
+			afterburn--;
+			hp-=3;
+			atk--;
+		}
+		if(poison>0) {
+			poison--;
+			hp-=4;
+		}
+		if(markedForDeath>0) {
+			markedForDeath--;
+		}
+		if(unaware>0) {
+			unaware--;
+		}
+		if(freeze>0) {
+			freeze--;
+		}
+		if(invuln>0) {
+			invuln--;
+		}
+	}
+	public String stringAfterburn() {
+		return "("+afterburn+" Afterburn)";
+	}
+	public String stringPoison() {
+		return "("+poison+" Poison)";
+	}
+	public String stringMarkForDeath() {
+		return "("+markedForDeath+" Mark For Death)";
+	}
+	public String stringUnaware() {
+		return "("+unaware+" Unaware)";
+	}
+	public String stringFreeze() {
+		return "("+freeze+" Freeze)";
+	}
+	public String stringInvuln() {
+		return "("+invuln+" Invuln)";
+	}
+	public String stringStatus() {
+		String status="";
+		if(afterburn>0) {
+			status+=stringAfterburn();
+		}
+		if(poison>0) {
+			status+=stringPoison();
+		}
+		if(markedForDeath>0) {
+			status+=stringMarkForDeath();
+		}
+		if(unaware>0) {
+			status+=stringUnaware();
+		}
+		if(freeze>0) {
+			status+=stringFreeze();
+		}
+		if(invuln>0) {
+			status+=stringInvuln();
+		}
+		return status;
+	}
+}
