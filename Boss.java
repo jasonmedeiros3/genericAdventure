@@ -1,5 +1,6 @@
 package genericAdventure;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Boss {
@@ -16,6 +17,8 @@ public class Boss {
 	private int invuln=0;
 	private int sniperCharge=0;
 	private int compactorCounter=9;
+	private int metal=200;
+	private int buildingLevel=1;
 	private boolean huntingShotgun=false;
 	public Boss(String biome) {
 		Random rand=new Random();
@@ -115,6 +118,14 @@ public class Boss {
 				atk=100;
 				def=100;
 				break;
+			case "Sentry Gun":
+				maxhp=150;
+				atk=80;
+				def=100;
+			case "Dispenser":
+				maxhp=150;
+				atk=20;
+				def=100;
 			case "The Devil":
 				maxhp=1998;
 				atk=66;
@@ -149,6 +160,9 @@ public class Boss {
 			System.out.println("Didn't do any damage.");
 		}
 		hp-=damage;
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
 	}
 	public void damage(double i) {
 		int damage;
@@ -166,8 +180,11 @@ public class Boss {
 			System.out.println("Didn't do any damage.");
 		}
 		hp-=damage;
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
 	}
-	public void doMove(Player player) {
+	public void doMove(Player player,ArrayList<Boss>bossList) {
 		Random rand=new Random();
 		int seed1=rand.nextInt(100);
 		int seed2=rand.nextInt(100);
@@ -241,8 +258,114 @@ public class Boss {
 					else {
 						lunch(player);
 					}
+				case "The Engineer":
+					Boss building=null;
+					boolean buildingDamaged=false;
+					boolean buildingUpgradable=false;
+					for(Boss b:bossList) {
+						if((b.name.equals("Sentry Gun")||b.name.equals("Dispenser"))&&b.hp<maxhp-40) {
+							building=b;
+							buildingDamaged=true;
+						}
+					}
+					if(!buildingDamaged) {
+						for(Boss b:bossList) {
+							if((b.name.equals("Sentry Gun")||b.name.equals("Dispenser"))&&b.buildingLevel<3) {
+								building=b;
+								buildingUpgradable=true;
+							}
+						}
+					}
+					if(bossList.size()<=5&&metal>=130&&(seed1<=15||(seed1<=85&&bossList.size()<2))) {
+						sentryGoingUp(bossList,seed2);
+					}
+					else if(bossList.size()<=5&&metal>=100&&(seed1<=25||(seed2<=85&&bossList.size()<=2))) {
+						dispenserGoingUp(bossList,seed1);
+					}
+					else if(building!=null&&buildingDamaged&&seed1<=50) {
+						buildingRepair(building);
+					}
+					else if(building!=null&&buildingUpgradable&&seed1<=50&&metal>=50) {
+						
+					}
+					else if((bossList.size()>=3&&seed1<=70)||seed1<=60) {
+						engiShotgun(player);
+					}
+					else if(seed1<=90&&metal<100) {
+						pickUpAmmo();
+					}
+					else {
+						wrench(player);
+					}
+				case "Sentry Gun":
+					if(buildingLevel<3||seed1<=60) {
+						sentryShot(player);
+					}
+					else {
+						
+					}
 			}
 		}
+	}
+	private void sentryShot(Player player) {
+		System.out.println(name+" opens fire.");
+		if(buildingLevel<2) {
+			player.damage(16*atk/100);
+		}
+		else {
+			player.damage(32*atk/100);
+		}
+	}
+	private void sentryRocket(Player player) {
+		System.out.println(name+" fires a salvo of rockets.");
+		player.damage(65*atk/100);
+	}
+	private void sentryGoingUp(ArrayList<Boss>bossList,int seed) {
+		if(seed<=90) {
+			System.out.println(name+" builds a Sentry.");
+		}
+		else {
+			System.out.println(name+" is erecting a Sentry.");
+		}
+		bossList.add(new Boss("Sentry Gun"));
+		metal-=130;
+	}
+	private void dispenserGoingUp(ArrayList<Boss>bossList,int seed) {
+		if(seed<=90) {
+			System.out.println(name+" builds a Dispenser.");
+		}
+		else {
+			System.out.println(name+" is erecting a Dispenser.");
+		}
+		bossList.add(new Boss("Dispenser"));
+		metal-=100;
+	}
+	private void buildingRepair(Boss building) {
+		System.out.println(name+" repairs a "+building.name+".");
+		building.damage(-60);
+		metal-=20;
+	}
+	private void buildingUpgrade(Boss building) {
+		System.out.println(name+" upgrades a "+building.name+".");
+		building.buildingLevel++;
+		building.maxhp*=1.2;
+		building.hp*=1.2;
+		metal-=50;
+	}
+	private void engiShotgun(Player player) {
+		System.out.println(name+" uses a shotgun.");
+		player.damage(60*atk/100);
+	}
+	private void pickUpAmmo() {
+		System.out.println(name+" picks up ammo.");
+		metal+=100;
+		if(metal>200) {
+			metal=200;
+		}
+	}
+	private void wrench(Player player) {
+		System.out.println(name+" swings a wrench.");
+		player.damage(49*atk/100);
 	}
 	private void teaBreak(Player player) {
 		System.out.println(name+" calls a tea break.");
@@ -267,6 +390,7 @@ public class Boss {
 			System.out.println("This is what London is like all the time.");
 		}
 		player.setFreeze(2);
+		player.damage(3);
 	}
 	private void lunch(Player player) {
 		System.out.println(name+" shares a traditional British delicacy with you.");
