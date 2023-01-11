@@ -567,15 +567,15 @@ public class Room {
 	}
 	public void displayMap(Floor floor) {
 		for (int x = 0; x < floor.map.size(); x++) {
-         		for (int y = 0;y < floor.map.get(0).size(); y++) {
-           			if (x == xCoord && y == yCoord){
-               				System.out.print(";;");
-            			} else {
-                			System.out.print("::");
- 				}
-             		}  
+			for (int y = 0;y < floor.map.get(0).size(); y++) {
+           		if (x == xCoord && y == yCoord){
+       				System.out.print(";;");
+           		}
+       			else {
+                	System.out.print("::");
+           		}
           	}
-         	 System.out.println();
+         	System.out.println();
  		}
  	}	
 }
