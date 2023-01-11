@@ -19,6 +19,7 @@ public class Room {
 	private boolean inspected;
 	private boolean fought;
 	private final int offclassItemChance;
+	public static int turn;
 	public Room(byte x,byte y,boolean item,int biomeSeed,boolean exit) {
 		xCoord=x;
 		yCoord=y;
@@ -216,6 +217,42 @@ public class Room {
 			}
 			if(input=='1'&&!itemRoom&&!fought) {
 				battle(floor,player);
+				int seed=rand.nextInt(100);
+				if(seed>=Math.pow(Floor.level,2)) {
+					while(true) {
+						int seed2=rand.nextInt(itempool.size());
+						int seed3=rand.nextInt(100);
+						byte type=itempool.get(seed2).getType();
+						switch(player.getClassName()) {
+							case "Soldier":
+								if((type==0||type==1||type==6)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Wizard":
+								if((type==0||type==2||type==7)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Lawyer":
+								if((type==0||type==3)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Paladin":
+								if((type==0||type==4||type==7)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Spy":
+								if((type==0||type==5||type==6)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+						}
+						Inventory.add(itempool.get(rand.nextInt(itempool.size())));
+					}
+				}
 			}
 			else if(input=='1'&&itemRoom) {
 				while(true) {
@@ -298,6 +335,7 @@ public class Room {
 		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
+		int turn=0;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
@@ -318,6 +356,7 @@ public class Room {
 			}
 		}
 		while(true) {
+			turn++;
 			int deadEnemyCounter=0;
 			for(Enemy e:enemies) {
 				e.checkDead();
@@ -375,8 +414,8 @@ public class Room {
 					input=getIntInput(1,5);
 				} catch (Exception e) {
 				}
-				enemies.get(input).damage((int)(15*player.getAtk()/100));
-				player.damage((int)(5*player.getAtk()/100));
+				enemies.get(input).damage(15*player.getAtk()/100.0);
+				player.damage(5*player.getAtk()/100.0);
 			}
 			else if(input==2&&hasActiveItem) {
 				battleInventory(player,enemies,(byte)input);
