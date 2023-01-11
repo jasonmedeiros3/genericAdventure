@@ -480,7 +480,6 @@ public class Room {
                			System.out.print("::");
 				}
             		}  
-         	}
         	 System.out.println();
 		}
 	}	
