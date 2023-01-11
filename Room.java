@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Room {
 	private final byte xCoord;
 	private final byte yCoord;
-	private short itemChance;
 	private final boolean itemRoom;
 	private boolean currentLocation=false;
 	private String biome;
@@ -20,10 +19,9 @@ public class Room {
 	private boolean inspected;
 	private boolean fought;
 	private final int offclassItemChance;
-	public Room(byte x,byte y,short chance,boolean item,int biomeSeed,boolean exit) {
+	public Room(byte x,byte y,boolean item,int biomeSeed,boolean exit) {
 		xCoord=x;
 		yCoord=y;
-		itemChance=chance;
 		itemRoom=item;
 		exitRoom=exit;
 		seen=false;
@@ -78,9 +76,6 @@ public class Room {
 				break;
 		}
 	}
-	public short getChance() {
-		return itemChance;
-	}
 	public byte getX() {
 		return xCoord;
 	}
@@ -99,7 +94,25 @@ public class Room {
 	public boolean getExit() {
 		return exitRoom;
 	}
-	public Room display(Floor floor,Player player,ItemPool itempool) throws IOException {
+	public boolean getSeen() {
+		return seen;
+	}
+	public void setSeen(boolean seen) {
+		this.seen=seen;
+	}
+	public boolean getInspected() {
+		return inspected;
+	}
+	public void setInspected(boolean inspected) {
+		this.inspected=inspected;
+	}
+	public boolean getFought() {
+		return fought;
+	}
+	public void setFought(boolean fought) {
+		this.fought=fought;
+	}
+	public Room display(Floor floor,Player player,ItemPool itempool) throws Exception {
 		char input;
 		Random rand=new Random();
 		int displaySeed=rand.nextInt(100);
@@ -114,7 +127,6 @@ public class Room {
 			System.out.println("You haven't been here yet.");
 		}
 		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
-		displayMap(floor);
 		seen=true;
 		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
 		if(xCoord>0) {
@@ -155,8 +167,20 @@ public class Room {
 			}
 			if(input=='S'||input=='s') {
 				File quicksave=new File("quicksave.txt");
+				File mapQuicksave=new File("mapQuicksave.txt");
+				int intInput;
+				if(quicksave.createNewFile()||mapQuicksave.createNewFile()) {
+					System.out.println("A save file already exists. Overwrite save?");
+					System.out.println("1. Yes");
+					System.out.println("2. No");
+					intInput=getIntInput(1,2);
+					if(intInput==2) {
+						continue;
+					}
+				}
 				try {
 					BufferedWriter bw=new BufferedWriter(new FileWriter(quicksave));
+					quicksave.createNewFile();
 					bw.write(Encryption.encryptln(player.getClassName().toLowerCase()));
 					bw.write(Encryption.encryptln(Integer.toString(player.getMaxHp())));
 					bw.write(Encryption.encryptln(Integer.toString(player.getHp())));
@@ -174,6 +198,17 @@ public class Room {
 					for(int i=0;i<Inventory.size();i++) {
 						bw.write(Encryption.encryptln(Inventory.get(i).getName().toLowerCase()+">"+Inventory.get(i).getDurability()));
 					}
+					bw.flush();
+					BufferedWriter bw2=new BufferedWriter(new FileWriter(mapQuicksave));
+					bw2.write(Encryption.encryptln(Integer.toString(floor.getXBound())));
+					for(ArrayList<Room> subList:floor.map) {
+						for(Room r:subList) {
+							bw2.write(Encryption.encryptln(r.biome+">"+r.seen+">"+r.fought+">"+r.inspected+">"+r.itemRoom+">"+r.exitRoom));
+						}
+						bw2.write(Encryption.encryptln("."));
+					}
+					bw2.flush();
+					System.out.println("Quicksave created.");
 				}
 				catch(Exception e) {
 					System.out.println("Error creating quicksave.");
@@ -234,21 +269,29 @@ public class Room {
 			}
 		}
 	}
-	public int getIntInput() throws Exception {
+	public static int getIntInput() throws Exception {
 		Scanner s=new Scanner(System.in);
 		return s.nextInt();
 	}
-	public int getIntInput(int lowerBound,int upperBound) throws Exception {
+	public static int getIntInput(int lowerBound,int upperBound) throws Exception {
 		int input;
 		do {
 			input=getIntInput();
-		} while(lowerBound<=input&&input<=upperBound);
+		} while(lowerBound>input||input>upperBound);
 		return input;
 	}
+	public void displayPlayer(Player player) {
+		System.out.println(player.getClassName()+": (HP: "+player.getHp()+"/"+player.getMaxHp()+")"+player.stringStatus());
+	}
 	public void displayEnemies(ArrayList<Enemy> enemies) {
+		for(Enemy e:enemies) {
+			System.out.println(e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
+		}
+	}
+	public void displayNumberedEnemies(ArrayList<Enemy> enemies) {
 		int counter=0;
 		for(Enemy e:enemies) {
-			System.out.println(++counter+". "+e.getName()+"(HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
+			System.out.println(++counter+". "+e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
 		}
 	}
 	public void battle(Floor floor,Player player) {
@@ -259,9 +302,12 @@ public class Room {
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
-		for(int i=0;enemyWeight<maxEnemyWeight||i<5;i++) {
+		for(int i=0;i<5;i++) {
 			enemies.add(new Enemy(biome));
 			enemyWeight+=enemies.get(i).getWeight();
+			if(enemyWeight>maxEnemyWeight) {
+				break;
+			}
 		}
 		for(int i=0;i<Inventory.size();i++) {
 			if(Inventory.get(i).isPassive()) {
@@ -272,7 +318,28 @@ public class Room {
 			}
 		}
 		while(true) {
+			int deadEnemyCounter=0;
+			for(Enemy e:enemies) {
+				e.checkDead();
+			}
 			while(true) {
+				try {
+					if(enemies.get(deadEnemyCounter).getDead()) {
+						enemies.remove(deadEnemyCounter);
+					}
+					else {
+						deadEnemyCounter++;
+					}
+				}
+				catch(Exception e) {
+					break;
+				}
+			}
+			if(enemies.size()<1) {
+				break;
+			}
+			while(true) {
+				displayPlayer(player);
 				displayEnemies(enemies);
 				for(int i=0;i<Inventory.size();i++) {
 					if(Inventory.get(i).isPassive()) {
@@ -290,20 +357,48 @@ public class Room {
 				System.out.println("3. Run Away");
 				try {
 					input=getIntInput(1,3);
+					System.out.println("OK!");
 					break;
 				}
 				catch(Exception e) {
 				}
 			}
-			hasActiveItem=false;
 			if(input==1) {
-				displayEnemies(enemies);
+				displayNumberedEnemies(enemies);
 				System.out.println("Select a target.");
 				try {
 					input=getIntInput(1,5);
 				} catch (Exception e) {
 				}
+				enemies.get(input).damage((int)(15*player.getAtk()/100));
+				player.damage((int)(5*player.getAtk()/100));
 			}
+			else if(input==2&&hasActiveItem) {
+				battleInventory(player,enemies,(byte)input);
+			}
+			else if(input==2) {
+				System.out.println("No usable items.");
+			}
+		}
+	}
+	public void battleInventory(Player player,ArrayList<Enemy> enemies,byte target) {
+		int counter=0;
+		int input=0;
+		ArrayList<Item> battleInv=new ArrayList<Item>();
+		for(int i=0;i<Inventory.size();i++) {
+			if(!Inventory.get(i).isPassive()) {
+				System.out.println(++counter+". "+Inventory.get(i).getName()+"("+Inventory.get(i).getDurability()+" Durability)");
+				battleInv.add(Inventory.get(i));
+			}
+		}
+		System.out.println("Select an item to use.");
+		try {
+			input=getIntInput(1,battleInv.size());
+		} catch (Exception e) {
+		}
+		try {
+			Inventory.get(input-1).doEffect("placeholder",player,enemies,0,target);
+		} catch (Exception e) {
 		}
 	}
 	public char roomChoice(Floor floor) {
@@ -470,17 +565,17 @@ public class Room {
 				return("You're in some kind of strange state of limbo. Please file a bug report.");
 		}
 	}
-	
 	public void displayMap(Floor floor) {
 		for (int x = 0; x < floor.map.size(); x++) {
          		for (int y = 0;y < floor.map.get(0).size(); y++) {
            			if (x == xCoord && y == yCoord){
                				System.out.print(";;");
             			} else {
-               			System.out.print("::");
-				}
-            		}  
-        	 System.out.println();
-		}
-	}	
+                			System.out.print("::");
+ 				}
+             		}  
+          	}
+         	 System.out.println();
+ 		}
+ 	}	
 }
