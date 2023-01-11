@@ -167,5 +167,44 @@ public class Player {
 	public int getInvuln() {
 		return invuln;
 	}
-
+	public String stringAfterburn() {
+		return "("+afterburn+" Afterburn)";
+	}
+	public String stringPoison() {
+		return "("+poison+" Poison)";
+	}
+	public String stringMarkForDeath() {
+		return "("+markedForDeath+" Mark For Death)";
+	}
+	public String stringUnaware() {
+		return "("+unaware+" Unaware)";
+	}
+	public String stringFreeze() {
+		return "("+freeze+" Freeze)";
+	}
+	public String stringInvuln() {
+		return "("+invuln+" Invuln)";
+	}
+	public String stringStatus() {
+		String status="";
+		if(afterburn>0) {
+			status+=stringAfterburn();
+		}
+		if(poison>0) {
+			status+=stringPoison();
+		}
+		if(markedForDeath>0) {
+			status+=stringMarkForDeath();
+		}
+		if(unaware>0) {
+			status+=stringUnaware();
+		}
+		if(freeze>0) {
+			status+=stringFreeze();
+		}
+		if(invuln>0) {
+			status+=stringInvuln();
+		}
+		return status;
+	}
 }

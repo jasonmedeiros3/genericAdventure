@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class GenericAdventure {
 	static int xCoord;
 	static int yCoord;
+	static boolean gameLoaded=false;
 	public ItemPool initItems() {
 		ItemPool itempool=new ItemPool();
 		return itempool;
@@ -94,19 +95,19 @@ public class GenericAdventure {
 			String str;
 			byte className;
 			switch(Encryption.decryptString(str=br.readLine())) {
-				case "Soldier":
+				case "soldier":
 					className=1;
 					break;
-				case "Wizard":
+				case "wizard":
 					className=2;
 					break;
-				case "Lawyer":
+				case "lawyer":
 					className=3;
 					break;
-				case "Paladin":
+				case "paladin":
 					className=4;
 					break;
-				case "Spy":
+				case "spy":
 					className=5;
 					break;
 				default:
@@ -140,10 +141,50 @@ public class GenericAdventure {
 				for(i=0;i<itempool.size();i++) {
 					if(str.substring(0,chevronIndex).equals(itempool.get(i).getName())) {
 							Inventory.silentAdd(itempool.get(i));
+							Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)));
 					}
 				}
-				Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)));
 				inventoryIndex++;
+			}
+			File mapQuicksave=new File("mapQuicksave.txt");
+			BufferedReader br2=new BufferedReader(new FileReader(mapQuicksave));
+			int xBound=Integer.parseInt(Encryption.decryptString(br2.readLine()));
+			ArrayList<String> quicksaveData=new ArrayList<String>();
+			Floor floor=new Floor();
+			while((str=Encryption.decryptString(br2.readLine()))!=null) {
+				int counter=0;
+				char[] roomNameArray=str.toCharArray();
+				int[] roomNameChevronIndices=new int[5];
+				int currentChevronIndex=0;
+				int previousChevronIndex=0;
+				for(char c:roomNameArray) {
+					if(c=='>') {
+						roomNameChevronIndices[currentChevronIndex++]=counter;
+					}
+					counter++;
+				}
+				for(int i:roomNameChevronIndices) {
+					if(i>=1) {
+						quicksaveData.add(str.substring(previousChevronIndex,i));
+					}
+					previousChevronIndex=i;
+				}
+				floor.reloadFloor(quicksaveData, xBound);
+			}
+			gameLoaded=true;
+			while(true) {
+				while(true) {
+					try {
+						System.out.println("Floor "+(Floor.level));
+						main.advent(new Floor(),player,itempool);
+						break;
+					}
+					catch(Exception e) {
+						System.out.println(e.getMessage()==null?"Something went wrong. Try again.":e.getMessage());
+						continue;
+					}
+				}
+				Floor.level++;
 			}
 		}
 	}

@@ -23,30 +23,39 @@ public class ActiveItem implements Item {
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer damage,byte target) throws Exception {
 		switch(getName()) {
 			case "Rocket Launcher":
+				target=selectTarget(enemyList);
 				rocketLaunch(player,enemyList,target);
 				break;
 			case "Staff of Lower Back Pain":
+				target=selectTarget(enemyList);
 				backPain(player,enemyList.get(target));
 				break;
 			case "Lawsuit":
+				target=selectTarget(enemyList);
 				lawsuit(player,enemyList.get(target));
 				break;
 			case "$8 Spear":
+				target=selectTarget(enemyList);
 				cheapSpear(player,enemyList.get(target));
 				break;
 			case "Butter Knife":
+				target=selectTarget(enemyList);
 				butterKnife(player,enemyList.get(target));
 				break;
 			case "Six Shooter":
+				target=selectTarget(enemyList);
 				sixShooter(player,enemyList.get(target));
 				break;
 			case "Staff of Arthritis":
+				target=selectTarget(enemyList);
 				arthritis(player,enemyList.get(target));
 				break;
 			case "Black Box":
+				target=selectTarget(enemyList);
 				blackBox(player,enemyList,target);
 				break;
 			case "Fountain Pen":
+				target=selectTarget(enemyList);
 				fountainPen(player,enemyList.get(target));
 				break;
 			case "Water Canteen":
@@ -57,6 +66,22 @@ public class ActiveItem implements Item {
 				break;
 			default:
 		}
+	}
+	private byte selectTarget(ArrayList<Enemy> enemyList) {
+		int counter=0;
+		int input;
+		byte byteInput;
+		for(Enemy e:enemyList) {
+			System.out.println(++counter+". "+e.getName()+e.stringStatus());
+		}
+		System.out.println("Select a target.");
+		try {
+			input=Room.getIntInput(1,enemyList.size());
+			byteInput=(byte)input;
+			return (byte)(byteInput-1);
+		} catch (Exception e) {
+		}
+		return 0;
 	}
 	private void rocketLaunch(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
 		enemyList.get(target).damage((int)(50*player.getAtk()/100));

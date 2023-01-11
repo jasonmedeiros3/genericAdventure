@@ -8,13 +8,14 @@ public class Enemy {
 	private int hp;
 	private int atk;
 	private int def;
+	private boolean dead;
 	private int afterburn=0;
 	private int poison=0;
 	private int markedForDeath=0;
 	private int unaware=0;
 	private int weight;
-	private int freeze;
-	private int invuln;
+	private int freeze=0;
+	private int invuln=0;
 	public Enemy(String biome) {
 		Random rand=new Random();
 		int seed=rand.nextInt(101);
@@ -174,9 +175,20 @@ public class Enemy {
 		}
 		hp=maxhp;
 	}
+	public void setDead(boolean isDead) {
+		dead=isDead;
+	}
+	public void checkDead() {
+		if(hp<=0) {
+			dead=true;
+		}
+	}
+	public boolean getDead() {
+		return dead;
+	}
 	public void damage(int i) {
 		int damage;
-		damage=i*(100/def);
+		damage=(int)(i*(100.0/def));
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
@@ -188,6 +200,10 @@ public class Enemy {
 		}
 		else {
 			System.out.println("Didn't do any damage.");
+		}
+		if(hp<=0) {
+			dead=true;
+			System.out.println("Enemy "+name+" died.");
 		}
 		hp-=damage;
 	}
@@ -297,6 +313,9 @@ public class Enemy {
 	}
 	public String stringStatus() {
 		String status="";
+		if(dead) {
+			return "(Dead)";
+		}
 		if(afterburn>0) {
 			status+=stringAfterburn();
 		}
