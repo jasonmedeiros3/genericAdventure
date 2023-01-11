@@ -21,12 +21,12 @@ public class Player {
 				className="Soldier";
 				maxhp=200;
 				atk=120;
-				def=108;
+				def=100;
 				Inventory.silentAdd(itempool.get(0));
 				break;
 			case 2:
 				className="Wizard";
-				maxhp=125;
+				maxhp=150;
 				atk=107;
 				def=100;
 				Inventory.silentAdd(itempool.get(1));
@@ -40,9 +40,9 @@ public class Player {
 				break;
 			case 4:
 				className="Paladin";
-				maxhp=300;
+				maxhp=200;
 				atk=77;
-				def=105;
+				def=195;
 				Inventory.silentAdd(itempool.get(3));
 				Inventory.silentAdd(itempool.get(8));
 				break;
@@ -60,7 +60,40 @@ public class Player {
 		bonusDef=0;*/
 	}
 	public void damage(int damage) {
+		if(getMarkForDeath()>0&&damage>0) {
+			damage*=1.35;
+		}
+		if(damage>0) {
+			System.out.println(className+" took "+damage+" damage.");
+		}
+		else if(damage<0) {
+			System.out.println(className+" healed "+(-damage)+" health.");
+		}
+		else {
+			System.out.println(className+" didn't take any damage.");
+		}
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
 		hp-=(int)(damage*(100/def));
+	}
+	public void damage(double damage) {
+		hp-=(int)(damage*(100/def));
+		if(getMarkForDeath()>0&&damage>0) {
+			damage*=1.35;
+		}
+		if(damage>0) {
+			System.out.println(className+" took "+damage+" damage.");
+		}
+		else if(damage<0) {
+			System.out.println(className+" healed "+(-damage)+" health.");
+		}
+		else {
+			System.out.println(className+" didn't take any damage.");
+		}
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
 	}
 	public int getHp() {
 		return hp;
@@ -206,5 +239,28 @@ public class Player {
 			status+=stringInvuln();
 		}
 		return status;
+	}
+	public void statusTick() {
+		if(afterburn>0) {
+			afterburn--;
+			hp-=3;
+			atk--;
+		}
+		if(poison>0) {
+			poison--;
+			hp-=4;
+		}
+		if(markedForDeath>0) {
+			markedForDeath--;
+		}
+		if(unaware>0) {
+			unaware--;
+		}
+		if(freeze>0) {
+			freeze--;
+		}
+		if(invuln>0) {
+			invuln--;
+		}
 	}
 }
