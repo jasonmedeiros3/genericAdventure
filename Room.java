@@ -338,6 +338,11 @@ public class Room {
 			if(enemies.size()<1) {
 				break;
 			}
+			if(player.getHp()<=0) {
+				System.out.println("You died.");
+				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
+				System.out.println("Your final item count was "+Inventory.size()+".");
+			}
 			while(true) {
 				displayPlayer(player);
 				displayEnemies(enemies);
