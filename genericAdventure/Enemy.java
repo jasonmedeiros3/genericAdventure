@@ -89,6 +89,16 @@ public class Enemy {
 				} else {
 					nameSelector("Winemaker");
 				}
+			case "Sewer":
+				if (seed <= 24) {
+					nameSelector("Rat");
+				} else if (seed <= 52){
+					nameSelector("Florida Man");
+				} else if (seed <= 74) {
+					nameSelector("Alligator");
+				} else {
+
+				}
 
 		}
 	}
