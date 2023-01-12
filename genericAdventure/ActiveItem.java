@@ -70,6 +70,10 @@ public class ActiveItem implements Item {
 			case "Red Flask":
 				redFlask(player);
 				break;
+			case "M1911":
+				target=selectTarget(enemyList);
+				m1911(player,enemyList.get(target));
+				break;
 			default:
 		}
 	}
@@ -177,6 +181,10 @@ public class ActiveItem implements Item {
 	private void redFlask(Player player) throws Exception {
 		System.out.println("Drank from the red flask.");
 		player.damage(-(player.getMaxHp())/2.5);
+	}
+	private void m1911(Player player,Enemy enemy) {
+		System.out.println("Fired the M1911.");
+		enemy.damage(60*player.getAtk()/100);
 	}
 	@Override
 	public String getName() {
