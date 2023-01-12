@@ -98,40 +98,44 @@ public class ActiveItem implements Item {
 		}
 		catch(Exception e) {
 		}
-		damage(1);
+		damage(1,player);
 	}
 	private void backPain(Player player,Enemy enemy) throws Exception {
 		enemy.damage(25);
-		damage(1);
+		damage(1,player);
 	}
 	private void lawsuit(Player player,Enemy enemy) throws Exception {
 		enemy.damage(30*player.getAtk()/100.0);
 		enemy.setMarkForDeath(2);
-		damage(1);
+		damage(1,player);
 	}
 	private void cheapSpear(Player player,Enemy enemy) throws Exception {
 		enemy.damage(65*player.getAtk()/100.0);
-		damage(1);
+		damage(1,player);
 	}
 	private void butterKnife(Player player,Enemy enemy) throws Exception {
 		if(enemy.getUnaware()>0) {
 			enemy.damage(enemy.getHp()/6.3+32*player.getAtk()/96.0);
 			System.out.println("A backstab.");
-			damage(2);
+			damage(2,player);
 		}
 		else {
 			enemy.damage(32*player.getAtk()/100.0);
-			damage(1);
+			damage(1,player);
 		}
 	}
 	private void sixShooter(Player player,Enemy enemy) throws Exception {
 		if(enemy.getUnaware()>0) {
 			enemy.damage(48*player.getAtk()/100.0);
 		}
+		else {
+			enemy.damage(32*player.getAtk()/100.0);
+		}
+		damage(1,player);
 	}
 	private void arthritis(Player player,Enemy enemy) throws Exception {
 		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0));
-		damage(1);
+		damage(1,player);
 	}
 	private void blackBox(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
 		enemyList.get(target).damage(50*player.getAtk()/100.0);
@@ -148,20 +152,24 @@ public class ActiveItem implements Item {
 		catch(Exception e) {
 		}
 		player.damage(-10*player.getAtk()/100.0);
-		damage(1);
+		damage(1,player);
 	}
 	private void fountainPen(Player player,Enemy enemy) throws Exception {
 		enemy.damage(47*player.getAtk()/100.0);
+		damage(1,player);
 	}
 	private void waterCanteen(Player player) throws Exception {
 		player.damage(-8);
+		damage(1,player);
 	}
 	private void uberCanteen(Player player) throws Exception {
 		player.setInvuln(3);
+		damage(1,player);
 	}
 	private void deadRinger(Player player) throws Exception {
 		System.out.println("The Dead Ringer is armed.");
-		Inventory.add(new PassiveItem("Armed Dead Ringer",(short)0,1,(byte)0));
+		Inventory.add(new PassiveItem("Armed Dead Ringer",(short)0,1,(byte)0),player);
+		damage(1,player);
 	}
 	@Override
 	public String getName() {
@@ -180,11 +188,11 @@ public class ActiveItem implements Item {
 		return durability;
 	}
 	@Override
-	public void damage(int damage) {
+	public void damage(int damage,Player player) {
 		durability-=damage;
 		if(durability<=0) {
 			try {
-				Inventory.directRemove(this);
+				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}
 		}

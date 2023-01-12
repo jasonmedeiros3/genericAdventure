@@ -27,7 +27,7 @@ public class PassiveItem implements Item {
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) {
 		switch(getName()) {
 			case "Paper-Thin Disguise":
-				paperThinDisguise(eventFlag,enemyList);
+				paperThinDisguise(eventFlag,player,enemyList);
 				break;
 			case "Cardboard Shield":
 				cardboardShield(eventFlag,player,damage);
@@ -56,11 +56,11 @@ public class PassiveItem implements Item {
 			default:
 		}
 	}
-	private void paperThinDisguise(String eventFlag,ArrayList<Enemy> enemyList) {
+	private void paperThinDisguise(String eventFlag,Player player,ArrayList<Enemy> enemyList) {
 		if(eventFlag.equals("battleStart")) {
 			for(Enemy e:enemyList) {
 				e.setUnaware(1);
-				damage(1);
+				damage(1,player);
 			}
 		}
 	}
@@ -74,9 +74,9 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("damage")) {
 			if(damage[0]<=5) {
 				damage[0]=0;
-				damage(1);
+				damage(1,player);
 			}
-			damage(1);
+			damage(1,player);
 		}
 	}
 	private void riotShield(String eventFlag,Player player,Integer[] damage) {
@@ -89,9 +89,9 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("damage")) {
 			if(damage[0]<=10) {
 				damage[0]=0;
-				damage(1);
+				damage(1,player);
 			}
-			damage(1);
+			damage(1,player);
 		}
 	}
 	private void heatDeathVest(String eventFlag,Player player) {
@@ -102,7 +102,7 @@ public class PassiveItem implements Item {
 			player.setDef(-20);
 		}
 		else if(eventFlag.equals("damage")) {
-			damage(1);
+			damage(1,player);
 		}
 	}
 	private void shimmeringVeil(String eventFlag,Player player,Integer[] damage) {
@@ -118,10 +118,10 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("damage")&&shimmeringVeil) {
 			damage[0]=0;
 			shimmeringVeil=false;
-			damage(1);
+			damage(1,player);
 		}
 		else if(eventFlag.equals("newFloor")) {
-			damage(-3);
+			damage(-3,player);
 		}
 	}
 	private void armedDeadRinger(String eventFlag,Player player,Integer[] damage) {
@@ -130,10 +130,10 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("damage")) {
 			damage[0]=(int)(damage[0]/4);
-			damage(1);
+			damage(1,player);
 		}
 		if(deadRingerCounter<=0) {
-			damage(1);
+			damage(1,player);
 		}
 	}
 	private void abstractConcept(String eventFlag,Player player) {
@@ -145,7 +145,7 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("battleEnd")) {
 			try {
-				Inventory.directRemove(this);
+				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}
 		}
@@ -159,7 +159,7 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("battleEnd")) {
 			try {
-				Inventory.directRemove(this);
+				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}
 		}
@@ -171,7 +171,7 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("damage")) {
 			damage[0]=0;
 			mantle=false;
-			damage(1);
+			damage(1,player);
 		}
 	}
 	@Override
@@ -191,11 +191,11 @@ public class PassiveItem implements Item {
 		return durability;
 	}
 	@Override
-	public void damage(int damage) {
+	public void damage(int damage,Player player) {
 		durability-=damage;
 		if(durability<=0) {
 			try {
-				Inventory.directRemove(this);
+				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}
 		}

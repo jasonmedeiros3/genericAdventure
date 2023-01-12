@@ -135,6 +135,10 @@ public class Boss {
 				atk=20;
 				def=100;
 				break;
+			case "The Beast":
+				maxhp=666;
+				atk=66;
+				def=66;
 			case "The Devil":
 				maxhp=1998;
 				atk=66;
@@ -401,7 +405,7 @@ public class Boss {
 							}
 							break;
 						case 4:
-							omnipresent();
+							omnipresent(player);
 							break;
 						case 5:
 							geometry(player);
@@ -423,7 +427,7 @@ public class Boss {
 							break;
 						case 9:
 							if(seed1<=50) {
-								omnipresent();
+								omnipresent(player);
 								attackCycle=5;
 							}
 							else {
@@ -439,8 +443,40 @@ public class Boss {
 							attackCycle=0;
 					}
 					attackCycle++;
+				case "The Devil":
+					if(seed1<=13||(seed1<=66&&player.getAfterburn()<2)) {
+						brimstone(player);
+					}
+					else if(bossList.size()<2) {
+						beast(player,bossList);
+					}
+					else if(seed1<=33) {
+						temptation(player);
+					}
+					else if(seed1<=50||(seed1<=66&&atk<=66)) {
+						wickedness();
+					}
 			}
 		}
+	}
+	private void brimstone(Player player) {
+		System.out.println(name+" attacks with fire and brimstone.");
+		player.damage(66*atk/100);
+		player.setAfterburn(6);
+	}
+	private void beast(Player player,ArrayList<Boss>bossList) {
+		System.out.println(name+" unleashes the Beast of Revelation.");
+		System.out.println(name+" is fined by local authorities because this is a leash only area.");
+		bossList.add(new Boss("The Beast"));
+	}
+	private void temptation(Player player) {
+		System.out.println(name+" tempts you. For some reason, this creates items in your inventory.");
+		System.out.println("The items decrease your defense.");
+		Inventory.silentAdd(new PassiveItem("Temptation",(short)0,1,(byte)0),player);
+	}
+	private void wickedness() {
+		System.out.println(name+" kicks a puppy. Attack up...?");
+		atk+=12;
 	}
 	private void increase(int seed) {
 		System.out.println(name+" increases by an arbitrary finite integer amount.");
@@ -456,10 +492,10 @@ public class Boss {
 		System.out.println(name+" erases itself from history. You forget that you can damage it.");
 		invuln+=2;
 	}
-	private void omnipresent() {
+	private void omnipresent(Player player) {
 		System.out.println(name+" exists at every point simultaneously.");
 		System.out.println("Including your inventory.");
-		Inventory.add(new PassiveItem("Abstract Concept",(short)0,1,(byte)0));
+		Inventory.silentAdd(new PassiveItem("Abstract Concept",(short)0,1,(byte)0),player);
 	}
 	private void vibration(Player player) {
 		System.out.println(name+" randomizes local thermal energy values.");

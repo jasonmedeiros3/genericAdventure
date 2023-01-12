@@ -183,6 +183,7 @@ public class Room {
 				try {
 					BufferedWriter bw=new BufferedWriter(new FileWriter(quicksave));
 					quicksave.createNewFile();
+					bw.write(Encryption.encryptln(Boolean.toString(player.getHayFever())));
 					bw.write(Encryption.encryptln(player.getClassName().toLowerCase()));
 					bw.write(Encryption.encryptln(Integer.toString(player.getMaxHp())));
 					bw.write(Encryption.encryptln(Integer.toString(player.getHp())));
@@ -194,6 +195,7 @@ public class Room {
 					bw.write(Encryption.encryptln(Integer.toString(player.getUnaware())));
 					bw.write(Encryption.encryptln(Integer.toString(player.getFreeze())));
 					bw.write(Encryption.encryptln(Integer.toString(player.getInvuln())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getIntang())));
 					bw.write(Encryption.encryptln(Integer.toString(xCoord)));
 					bw.write(Encryption.encryptln(Integer.toString(yCoord)));
 					bw.write(Encryption.encryptln(Integer.toString(Floor.level)));
@@ -202,7 +204,7 @@ public class Room {
 					}
 					bw.flush();
 					BufferedWriter bw2=new BufferedWriter(new FileWriter(mapQuicksave));
-					bw2.write(Encryption.encryptln(Integer.toString(floor.map.size())));
+					bw2.write(Encryption.encryptln(Integer.toString(floor.getXBound())));
 					for(ArrayList<Room> subList:floor.map) {
 						for(Room r:subList) {
 							bw2.write(Encryption.encryptln(r.biome+">"+r.seen+">"+r.fought+">"+r.inspected+">"+r.itemRoom+">"+r.exitRoom));
@@ -251,7 +253,7 @@ public class Room {
 								}
 								continue;
 						}
-						Inventory.add(itempool.get(rand.nextInt(itempool.size())));
+						Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 					}
 				}
 			}
@@ -287,7 +289,7 @@ public class Room {
 							}
 							continue;
 					}
-					Inventory.add(itempool.get(rand.nextInt(itempool.size())));
+					Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 				}
 			}
 			else if(input=='1'){
@@ -442,7 +444,7 @@ public class Room {
 		} catch (Exception e) {
 		}
 		try {
-			Inventory.get(input-1).doEffect("placeholder",player,enemies,0,target);
+			Inventory.get(input-1).doEffect("placeholder",player,enemies,new Integer[]{0},target);
 		} catch (Exception e) {
 		}
 	}
