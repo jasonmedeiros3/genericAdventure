@@ -79,7 +79,7 @@ public class Enemy {
 					nameSelector("Protestor");
 				}
 				break;
-			case "Vineyard":
+			case "vineyard":
 				if (seed <= 28) {
 					nameSelector("Sapient Grapevine");
 				} else if (seed <= 41) {
@@ -89,7 +89,7 @@ public class Enemy {
 				} else {
 					nameSelector("Winemaker");
 				}
-			case "Sewer":
+			case "sewer":
 				if (seed <= 37) {
 					nameSelector("Rat");
 				} else if (seed <= 52){
@@ -99,6 +99,17 @@ public class Enemy {
 				} else {
 					nameSelector("Upright Walking Turtles");
 				}
+			case "rooftop": 
+				if (seed <= 19) {
+					nameSelector("Call Of The Void");
+				} else if (seed <= 48) {
+					nameSelector("Paper Airplane");
+				} else if (seed <= 79){
+					nameSelector("Firefighter");
+				} else {
+
+				}
+			case "":
 
 		}
 	}
@@ -234,6 +245,21 @@ public class Enemy {
 				maxhp = (int) (90 + 2 * Floor.level);
 				atk = (int) (50 + 3 * Math.pow(Floor.level, 1.5));
 				def = (int) (184 + Floor.level);
+				setWeight(3);
+			case "Call Of The Void":
+				maxhp = (int) (167 + 2 * Floor.level);
+				atk = (int) (40 + 7 * Floor.level);
+				def = (int) (95 + 2 * Math.pow(Floor.level, 1.2));
+				setWeight(2);
+			case "Paper Airplane":
+				maxhp = (int) (67 + Floor.level);
+				atk = (int) (112 + 1.2 * Floor.level);
+				def = (int) (40 + 10 * Floor.level);
+				setWeight(2);
+			case "Firefighter":
+				maxhp = (int) (100 + 3 * Floor.level);
+				atk = (int) (98 + 1.8 * Floor.level);
+				def = (int) (152 + 1.4 * Floor.level);
 				setWeight(3);
 			case "":
 
