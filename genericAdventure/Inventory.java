@@ -13,7 +13,7 @@ public class Inventory {
 		for(Item i:inventory) {
 			if(i.isPassive()) {
 				try {
-					i.doEffect(eventFlag,player,enemyList,damage,(byte)0);
+					i.doEffect(eventFlag,player,enemyList,new Integer[]{damage},(byte)0);
 				} catch (Exception e) {
 				}
 			}

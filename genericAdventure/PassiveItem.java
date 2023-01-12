@@ -24,7 +24,7 @@ public class PassiveItem implements Item {
 		deadRingerCounter=0;
 	}
 	@Override
-	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer damage,byte target) {
+	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) {
 		switch(getName()) {
 			case "Paper-Thin Disguise":
 				paperThinDisguise(eventFlag,enemyList);
@@ -64,7 +64,7 @@ public class PassiveItem implements Item {
 			}
 		}
 	}
-	private void cardboardShield(String eventFlag,Player player,Integer damage) {
+	private void cardboardShield(String eventFlag,Player player,Integer[] damage) {
 		if(eventFlag.equals("addItem")) {
 			player.setDef(5);
 		}
@@ -72,14 +72,14 @@ public class PassiveItem implements Item {
 			player.setDef(-5);
 		}
 		else if(eventFlag.equals("damage")) {
-			if(damage<=5) {
-				damage=0;
+			if(damage[0]<=5) {
+				damage[0]=0;
 				damage(1);
 			}
 			damage(1);
 		}
 	}
-	private void riotShield(String eventFlag,Player player,Integer damage) {
+	private void riotShield(String eventFlag,Player player,Integer[] damage) {
 		if(eventFlag.equals("addItem")) {
 			player.setDef(25);
 		}
@@ -87,8 +87,8 @@ public class PassiveItem implements Item {
 			player.setDef(-25);
 		}
 		else if(eventFlag.equals("damage")) {
-			if(damage<=10) {
-				damage=0;
+			if(damage[0]<=10) {
+				damage[0]=0;
 				damage(1);
 			}
 			damage(1);
@@ -105,7 +105,7 @@ public class PassiveItem implements Item {
 			damage(1);
 		}
 	}
-	private void shimmeringVeil(String eventFlag,Player player,Integer damage) {
+	private void shimmeringVeil(String eventFlag,Player player,Integer[] damage) {
 		if(eventFlag.equals("addItem")) {
 			player.setDef(10);
 		}
@@ -116,7 +116,7 @@ public class PassiveItem implements Item {
 			shimmeringVeil=true;
 		}
 		else if(eventFlag.equals("damage")&&shimmeringVeil) {
-			damage=0;
+			damage[0]=0;
 			shimmeringVeil=false;
 			damage(1);
 		}
@@ -124,12 +124,12 @@ public class PassiveItem implements Item {
 			damage(-3);
 		}
 	}
-	private void armedDeadRinger(String eventFlag,Player player,Integer damage) {
+	private void armedDeadRinger(String eventFlag,Player player,Integer[] damage) {
 		if(eventFlag.equals("turnStart")) {
 			deadRingerCounter--;
 		}
 		else if(eventFlag.equals("damage")) {
-			damage=(int)(damage/4);
+			damage[0]=(int)(damage[0]/4);
 			damage(1);
 		}
 		if(deadRingerCounter<=0) {
@@ -164,12 +164,12 @@ public class PassiveItem implements Item {
 			}
 		}
 	}
-	private void holyMantle(String eventFlag,Player player,Integer damage) {
+	private void holyMantle(String eventFlag,Player player,Integer[] damage) {
 		if(eventFlag.equals("battleStart")) {
 			mantle=true;
 		}
 		else if(eventFlag.equals("damage")) {
-			damage=0;
+			damage[0]=0;
 			mantle=false;
 			damage(1);
 		}
