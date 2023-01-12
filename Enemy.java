@@ -16,6 +16,7 @@ public class Enemy {
 	private int weight;
 	private int freeze=0;
 	private int invuln=0;
+	private int intang=0;
 	public Enemy(String biome) {
 		Random rand=new Random();
 		int seed=rand.nextInt(101);
@@ -192,6 +193,12 @@ public class Enemy {
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
+		if(getIntang()>0&&damage>0) {
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			damage=0;
+		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage.");
 		}
@@ -215,6 +222,12 @@ public class Enemy {
 		damage=(int)(i*(100.0/def));
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
+		}
+		if(getIntang()>0&&damage>0) {
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			damage=0;
 		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage.");
@@ -291,6 +304,12 @@ public class Enemy {
 	public int getInvuln() {
 		return invuln;
 	}
+	public void setIntang(int increment) {
+		intang+=increment;
+	}
+	public int getIntang() {
+		return intang;
+	}
 	public int getWeight() {
 		return weight;
 	}
@@ -319,6 +338,9 @@ public class Enemy {
 		if(invuln>0) {
 			invuln--;
 		}
+		if(intang>0) {
+			intang--;
+		}
 	}
 	public String stringAfterburn() {
 		return "("+afterburn+" Afterburn)";
@@ -338,11 +360,11 @@ public class Enemy {
 	public String stringInvuln() {
 		return "("+invuln+" Invuln)";
 	}
+	public String stringIntang() {
+		return "("+intang+" Intangible)";
+	}
 	public String stringStatus() {
 		String status="";
-		if(dead) {
-			return "(Dead)";
-		}
 		if(afterburn>0) {
 			status+=stringAfterburn();
 		}
@@ -360,6 +382,9 @@ public class Enemy {
 		}
 		if(invuln>0) {
 			status+=stringInvuln();
+		}
+		if(intang>0) {
+			status+=stringIntang();
 		}
 		return status;
 	}
