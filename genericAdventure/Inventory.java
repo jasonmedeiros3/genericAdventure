@@ -9,6 +9,16 @@ public class Inventory {
 	private static ArrayList<Item> inventory=new ArrayList<Item>();
 	private static short weight;
 	private final static short MAXWEIGHT=100;
+	public static void eventFlagHandler(String eventFlag,Player player,ArrayList<Enemy>enemyList,Integer damage) {
+		for(Item i:inventory) {
+			if(i.isPassive()) {
+				try {
+					i.doEffect(eventFlag,player,enemyList,damage,(byte)0);
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
 	public static void add(Item item) {
 		Random rand=new Random();
 		int seed=rand.nextInt(100);

@@ -64,6 +64,9 @@ public class ActiveItem implements Item {
 			case "Uber Canteen":
 				uberCanteen(player);
 				break;
+			case "Dead Ringer":
+				deadRinger(player);
+				break;
 			default:
 		}
 	}
@@ -84,7 +87,7 @@ public class ActiveItem implements Item {
 		return 0;
 	}
 	private void rocketLaunch(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
-		enemyList.get(target).damage((int)(50*player.getAtk()/100));
+		enemyList.get(target).damage(50*player.getAtk()/100.0);
 		try {
 			enemyList.get(target-1).damage((int)(24*player.getAtk()/100));
 		}
@@ -102,53 +105,53 @@ public class ActiveItem implements Item {
 		damage(1);
 	}
 	private void lawsuit(Player player,Enemy enemy) throws Exception {
-		enemy.damage((int)(30*player.getAtk()/100));
+		enemy.damage(30*player.getAtk()/100.0);
 		enemy.setMarkForDeath(2);
 		damage(1);
 	}
 	private void cheapSpear(Player player,Enemy enemy) throws Exception {
-		enemy.damage((int)(65*player.getAtk()/100));
+		enemy.damage(65*player.getAtk()/100.0);
 		damage(1);
 	}
 	private void butterKnife(Player player,Enemy enemy) throws Exception {
 		if(enemy.getUnaware()>0) {
-			enemy.damage((int)((enemy.getHp()/6.3)+32*player.getAtk()/96));
+			enemy.damage(enemy.getHp()/6.3+32*player.getAtk()/96.0);
 			System.out.println("A backstab.");
 			damage(2);
 		}
 		else {
-			enemy.damage((int)(32*player.getAtk()/100));
+			enemy.damage(32*player.getAtk()/100.0);
 			damage(1);
 		}
 	}
 	private void sixShooter(Player player,Enemy enemy) throws Exception {
 		if(enemy.getUnaware()>0) {
-			enemy.damage((int)(48*player.getAtk()/100));
+			enemy.damage(48*player.getAtk()/100.0);
 		}
 	}
 	private void arthritis(Player player,Enemy enemy) throws Exception {
-		enemy.damage((int)(26+(enemy.getDef()/10)*(player.getAtk()/120)));
+		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0));
 		damage(1);
 	}
 	private void blackBox(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
-		enemyList.get(target).damage((int)(50*player.getAtk()/100));
+		enemyList.get(target).damage(50*player.getAtk()/100.0);
 		try {
-			enemyList.get(target-1).damage((int)(24*player.getAtk()/100));
-			player.damage(-3*player.getAtk()/100);
+			enemyList.get(target-1).damage(24*player.getAtk()/100.0);
+			player.damage(-3*player.getAtk()/100.0);
 		}
 		catch(Exception e) {
 		}
 		try {
-			enemyList.get(target+1).damage((int)(24*player.getAtk()/100));
-			player.damage(-3*player.getAtk()/100);
+			enemyList.get(target+1).damage(24*player.getAtk()/100.0);
+			player.damage(-3*player.getAtk()/100.0);
 		}
 		catch(Exception e) {
 		}
-		player.damage(-10*player.getAtk()/100);
+		player.damage(-10*player.getAtk()/100.0);
 		damage(1);
 	}
 	private void fountainPen(Player player,Enemy enemy) throws Exception {
-		enemy.damage((int)(47*player.getAtk()/100));
+		enemy.damage(47*player.getAtk()/100.0);
 	}
 	private void waterCanteen(Player player) throws Exception {
 		player.damage(-8);
@@ -179,6 +182,12 @@ public class ActiveItem implements Item {
 	@Override
 	public void damage(int damage) {
 		durability-=damage;
+		if(durability<=0) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
 	}
 	@Override
 	public void setMaxDurability(int value) {

@@ -25,6 +25,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Uber Canteen",s=9,3,b=6,true)); //15
 		pool.add(new PassiveItem("Multiclass Manual",s=3,256,b=0)); //16
 		pool.add(new ActiveItem("Dead Ringer",s=6,1,b=5,false)); //17
+		pool.add(new PassiveItem("Holy Mantle",s=1,14,b=4)); //18
 	}
 	public Item get(int index) {
 		return pool.get(index);

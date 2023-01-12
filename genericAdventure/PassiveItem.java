@@ -10,6 +10,7 @@ public class PassiveItem implements Item {
 	private int maxDurability;
 	private byte type;
 	private boolean shimmeringVeil;
+	private boolean mantle;
 	private int deadRingerCounter=2;
 	public PassiveItem(String s,short w,int d,byte t) {
 		name=s;
@@ -19,6 +20,7 @@ public class PassiveItem implements Item {
 		type=t;
 		isPassive=true;
 		shimmeringVeil=true;
+		mantle=true;
 		deadRingerCounter=0;
 	}
 	@Override
@@ -44,6 +46,12 @@ public class PassiveItem implements Item {
 				break;
 			case "Abstract Concept":
 				abstractConcept(eventFlag,player);
+				break;
+			case "Temptation":
+				temptation(eventFlag,player);
+				break;
+			case "Holy Mantle":
+				holyMantle(eventFlag,player,damage);
 				break;
 			default:
 		}
@@ -135,6 +143,36 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("removeItem")) {
 			player.setAtk(10);
 		}
+		else if(eventFlag.equals("battleEnd")) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
+	}
+	private void temptation(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setDef(-10);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setAtk(10);
+		}
+		else if(eventFlag.equals("battleEnd")) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
+	}
+	private void holyMantle(String eventFlag,Player player,Integer damage) {
+		if(eventFlag.equals("battleStart")) {
+			mantle=true;
+		}
+		else if(eventFlag.equals("damage")) {
+			damage=0;
+			mantle=false;
+			damage(1);
+		}
 	}
 	@Override
 	public String getName() {
@@ -155,6 +193,12 @@ public class PassiveItem implements Item {
 	@Override
 	public void damage(int damage) {
 		durability-=damage;
+		if(durability<=0) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
 	}
 	@Override
 	public void setMaxDurability(int value) {
