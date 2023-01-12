@@ -90,14 +90,14 @@ public class Enemy {
 					nameSelector("Winemaker");
 				}
 			case "Sewer":
-				if (seed <= 24) {
+				if (seed <= 37) {
 					nameSelector("Rat");
 				} else if (seed <= 52){
 					nameSelector("Florida Man");
-				} else if (seed <= 74) {
+				} else if (seed <= 87) {
 					nameSelector("Alligator");
 				} else {
-
+					nameSelector("Upright Walking Turtles");
 				}
 
 		}
@@ -215,6 +215,29 @@ public class Enemy {
 				atk = (int) (111 + 4 * Floor.level);
 				def = (int) (78 + 2 * Floor.level);
 				setWeight(2);
+			case "Rat":
+				maxhp = (int) (40 + 2 * Floor.level);
+				atk = (int) (54 + 4 * Floor.level);
+				def = (int) (124 + Math.pow(Floor.level, 1.36));
+				setWeight(1);
+			case "Alligator":
+				maxhp = (int) (102 + 2 * Floor.level);
+				atk = (int) (109 + 3 * Floor.level);
+				def = (int) (104 + 6 * Floor.level);
+				setWeight(2);
+			case "Florida Man":
+				maxhp = (int) (94 + Math.pow(Floor.level, 1.46));
+				atk = (int) (127 + 4 * Floor.level);
+				def = (int) (82 + Floor.level);
+				setWeight(2);
+			case "Upright Walking Turtles":
+				maxhp = (int) (90 + 2 * Floor.level);
+				atk = (int) (50 + 3 * Math.pow(Floor.level, 1.5));
+				def = (int) (184 + Floor.level);
+				setWeight(3);
+			case "":
+
+
 		}
 		hp=maxhp;
 	}
