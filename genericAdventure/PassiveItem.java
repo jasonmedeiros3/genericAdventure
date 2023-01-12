@@ -42,6 +42,9 @@ public class PassiveItem implements Item {
 			case "Armed Dead Ringer":
 				armedDeadRinger(eventFlag,player,damage);
 				break;
+			case "Abstract Concept":
+				abstractConcept(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -123,6 +126,14 @@ public class PassiveItem implements Item {
 		}
 		if(deadRingerCounter<=0) {
 			damage(1);
+		}
+	}
+	private void abstractConcept(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setAtk(-10);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setAtk(10);
 		}
 	}
 	@Override
