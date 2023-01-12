@@ -626,7 +626,7 @@ public class Room {
            		}
           	}
  		}
-		rotateMultiDimensionalArray(a);
+		
 		for (int x = 0; x < a.length(); x++){
 			for (int y = 0; y < a[].length(); y++){
 				System.out.print(a[x][y]);
@@ -635,18 +635,6 @@ public class Room {
 		}
  	}	
 
-	static void rotateMultiDimensionalArray(int[][] a) {
-		for (int i = 0; i < a.size() / 2; i++) {
-			int top = i;
-			int bottom = a.length - 1 - i;
-			for (int j = top; j < bottom; j++) {
-				int temp = a[top][j];
-				a[top][j] = a[j][bottom];
-				a[j][bottom] = a[bottom][bottom - (j - top)];
-				a[bottom][bottom - (j - top)] = a[bottom - (j - top)][top];
-				a[bottom - (j - top)][top] = temp;
-			}
-		}
-	}
+	
 
 }
