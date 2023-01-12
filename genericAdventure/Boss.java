@@ -120,7 +120,7 @@ public class Boss {
 				def=97;
 				break;
 			case "The Abstract Concept":
-				maxhp=10;
+				maxhp=15;
 				atk=100;
 				def=100;
 				intang=infinity;
