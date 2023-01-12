@@ -129,6 +129,31 @@ public class Enemy {
 				} else {
 					nameSelector("Uncool Satan");
 				}
+			case "flight":
+				if (seed <= 30){
+					nameSelector("Pilot");
+				} else if (seed <= 60) {
+					nameSelector("Flight Attendant");
+				} else if (seed <= 70) {
+					nameSelector("I Sell Soap");
+				} else {
+					nameSelector("Flying Ostrich");
+				}
+			case "ireland":
+				if (seed <= 25){
+					nameSelector("Another Drunkard");
+				} else if (seed <= 36) {
+					nameSelector("Doom Guy Protestant");
+				} else if (seed <= 51) {
+					nameSelector("Catholic Mob");
+				} else if (seed <= 69){
+					nameSelector("Leprachaun");
+				} else if (seed <= 83) {
+					nameSelector("Potato Vendor");
+				} else {
+					nameSelector("Blight Immigrant");
+				}
+				
 
 		}
 	}
@@ -236,15 +261,15 @@ public class Enemy {
 				def = (int) (50 + 2 * Math.pow(Floor.level, 1.2));
 				setWeight(1);
 			case "Drunkard":
-				maxhp = (int) (100 + 4 * Floor.level);
+				maxhp = (int) (80 + 2 * Floor.level);
 				atk = (int) (120 + Math.pow(Floor.level, 1.6));
-				def = (int) (96 + Floor.level);
-				setWeight(3);
-			case "Winemaker": 
-				maxhp = (int) (97 + 3 * Floor.level);
-				atk = (int) (111 + 4 * Floor.level);
-				def = (int) (78 + 2 * Floor.level);
+				def = (int) (50 + Floor.level);
 				setWeight(2);
+			case "Winemaker": 
+			maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (111 + 4 * Floor.level);
+				def = (int) (102 + 2 * Floor.level);
+				setWeight(3);
 			case "Rat":
 				maxhp = (int) (40 + 2 * Floor.level);
 				atk = (int) (54 + 4 * Floor.level);
@@ -276,7 +301,7 @@ public class Enemy {
 				def = (int) (40 + 10 * Floor.level);
 				setWeight(2);
 			case "Firefighter":
-				maxhp = (int) (100 + 3 * Floor.level);
+				maxhp = (int) (80 + 2 * Floor.level);
 				atk = (int) (98 + 1.8 * Floor.level);
 				def = (int) (152 + 1.4 * Floor.level);
 				setWeight(3);
@@ -303,7 +328,7 @@ public class Enemy {
 			case "Willify":
 				maxhp = (int) (130 + 2.3 * Floor.level);
 				atk = (int) (19 + 1.2 * Floor.level);
-				def = (int) (10 + Floor.level);
+				def = (int) (100 + Floor.level);
 				setWeight(3);
 			case "Spirit":
 				maxhp = (int) (40 + 2 * Floor.level);
@@ -325,8 +350,56 @@ public class Enemy {
 				atk = (int) (105 + 1.3 * Floor.level);
 				def = (int) (100 + Floor.level);
 				setWeight(3);
-			
-
+			case "Pilot":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (119 + 1.9 * Floor.level);
+				def = (int) (90 + Floor.level);
+				setWeight(2);
+			case "Flight Attendant":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (45 + 2 * Math.pow(Floor.level, 1.4));
+				def = (int) (50 + 5 * Floor.level);
+				setWeight(1);
+			case "I Sell Soap":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (90 + 1.3 * Floor.level);
+				def = (int) (100 + 2 * Math.pow(Floor.level, 1.6));
+				setWeight(2);
+			case "Flying Ostrich":
+				maxhp = (int) (112 + Floor.level);
+				atk = (int) (120 + Floor.level);
+				def = (int) (100 + 2 * Floor.level);
+				setWeight(3);
+			case "Potato Vendor":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (40 + 5 * Floor.level);
+				def = (int) (90 + Floor.level);
+				setWeight(1);
+			case "Catholic Mob":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (75 + Math.pow(Floor.level, 1.6));
+				def = (int) (55 + 6 * Floor.level);
+				setWeight(1);
+			case "Blight Immigrant":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (99 + Floor.level);
+				def = (int ) (143 + Floor.level);
+				setWeight(2);
+			case "Another Drunkard":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (120 + Math.pow(Floor.level, 1.6));
+				def = (int) (50 + Floor.level);
+				setWeight(2);
+			case "Leprachaun":
+				maxhp = (int) (150 + 2 * Floor.level);
+				atk = (int) (79 + Floor.level);
+				def = (int) (15 + 2 * Math.pow(Floor.level, 1.9));
+				setWeight(2);
+			case "Doom Guy Protestant":
+				maxhp = (int) (80 + 2 * Floor.level);
+				atk = (int) (112 + 3 * Floor.level);
+				def = (int) (170 + 3 * Floor.level);
+				setWeight(3);
 		}
 		hp=maxhp;
 	}
