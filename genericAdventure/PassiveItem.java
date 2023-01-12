@@ -53,6 +53,12 @@ public class PassiveItem implements Item {
 			case "Holy Mantle":
 				holyMantle(eventFlag,player,damage);
 				break;
+			case "Synthol":
+				synthol(eventFlag,player);
+				break;
+			case "Brass Knuckles":
+				brassKnuckles(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -172,6 +178,22 @@ public class PassiveItem implements Item {
 			damage[0]=0;
 			mantle=false;
 			damage(1,player);
+		}
+	}
+	private void synthol(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setAtk(3);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setAtk(-3);
+		}
+	}
+	private void brassKnuckles(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setAtk(8);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setAtk(-8);
 		}
 	}
 	@Override
