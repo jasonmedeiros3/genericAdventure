@@ -15,6 +15,7 @@ public class Player {
 	private int unaware=0;
 	private int freeze=0;
 	private int invuln=0;
+	private int intang=0;
 	private final boolean hayFever;
 	public Player(byte[]inputs,ItemPool itempool) {
 		if(inputs[0]==1) {
@@ -70,6 +71,12 @@ public class Player {
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
+		if(getIntang()>0&&damage>0) {
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			damage=0;
+		}
 		if(damage>0) {
 			System.out.println(className+" took "+damage+" damage.");
 		}
@@ -85,9 +92,14 @@ public class Player {
 		hp-=(int)(damage*(100/def));
 	}
 	public void damage(double damage) {
-		hp-=(int)(damage*(100/def));
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
+		}
+		if(getIntang()>0&&damage>0) {
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			damage=0;
 		}
 		if(damage>0) {
 			System.out.println(className+" took "+damage+" damage.");
@@ -101,6 +113,7 @@ public class Player {
 		if(hp>maxhp) {
 			hp=maxhp;
 		}
+		hp-=(int)(damage*(100/def));
 	}
 	public int getHp() {
 		return hp;
@@ -207,6 +220,12 @@ public class Player {
 	public int getInvuln() {
 		return invuln;
 	}
+	public void setIntang(int increment) {
+		intang+=increment;
+	}
+	public int getIntang() {
+		return intang;
+	}
 	public String stringAfterburn() {
 		return "("+afterburn+" Afterburn)";
 	}
@@ -225,8 +244,8 @@ public class Player {
 	public String stringInvuln() {
 		return "("+invuln+" Invuln)";
 	}
-	public boolean getHayFever() {
-		return hayFever;
+	public String stringIntang() {
+		return "("+intang+" Intangible)";
 	}
 	public String stringStatus() {
 		String status="";
@@ -248,7 +267,13 @@ public class Player {
 		if(invuln>0) {
 			status+=stringInvuln();
 		}
+		if(intang>0) {
+			status+=stringIntang();
+		}
 		return status;
+	}
+	public boolean getHayFever() {
+		return hayFever;
 	}
 	public void statusTick() {
 		if(afterburn>0) {
@@ -271,6 +296,9 @@ public class Player {
 		}
 		if(invuln>0) {
 			invuln--;
+		}
+		if(intang>0) {
+			intang--;
 		}
 	}
 }
