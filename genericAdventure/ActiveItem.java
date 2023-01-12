@@ -20,7 +20,7 @@ public class ActiveItem implements Item {
 		isPassive=false;
 	}
 	@Override
-	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer damage,byte target) throws Exception {
+	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception {
 		switch(getName()) {
 			case "Rocket Launcher":
 				target=selectTarget(enemyList);

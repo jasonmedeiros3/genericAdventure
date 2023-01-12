@@ -67,15 +67,19 @@ public class Player {
 		bonusAtk=0;
 		bonusDef=0;*/
 	}
-	public void damage(int damage) {
+	public void damage(Integer damage) {
 		if(getMarkForDeath()>0&&damage>0) {
-			damage*=1.35;
+			damage=(int)(damage*1.35);
 		}
 		if(getIntang()>0&&damage>0) {
 			damage=1;
 		}
 		if(getInvuln()>0&&damage>0) {
 			damage=0;
+		}
+		Integer[]arrayDamage={damage};
+		if(damage>0) {
+			Inventory.eventFlagHandler("damage", this, null, damage);
 		}
 		if(damage>0) {
 			System.out.println(className+" took "+damage+" damage.");
@@ -92,6 +96,7 @@ public class Player {
 		hp-=(int)(damage*(100/def));
 	}
 	public void damage(double damage) {
+		Integer intDamage;
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
@@ -100,6 +105,10 @@ public class Player {
 		}
 		if(getInvuln()>0&&damage>0) {
 			damage=0;
+		}
+		intDamage=(int)damage;
+		if(damage>0) {
+			Inventory.eventFlagHandler("damage", this, null, intDamage);
 		}
 		if(damage>0) {
 			System.out.println(className+" took "+damage+" damage.");
@@ -278,12 +287,11 @@ public class Player {
 	public void statusTick() {
 		if(afterburn>0) {
 			afterburn--;
-			hp-=3;
-			atk--;
+			hp-=(int)((1/32.0)*maxhp);
 		}
 		if(poison>0) {
 			poison--;
-			hp-=4;
+			hp-=(int)((1/16.0)*maxhp);
 		}
 		if(markedForDeath>0) {
 			markedForDeath--;
