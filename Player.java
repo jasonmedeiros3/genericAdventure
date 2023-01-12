@@ -15,8 +15,15 @@ public class Player {
 	private int unaware=0;
 	private int freeze=0;
 	private int invuln=0;
-	public Player(byte input,ItemPool itempool) {
-		switch(input) {
+	private final boolean hayFever;
+	public Player(byte[]inputs,ItemPool itempool) {
+		if(inputs[0]==1) {
+			hayFever=true;
+		}
+		else {
+			hayFever=false;
+		}
+		switch(inputs[1]) {
 			case 1:
 				className="Soldier";
 				maxhp=200;
@@ -217,6 +224,9 @@ public class Player {
 	}
 	public String stringInvuln() {
 		return "("+invuln+" Invuln)";
+	}
+	public boolean getHayFever() {
+		return hayFever;
 	}
 	public String stringStatus() {
 		String status="";
