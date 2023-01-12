@@ -77,6 +77,15 @@ public class ActiveItem implements Item {
 			case "Staple Gun":
 				target=selectTarget(enemyList);
 				stapleGun(player,enemyList.get(target));
+				break;
+			case "Conniver Kunai":
+				target=selectTarget(enemyList);
+				kunai(player,enemyList.get(target));
+				break;
+			case "Direct Hit":
+				target=selectTarget(enemyList);
+				directHit(player,enemyList,target);
+				break;
 			default:
 		}
 	}
@@ -203,6 +212,32 @@ public class ActiveItem implements Item {
 	private void stapleGun(Player player,Enemy enemy) {
 		System.out.println("Fired a staple.");
 		enemy.damage(40*player.getAtk()/100.0);
+	}
+	private void kunai(Player player,Enemy enemy) {
+		System.out.println("Swung the kunai.");
+		if(enemy.getUnaware()>0) {
+			enemy.damage(enemy.getHp()/5.9+32*player.getAtk()/90.0);
+			System.out.println("A backstab.");
+			damage(2,player);
+		}
+		else {
+			enemy.damage(40*player.getAtk()/100.0);
+			damage(1,player);
+		}
+	}
+	private void directHit(Player player,ArrayList<Enemy>enemyList,byte target) {
+		System.out.println("Fired an accurate rocket.");
+		enemyList.get(target).damage(76*player.getAtk()/100.0);
+		try {
+			enemyList.get(target-1).damage(7*player.getAtk()/100.0);
+		}
+		catch(Exception e) {
+		}
+		try {
+			enemyList.get(target+1).damage(7*player.getAtk()/100.0);
+		}
+		catch(Exception e) {
+		}
 	}
 	@Override
 	public String getName() {

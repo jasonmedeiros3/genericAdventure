@@ -31,6 +31,8 @@ public class ItemPool {
 		pool.add(new ActiveItem("Red Flask",s=3,5,b=7,true)); //21
 		pool.add(new ActiveItem("M1911",s=6,20,b=3,false)); //22
 		pool.add(new ActiveItem("Staple Gun",s=10,30,b=3,false)); //23
+		pool.add(new ActiveItem("Conniver Kunai",s=7,70,b=5,false)); //24
+		pool.add(new ActiveItem("Direct Hit",s=10,20,b=1,false)); //25
 	}
 	public Item get(int index) {
 		return pool.get(index);
