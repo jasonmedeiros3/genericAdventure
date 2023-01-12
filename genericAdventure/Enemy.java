@@ -107,9 +107,24 @@ public class Enemy {
 				} else if (seed <= 79){
 					nameSelector("Firefighter");
 				} else {
-
+					nameSelector("Brick");
 				}
-			case "":
+			case "fake beach":
+				if (seed <= 27) {
+					nameSelector("Sand");
+				} else if (seed <= 57) {
+					nameSelector("Real Sun");
+				} else if (seed <= 96) {
+					nameSelector("Water");
+				} else {
+					nameSelector("Willify");
+				}
+			case "hell":
+				if (seed <= 30) {
+					nameSelector("Spirit");
+				} else if (seed <= 49) {
+					nameSelector("Three Headed Dog");
+				}
 
 		}
 	}
@@ -261,8 +276,43 @@ public class Enemy {
 				atk = (int) (98 + 1.8 * Floor.level);
 				def = (int) (152 + 1.4 * Floor.level);
 				setWeight(3);
+			case "Brick":
+				maxhp = (int) (50 + 2 * Floor.level);
+				atk = (int) (23 + 4 * Floor.level);
+				def = (int) (140 + Floor.level);
+				setWeight(1);
+			case "Sand":
+				maxhp = (int) (40 + 2 * Floor.level);
+				atk = (int) (101 + 2.4 * Floor.level);
+				def = (int) (100);
+				setWeight(2);
+			case "Real Sun":
+				maxhp = (int) (100 + 2 * Floor.level);
+				atk = (int) (10 + 15 * Floor.level);
+				def = (int) (95);
+				setWeight(2);
+			case "Water":
+				maxhp = (int) (50 + 2.8 * Floor.level);
+				atk = (int) (70 + Floor.level);
+				def = (int) (120 + Floor.level);
+				setWeight(1);
+			case "Willify":
+				maxhp = (int) (130 + 2.3 * Floor.level);
+				atk = (int) (19 + 1.2 * Floor.level);
+				def = (int) (10 + Floor.level);
+				setWeight(3);
+			case "Spirit":
+				maxhp = (int) (40 + 2 * Floor.level);
+				atk = (int) (40 + 2 * Floor.level);
+				def = (int) (40 + 2 * Floor.level);
+				setWeight(1);
+			case "Three Headed Dog":
+				maxhp = (int) (102 + 4 * Floor.level);
+				atk = (int) (114 + 5 * Floor.level);
+				def = (int) (84 + Floor.level);
+				setWeight(3);
 			case "":
-
+			
 
 		}
 		hp=maxhp;
