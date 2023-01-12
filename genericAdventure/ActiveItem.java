@@ -214,9 +214,12 @@ public class ActiveItem implements Item {
 		enemy.damage(40*player.getAtk()/100.0);
 	}
 	private void kunai(Player player,Enemy enemy) {
+		double damage=enemy.getHp()/5.9+32*player.getAtk()/90.0;
 		System.out.println("Swung the kunai.");
 		if(enemy.getUnaware()>0) {
-			enemy.damage(enemy.getHp()/5.9+32*player.getAtk()/90.0);
+			if(enemy.damage(damage)) {
+				player.damage(-damage);
+			}
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
