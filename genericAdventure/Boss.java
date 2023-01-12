@@ -21,6 +21,7 @@ public class Boss {
 	private int metal=200;
 	private int buildingLevel=1;
 	private int csgo=0;
+	private int attackCycle=0;
 	private final int infinity=2147483647;
 	private boolean huntingShotgun=false;
 	private boolean justBlocked;
@@ -122,15 +123,18 @@ public class Boss {
 				maxhp=10;
 				atk=100;
 				def=100;
+				intang=infinity;
 				break;
 			case "Sentry Gun":
 				maxhp=150;
 				atk=80;
 				def=100;
+				break;
 			case "Dispenser":
 				maxhp=150;
 				atk=20;
 				def=100;
+				break;
 			case "The Devil":
 				maxhp=1998;
 				atk=66;
@@ -381,8 +385,94 @@ public class Boss {
 					else {
 						benediction();
 					}
+				case "The Abstract Concept":
+					switch(attackCycle) {
+						case 0:
+							increase(seed2);
+							break;
+						case 1:
+						case 2:
+							geometry(player);
+							break;
+						case 3:
+							forget();
+							if(seed1<=20) {
+								attackCycle=-1;
+							}
+							break;
+						case 4:
+							omnipresent();
+							break;
+						case 5:
+							geometry(player);
+							break;
+						case 6:
+							if(seed1<=30) {
+								geometry(player);
+								attackCycle=-1;
+							}
+							else {
+								increase(seed2);
+							}
+							break;
+						case 7:
+							vibration(player);
+							break;
+						case 8:
+							increase(seed2);
+							break;
+						case 9:
+							if(seed1<=50) {
+								omnipresent();
+								attackCycle=5;
+							}
+							else {
+								geometry(player);
+							}
+							break;
+						case 10:
+							forcedPerspective(player);
+							attackCycle=8;
+							break;
+						default:
+							forcedPerspective(player);
+							attackCycle=0;
+					}
+					attackCycle++;
 			}
 		}
+	}
+	private void increase(int seed) {
+		System.out.println(name+" increases by an arbitrary finite integer amount.");
+		atk+=(int)(10+(seed/10.0));
+		def+=(int)(10+(seed/10.0));
+	}
+	private void geometry(Player player) {
+		System.out.println(name+" reveals incomprehensible geometries to you.");
+		System.out.println("You fall down a flight of 4D stairs.");
+		player.damage(65*atk/100);
+	}
+	private void forget() {
+		System.out.println(name+" erases itself from history. You forget that you can damage it.");
+		invuln+=2;
+	}
+	private void omnipresent() {
+		System.out.println(name+" exists at every point simultaneously.");
+		System.out.println("Including your inventory.");
+		Inventory.add(new PassiveItem("Abstract Concept",(short)0,1,(byte)0));
+	}
+	private void vibration(Player player) {
+		System.out.println(name+" randomizes local thermal energy values.");
+		System.out.println("Not only were the laws of thermodynamics violated, but you're also on fire now.");
+		player.damage(10*atk/100);
+		player.setAfterburn(3);
+	}
+	private void forcedPerspective(Player player) {
+		System.out.println(name+" invokes forced perspective on your health bar.");
+		System.out.println("It looks smaller, so it is smaller.");
+		System.out.println("What? You can't see your health bar?");
+		System.out.println("Maybe you should complain to the developers.");
+		player.setHp(-100);
 	}
 	private void salvation() {
 		System.out.println("The power of God heals "+name+", or something like that.");
