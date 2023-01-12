@@ -67,16 +67,20 @@ public class Enemy {
 				}
 				break;
 			case "consulate":
-				if(seed<=40) {
+				if(seed<=25) {
 					nameSelector("Lawyer");
 				}
-				else if(seed<=80) {
+				else if(seed<=50) {
 					nameSelector("Consul");
 				}
-				else {
+				else if (seed <= 75){
 					nameSelector("Consulate Janitor");
+				} else {
+					nameSelector("Protestor");
 				}
 				break;
+			case "Vineyard":
+
 		}
 	}
 	public void nameSelector(String n) {
@@ -167,6 +171,11 @@ public class Enemy {
 				atk=(int)(80+1.25*Math.pow(Floor.level,1.25));
 				def=(int)(97+0.9*Floor.level);
 				setWeight(3);
+			case "Protestor":
+				maxhp = (int) (50+2.2 * Math.pow(Floor.level, 1.8));
+				atk = (int) (20 + 5 * Floor.level);
+				def = (int) (97 + 0.9 * Floor.level);
+				setWeight(1);
 			case "Sapient Grapevine":
 				maxhp=(int)(90+1.05*Math.pow(Floor.level,1.4));
 				atk=(int)(77+1.13*Math.pow(Floor.level,1.23));
