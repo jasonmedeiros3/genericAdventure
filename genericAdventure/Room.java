@@ -612,17 +612,41 @@ public class Room {
 				return("You're in some kind of strange state of limbo. Please file a bug report.");
 		}
 	}
+
 	public void displayMap(Floor floor) {
-		for (int x = 0; x < floor.map.get(0).size(); x++) {
-			for (int y = 0;y < floor.map.size(); y++) {
+		String[][] a = new String[floor.map.size()][floor.map.get(0).size()];
+
+		for (int x = 0; x < floor.map.size(); x++) {
+			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (x == xCoord && y == yCoord){
-       				System.out.print("()");
+       				a[x][y] = "()";
            		}
        			else {
-                	System.out.print("::");
+                	a[x][y] = "::";
            		}
           	}
-         	System.out.println();
  		}
+		rotateMultiDimensionalArray(a);
+		for (int x = 0; x < a.length(); x++){
+			for (int y = 0; y < a[].length(); y++){
+				System.out.print(a[x][y]);
+			}
+			System.out.println();
+		}
  	}	
+
+	static void rotateMultiDimensionalArray(int[][] a) {
+		for (int i = 0; i < a.size() / 2; i++) {
+			int top = i;
+			int bottom = a.length - 1 - i;
+			for (int j = top; j < bottom; j++) {
+				int temp = a[top][j];
+				a[top][j] = a[j][bottom];
+				a[j][bottom] = a[bottom][bottom - (j - top)];
+				a[bottom][bottom - (j - top)] = a[bottom - (j - top)][top];
+				a[bottom - (j - top)][top] = temp;
+			}
+		}
+	}
+
 }
