@@ -147,7 +147,7 @@ public class Enemy {
 				} else if (seed <= 51) {
 					nameSelector("Catholic Mob");
 				} else if (seed <= 69){
-					nameSelector("Leprachaun");
+					nameSelector("Leprechaun");
 				} else if (seed <= 83) {
 					nameSelector("Potato Vendor");
 				} else {
@@ -390,7 +390,7 @@ public class Enemy {
 				atk = (int) (120 + Math.pow(Floor.level, 1.6));
 				def = (int) (50 + Floor.level);
 				setWeight(2);
-			case "Leprachaun":
+			case "Leprechaun":
 				maxhp = (int) (150 + 2 * Floor.level);
 				atk = (int) (79 + Floor.level);
 				def = (int) (15 + 2 * Math.pow(Floor.level, 1.9));
