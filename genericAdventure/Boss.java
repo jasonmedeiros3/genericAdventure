@@ -22,6 +22,7 @@ public class Boss {
 	private int buildingLevel=1;
 	private int csgo=0;
 	private int attackCycle=0;
+	private int blackCandle=0;
 	private final int infinity=2147483647;
 	private boolean huntingShotgun=false;
 	private boolean justBlocked;
@@ -444,6 +445,12 @@ public class Boss {
 					}
 					attackCycle++;
 				case "The Devil":
+					Boss beast=null;
+					for(Boss b:bossList) {
+						if(b.getName().equals("The Beast")) {
+							beast=b;
+						}
+					}
 					if(seed1<=13||(seed1<=66&&player.getAfterburn()<2)) {
 						brimstone(player);
 					}
@@ -456,7 +463,56 @@ public class Boss {
 					else if(seed1<=50||(seed1<=66&&atk<=66)) {
 						wickedness();
 					}
+					else if(seed1<=66) {
+						lakeOfFire(player);
+					}
+					else if(seed1<=75&&player.getFreeze()==0) {
+						sheol(player,seed2);
+					}
+					else if(seed1<=90&&player.getMarkForDeath()<=0) {
+						damnation(player);
+					}
+					else if(seed1<=96&&beast!=null) {
+						theDragon(beast);
+					}
+				case "The Beast":
+					if(seed1<=60&&hp<=111) {
+						beastLunch();
+					}
+					else if(seed1<=33) {
+						theMark(player);
+					}
+					else if(seed1<=66) {
+						hellfire(player);
+					}
+					else {
+						hornAttack(player);
+					}
 			}
+		}
+	}
+	private void beastLunch() {
+		System.out.println(name+" stops for lunch.");
+		damage(-66);
+	}
+	private void theMark(Player player) {
+		System.out.println(name+" brands you with the Mark of the Beast.");
+		player.setAfterburn(3);
+		player.setMarkForDeath(3);
+	}
+	private void hellfire(Player player) {
+		System.out.println(name+" attacks with hellfire. It's a lot like normal fire.");
+		player.damage(66*atk/100);
+		player.setAfterburn(3);
+	}
+	private void hornAttack(Player player) {
+		System.out.println(name+" gores you with its many, many horns.");
+		if(player.getAfterburn()>0) {
+			System.out.println("Your burn scars open up.");
+			player.damage(99*atk/100);
+		}
+		else {
+			player.damage(66*atk/100);
 		}
 	}
 	private void brimstone(Player player) {
@@ -477,6 +533,47 @@ public class Boss {
 	private void wickedness() {
 		System.out.println(name+" kicks a puppy. Attack up...?");
 		atk+=12;
+	}
+	private void lakeOfFire(Player player) {
+		System.out.println(name+" dunks you in the lake of fire.");
+		if(player.getAfterburn()>0) {
+			System.out.println("You are already on fire. You took an increased amount of damage.");
+			player.damage(132*atk/100);
+		}
+		else {
+			player.damage(44*atk/100);
+			player.setAfterburn(2);
+		}
+	}
+	private void sheol(Player player,int seed) {
+		System.out.println(name+" reminds you that Sheol is actually supposed to be cold and empty.");
+		System.out.println("You freeze.");
+		if(seed<=33) {
+			System.out.println("You are very good at following instructions.");
+		}
+		player.setFreeze(2);
+	}
+	private void damnation(Player player) {
+		System.out.println(name+" damns you.");
+		System.out.println("You are marked for death.");
+		player.setMarkForDeath(3);
+	}
+	private void theDragon(Boss beast) {
+		System.out.println(name+" gives the Beast his power, his seat, and great authority.");
+		beast.atk+=6;
+		beast.def+=6;
+	}
+	private void blackCandle() {
+		System.out.println(name+" lights a black candle.");
+		if(blackCandle==0) {
+			System.out.println("It takes three black candles.");
+		}
+		blackCandle++;
+		if(blackCandle==3) {
+			System.out.println("The black candles provide "+name+" with 3 turns of invincibility.");
+			invuln+=3;
+			blackCandle=0;
+		}
 	}
 	private void increase(int seed) {
 		System.out.println(name+" increases by an arbitrary finite integer amount.");
@@ -881,6 +978,10 @@ public class Boss {
 	}
 	public void setFreeze(int increment) {
 		freeze+=increment;
+		if(blackCandle>0&&increment>0) {
+			blackCandle=0;
+			System.out.println("The black candles are extinguished by ice.");
+		}
 	}
 	public int getFreeze() {
 		return freeze;
