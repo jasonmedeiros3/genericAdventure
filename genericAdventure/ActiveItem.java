@@ -74,6 +74,9 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				m1911(player,enemyList.get(target));
 				break;
+			case "Staple Gun":
+				target=selectTarget(enemyList);
+				stapleGun(player,enemyList.get(target));
 			default:
 		}
 	}
@@ -195,7 +198,11 @@ public class ActiveItem implements Item {
 	}
 	private void m1911(Player player,Enemy enemy) {
 		System.out.println("Fired the M1911.");
-		enemy.damage(60*player.getAtk()/100);
+		enemy.damage(60*player.getAtk()/100.0);
+	}
+	private void stapleGun(Player player,Enemy enemy) {
+		System.out.println("Fired a staple.");
+		enemy.damage(40*player.getAtk()/100.0);
 	}
 	@Override
 	public String getName() {
