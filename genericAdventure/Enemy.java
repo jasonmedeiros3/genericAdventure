@@ -124,6 +124,10 @@ public class Enemy {
 					nameSelector("Spirit");
 				} else if (seed <= 49) {
 					nameSelector("Three Headed Dog");
+				} else if (seed <= 85) {
+					nameSelector("Pointy Rock");
+				} else {
+					nameSelector("Uncool Satan");
 				}
 
 		}
@@ -311,7 +315,16 @@ public class Enemy {
 				atk = (int) (114 + 5 * Floor.level);
 				def = (int) (84 + Floor.level);
 				setWeight(3);
-			case "":
+			case "Pointy Rock":
+				maxhp = (int) (87 + Floor.level);
+				atk = (int) (70 + 2 * Floor.level);
+				def = (int) (120 + Floor.level);
+				setWeight(2);
+			case "Uncool Satan":
+				maxhp = (int) (95 + 3 * Floor.level);
+				atk = (int) (105 + 1.3 * Floor.level);
+				def = (int) (100 + Floor.level);
+				setWeight(3);
 			
 
 		}
