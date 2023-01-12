@@ -80,6 +80,15 @@ public class Enemy {
 				}
 				break;
 			case "Vineyard":
+				if (seed <= 28) {
+					nameSelector("Sapient Grapevine");
+				} else if (seed <= 41) {
+					nameSelector("Grape Seed");
+				} else if (seed <= 69) {
+					nameSelector("Drunkard");
+				} else {
+					nameSelector("Winemaker");
+				}
 
 		}
 	}
@@ -180,8 +189,22 @@ public class Enemy {
 				maxhp=(int)(90+1.05*Math.pow(Floor.level,1.4));
 				atk=(int)(77+1.13*Math.pow(Floor.level,1.23));
 				def=(int)(107+1.1*Floor.level);
+				setWeight(2);
+			case "Grape Seed":
+				maxhp = (int) (40 + 8.2 * Floor.level);
+				atk = (int) (31 + 4 * Math.pow(Floor.level, 1.3));
+				def = (int) (50 + 2 * Math.pow(Floor.level, 1.2));
+				setWeight(1);
+			case "Drunkard":
+				maxhp = (int) (100 + 4 * Floor.level);
+				atk = (int) (120 + Math.pow(Floor.level, 1.6));
+				def = (int) (96 + Floor.level);
 				setWeight(3);
-			case "":
+			case "Winemaker": 
+				maxhp = (int) (97 + 3 * Floor.level);
+				atk = (int) (111 + 4 * Floor.level);
+				def = (int) (78 + 2 * Floor.level);
+				setWeight(2);
 		}
 		hp=maxhp;
 	}
