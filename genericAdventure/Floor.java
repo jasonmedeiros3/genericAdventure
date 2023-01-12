@@ -8,8 +8,8 @@ public class Floor {
 	public static int level=0;
 	public Floor() {
 		Random rand=new Random();
-		int xBound=rand.nextInt(2,8)+3;
-		int yBound=xBound+rand.nextInt(-2,3);
+		int xBound =rand.nextInt(4)+5;
+		int yBound=xBound+rand.nextInt(4)-2;
 		int itemX=rand.nextInt(xBound);
 		int itemY=rand.nextInt(yBound);
 		int exitX=rand.nextInt(xBound);
@@ -34,4 +34,5 @@ public class Floor {
 			}
 		}
 	}
+
 }

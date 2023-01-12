@@ -201,7 +201,7 @@ public class Room {
 					}
 					bw.flush();
 					BufferedWriter bw2=new BufferedWriter(new FileWriter(mapQuicksave));
-					bw2.write(Encryption.encryptln(Integer.toString(floor.getXBound())));
+					bw2.write(Encryption.encryptln(Integer.toString(floor.map.size())));
 					for(ArrayList<Room> subList:floor.map) {
 						for(Room r:subList) {
 							bw2.write(Encryption.encryptln(r.biome+">"+r.seen+">"+r.fought+">"+r.inspected+">"+r.itemRoom+">"+r.exitRoom));
