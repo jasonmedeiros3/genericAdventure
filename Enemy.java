@@ -206,6 +206,33 @@ public class Enemy {
 			System.out.println("Enemy "+name+" died.");
 		}
 		hp-=damage;
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
+	}
+	public void damage(double i) {
+		int damage;
+		damage=(int)(i*(100.0/def));
+		if(getMarkForDeath()>0&&damage>0) {
+			damage*=1.35;
+		}
+		if(damage>0) {
+			System.out.println("Did "+damage+" damage.");
+		}
+		else if(damage<0) {
+			System.out.println("Enemy "+name+" healed "+(-damage)+" health.");
+		}
+		else {
+			System.out.println("Didn't do any damage.");
+		}
+		if(hp<=0) {
+			dead=true;
+			System.out.println("Enemy "+name+" died.");
+		}
+		hp-=damage;
+		if(hp>maxhp) {
+			hp=maxhp;
+		}
 	}
 	public void setAtk(int increment) {
 		atk+=increment;
