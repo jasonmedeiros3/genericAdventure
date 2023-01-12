@@ -30,37 +30,37 @@ public class Player {
 				maxhp=200;
 				atk=120;
 				def=100;
-				Inventory.silentAdd(itempool.get(0));
+				Inventory.silentAdd(itempool.get(0),this);
 				break;
 			case 2:
 				className="Wizard";
 				maxhp=150;
 				atk=107;
 				def=100;
-				Inventory.silentAdd(itempool.get(1));
+				Inventory.silentAdd(itempool.get(1),this);
 				break;
 			case 3:
 				className="Lawyer";
 				maxhp=150;
 				atk=113;
 				def=100;
-				Inventory.silentAdd(itempool.get(2));
+				Inventory.silentAdd(itempool.get(2),this);
 				break;
 			case 4:
 				className="Paladin";
 				maxhp=200;
 				atk=77;
 				def=195;
-				Inventory.silentAdd(itempool.get(3));
-				Inventory.silentAdd(itempool.get(8));
+				Inventory.silentAdd(itempool.get(3),this);
+				Inventory.silentAdd(itempool.get(8),this);
 				break;
 			case 5:
 				className="Spy";
 				maxhp=125;
 				atk=107;
 				def=97;
-				Inventory.silentAdd(itempool.get(4));
-				Inventory.silentAdd(itempool.get(7));
+				Inventory.silentAdd(itempool.get(4),this);
+				Inventory.silentAdd(itempool.get(7),this);
 		}
 		hp=maxhp;
 		/*bonusMaxhp=0;

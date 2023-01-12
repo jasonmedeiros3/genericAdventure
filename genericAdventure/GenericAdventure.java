@@ -157,8 +157,8 @@ public class GenericAdventure {
 				}
 				for(i=0;i<itempool.size();i++) {
 					if(str.substring(0,chevronIndex).equals(itempool.get(i).getName())) {
-							Inventory.silentAdd(itempool.get(i));
-							Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)));
+							Inventory.silentAdd(itempool.get(i),player);
+							Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)),player);
 					}
 				}
 				inventoryIndex++;
