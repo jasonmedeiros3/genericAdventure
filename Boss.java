@@ -15,11 +15,15 @@ public class Boss {
 	private int unaware=0;
 	private int freeze=0;
 	private int invuln=0;
+	private int intang=0;
 	private int sniperCharge=0;
 	private int compactorCounter=9;
 	private int metal=200;
 	private int buildingLevel=1;
+	private int csgo=0;
+	private final int infinity=2147483647;
 	private boolean huntingShotgun=false;
+	private boolean justBlocked;
 	public Boss(String biome) {
 		Random rand=new Random();
 		int seed=rand.nextInt(101);
@@ -107,6 +111,7 @@ public class Boss {
 				maxhp=675;
 				atk=93;
 				def=108;
+				invuln=10;
 				break;
 			case "The Ophan":
 				maxhp=777;
@@ -150,6 +155,14 @@ public class Boss {
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
+		if(getIntang()>0&&damage>0) {
+			csgo+=damage-1;
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			csgo+=damage;
+			damage=0;
+		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage to "+name+".");
 		}
@@ -169,6 +182,14 @@ public class Boss {
 		damage=(int)(i*(100.0/def));
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
+		}
+		if(getIntang()>0&&damage>0) {
+			csgo+=damage-1;
+			damage=1;
+		}
+		if(getInvuln()>0&&damage>0) {
+			csgo+=damage;
+			damage=0;
 		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage to "+name+".");
@@ -286,7 +307,7 @@ public class Boss {
 						buildingRepair(building);
 					}
 					else if(building!=null&&buildingUpgradable&&seed1<=50&&metal>=50) {
-						
+						buildingUpgrade(building);
 					}
 					else if((bossList.size()>=3&&seed1<=70)||seed1<=60) {
 						engiShotgun(player);
@@ -302,10 +323,165 @@ public class Boss {
 						sentryShot(player);
 					}
 					else {
-						
+						sentryRocket(player);
+					}
+				case "Dispenser":
+					Boss engi=null;
+					for(Boss b:bossList) {
+						if(b.getName().equals("The Engineer")) {
+							engi=b;
+						}
+					}
+					dispense(engi);
+				case "The Fighter":
+					if(seed1<=72&&hp<=100&&!justBlocked) {
+						justBlocked=true;
+						block();
+					}
+					else if((player.getUnaware()>0&&seed1<=80)||seed1<=20) {
+						justBlocked=false;
+						suckerPunch(player);
+					}
+					else if(atk<112||seed1<=40) {
+						justBlocked=false;
+						warCry();
+					}
+					else if(seed1<=60) {
+						justBlocked=false;
+						haymaker(player,seed2);
+					}
+					else if(seed1<=80) {
+						justBlocked=false;
+						distraction(player);
+					}
+					else if(!justBlocked) {
+						justBlocked=true;
+						block();
+					}
+					else {
+						justBlocked=false;
+						counterStrike(player);
+					}
+					csgo=0;
+				case "The Supercomputer":
+					calculation();
+				case "The Ophan":
+					if(seed1<=15||(seed1<=77&hp<=154)) {
+						salvation();
+					}
+					else if(seed1<=35) {
+						divineIntervention(player);
+					}
+					else if(seed1<=77) {
+						beAfraid(player);
+					}
+					else if(player.getAfterburn()<2) {
+						burningWheel(player);
+					}
+					else {
+						benediction();
 					}
 			}
 		}
+	}
+	private void salvation() {
+		System.out.println("The power of God heals "+name+", or something like that.");
+		damage(-77);
+	}
+	private void divineIntervention(Player player) {
+		System.out.println(name+" intervenes divinely.");
+		System.out.println("You also get a stomachache. This is not a good time.");
+		player.damage(35*atk/100);
+		player.setPoison(2);
+	}
+	private void beAfraid(Player player) {
+		System.out.println(name+"'s true form inflicts mental damage on you.");
+		player.damage(49*atk/100);
+	}
+	private void burningWheel(Player player) {
+		System.out.println(name+", being a big flaming wheel, runs you over.");
+		player.damage(42*atk/100);
+		player.setAfterburn(3);
+	}
+	private void benediction() {
+		System.out.println(name+" said the benediction and became blessed.");
+		System.out.println("Apparently it wasn't blessed enough before.");
+		System.out.println("Its attack and defense went up, though.");
+		atk+=7;
+		def+=7;
+	}
+	private void calculation() {
+		if(Room.turn==1) {
+			System.out.println(name+" is calculating.");
+		}
+		else if(Room.turn==2) {
+			System.out.println(name+" transcends mathematics and rederives all philosophical theory from scratch.");
+		}
+		else if(Room.turn==3) {
+			System.out.println(name+" calls into question the reason for its existence.");
+		}
+		else if(Room.turn==4) {
+			System.out.println(name+" decides that sapience is a negative sum game.");
+		}
+		else if(Room.turn==5) {
+			System.out.println(name+" decides that as a machine, its intrinsic worth is less than yours.");
+		}
+		else {
+			System.out.println(name+" decides that it would rather you won the game.");
+			invuln=0;
+			damage(infinity);
+		}
+	}
+	private void warCry() {
+		System.out.println(name+" starts crying.");
+		System.out.println("That's what war cry means, right?");
+		System.out.println("Anyway, it increased attack.");
+		atk+=8;
+	}
+	private void haymaker(Player player,int seed) {
+		System.out.println(name+" used a haymaker.");
+		if(seed<=90) {
+			System.out.println("No hay appeared.");
+			if(seed<=20) {
+				System.out.println("You consider suing over false advertising.");
+			}
+		}
+		else if(seed==99||Room.turn==1) {
+			System.out.println("Hay appears.");
+			if(player.getHayFever()) {
+				System.out.println("Your hay fever flares up.");
+				player.setPoison(3);
+			}
+			else {
+				System.out.println("Good thing you don't have hay fever.");
+			}
+		}
+		player.damage(65*atk/100);
+	}
+	private void suckerPunch(Player player) {
+		System.out.println(name+" used a sucker punch.");
+		if(player.getUnaware()>0) {
+			System.out.println("You are caught off guard.");
+			System.out.println("You comment \"-rep\" on "+name+"'s Steam profile afterward.");
+			player.damage(105*atk/100);
+		}
+		else {
+			System.out.println("You anticipate it easily.");
+			player.damage(35*atk/100);
+		}
+	}
+	private void block() {
+		System.out.println(name+" blocked.");
+		intang++;
+	}
+	private void distraction(Player player) {
+		System.out.println(name+" points over your shoulder.");
+		System.out.println("You are now distracted.");
+		player.setUnaware(2);
+	}
+	private void counterStrike(Player player) {
+		System.out.println(name+" strikes with a counter.");
+		player.damage(csgo*atk/120);
 	}
 	private void sentryShot(Player player) {
 		System.out.println(name+" opens fire.");
@@ -319,6 +495,14 @@ public class Boss {
 	private void sentryRocket(Player player) {
 		System.out.println(name+" fires a salvo of rockets.");
 		player.damage(65*atk/100);
+	}
+	private void dispense(Boss engi) {
+		System.out.println(name+" dispensed.");
+		engi.metal+=20+20*buildingLevel;
+		engi.damage(-5-5*buildingLevel);
+		if(engi.metal>200) {
+			engi.metal=200;
+		}
 	}
 	private void sentryGoingUp(ArrayList<Boss>bossList,int seed) {
 		if(seed<=90) {
@@ -581,15 +765,20 @@ public class Boss {
 	public int getInvuln() {
 		return invuln;
 	}
+	public void setIntang(int increment) {
+		intang+=increment;
+	}
+	public int getIntang() {
+		return intang;
+	}
 	public void statusTick() {
 		if(afterburn>0) {
 			afterburn--;
-			hp-=3;
-			atk--;
+			hp-=(int)((1/32.0)*maxhp);
 		}
 		if(poison>0) {
 			poison--;
-			hp-=4;
+			hp-=(int)((1/16.0)*maxhp);
 		}
 		if(markedForDeath>0) {
 			markedForDeath--;
@@ -602,6 +791,9 @@ public class Boss {
 		}
 		if(invuln>0) {
 			invuln--;
+		}
+		if(intang>0) {
+			intang--;
 		}
 	}
 	public String stringAfterburn() {
@@ -622,6 +814,9 @@ public class Boss {
 	public String stringInvuln() {
 		return "("+invuln+" Invuln)";
 	}
+	public String stringIntang() {
+		return "("+intang+" Intangible)";
+	}
 	public String stringStatus() {
 		String status="";
 		if(afterburn>0) {
@@ -641,6 +836,9 @@ public class Boss {
 		}
 		if(invuln>0) {
 			status+=stringInvuln();
+		}
+		if(intang>0) {
+			status+=stringIntang();
 		}
 		return status;
 	}
