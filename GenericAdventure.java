@@ -17,16 +17,25 @@ public class GenericAdventure {
 		ItemPool itempool=new ItemPool();
 		return itempool;
 	}
-	public byte classSelect() throws Exception {
+	public byte[] classSelect() throws Exception {
 		byte input;
+		byte[] returnValues=new byte[2];
 		Scanner s = new Scanner(System.in);
+		System.out.println("Do you suffer from hay fever?");
+		System.out.println("1. Yes\n2. No");
+		input=s.nextByte();
+		if(input!=1&&input!=2) {
+			throw new Exception("That isn't a valid answer.");
+		}
+		returnValues[0]=input;
 		System.out.println("Select a class.");
 		System.out.println("1. Soldier\n2. Wizard\n3. Lawyer\n4. Paladin\n5. Spy");
 		input=s.nextByte();
 		if(input<1||input>5) {
 			throw new Exception("That isn't a valid class.");
 		}
-		return input;
+		returnValues[1]=input;
+		return returnValues;
 	}
 	public static void main(String[]args) throws Exception {
 		GenericAdventure main=new GenericAdventure();
@@ -94,6 +103,13 @@ public class GenericAdventure {
 			BufferedReader br=new BufferedReader(new FileReader(quicksave));
 			String str;
 			byte className;
+			byte hayFever;
+			if(Boolean.parseBoolean(Encryption.decryptString(str=br.readLine()))) {
+				hayFever=1;
+			}
+			else {
+				hayFever=2;
+			}
 			switch(Encryption.decryptString(str=br.readLine())) {
 				case "soldier":
 					className=1;
@@ -113,7 +129,7 @@ public class GenericAdventure {
 				default:
 					className=66;
 			}
-			Player player=new Player(className,itempool);
+			Player player=new Player(new byte[]{hayFever,className},itempool);
 			player.setMaxHp(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getMaxHp());
 			player.setHp(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getHp());
 			player.setAtk(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getAtk());
