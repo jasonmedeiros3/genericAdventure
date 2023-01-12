@@ -67,6 +67,9 @@ public class ActiveItem implements Item {
 			case "Dead Ringer":
 				deadRinger(player);
 				break;
+			case "Red Flask":
+				redFlask(player);
+				break;
 			default:
 		}
 	}
@@ -170,6 +173,10 @@ public class ActiveItem implements Item {
 		System.out.println("The Dead Ringer is armed.");
 		Inventory.add(new PassiveItem("Armed Dead Ringer",(short)0,1,(byte)0),player);
 		damage(1,player);
+	}
+	private void redFlask(Player player) throws Exception {
+		System.out.println("Drank from the red flask.");
+		player.damage(-(player.getMaxHp())/2.5);
 	}
 	@Override
 	public String getName() {
