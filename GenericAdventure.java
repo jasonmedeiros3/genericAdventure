@@ -139,7 +139,8 @@ public class GenericAdventure {
 			player.setMarkForDeath(Integer.parseInt(Encryption.decryptString(br.readLine())));
 			player.setUnaware(Integer.parseInt(Encryption.decryptString(br.readLine())));
 			player.setFreeze(Integer.parseInt(Encryption.decryptString(br.readLine())));
-			player.setInvuln(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getMaxHp());
+			player.setInvuln(Integer.parseInt(Encryption.decryptString(br.readLine())));
+			player.setIntang(Integer.parseInt(Encryption.decryptString(br.readLine())));
 			xCoord=Integer.parseInt(Encryption.decryptString(br.readLine()));
 			yCoord=Integer.parseInt(Encryption.decryptString(br.readLine()));
 			Floor.level=Integer.parseInt(Encryption.decryptString(br.readLine()));
