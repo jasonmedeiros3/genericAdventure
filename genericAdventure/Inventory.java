@@ -11,9 +11,11 @@ public class Inventory {
 	private final static short MAXWEIGHT=100;
 	public static void eventFlagHandler(String eventFlag,Player player,ArrayList<Enemy>enemyList,Integer damage) {
 		for(Item i:inventory) {
-			try {
-				i.doEffect(eventFlag,player,enemyList,damage,(byte)0);
-			} catch (Exception e) {
+			if(i.isPassive()) {
+				try {
+					i.doEffect(eventFlag,player,enemyList,damage,(byte)0);
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
