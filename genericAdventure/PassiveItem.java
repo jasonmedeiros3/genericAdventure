@@ -45,6 +45,9 @@ public class PassiveItem implements Item {
 			case "Abstract Concept":
 				abstractConcept(eventFlag,player);
 				break;
+			case "Temptation":
+				temptation(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -135,6 +138,26 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("removeItem")) {
 			player.setAtk(10);
 		}
+		else if(eventFlag.equals("battleEnd")) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
+	}
+	private void temptation(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setDef(-10);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setAtk(10);
+		}
+		else if(eventFlag.equals("battleEnd")) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
 	}
 	@Override
 	public String getName() {
@@ -155,6 +178,12 @@ public class PassiveItem implements Item {
 	@Override
 	public void damage(int damage) {
 		durability-=damage;
+		if(durability<=0) {
+			try {
+				Inventory.directRemove(this);
+			} catch (Exception e) {
+			}
+		}
 	}
 	@Override
 	public void setMaxDurability(int value) {
