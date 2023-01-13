@@ -220,7 +220,7 @@ public class Enemy {
 	}
 	public void nameSelector(String n) {
 		name=n;
-		if(isBoss) {
+		if(!isBoss) {
 			switch(name) {
 				case "Squirrel":
 					maxhp=(int)(30+1.9*(Math.pow(Floor.level-1,1.3)));
