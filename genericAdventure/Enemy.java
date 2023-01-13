@@ -102,7 +102,7 @@ public class Enemy {
 					} else if (seed <= 87) {
 						nameSelector("Alligator");
 					} else {
-						nameSelector("Upright Walking Turtles");
+						nameSelector("Bipedal Turtles");
 					}
 				case "rooftop": 
 					if (seed <= 19) {
@@ -160,6 +160,9 @@ public class Enemy {
 					}
 				
 			}
+		}
+		else if(biome!=null) {
+			nameSelector(biome);
 		}
 		else {
 			switch(Floor.level) {
@@ -334,7 +337,7 @@ public class Enemy {
 					atk = (int) (127 + 4 * Floor.level);
 					def = (int) (82 + Floor.level);
 					setWeight(2);
-				case "Upright Walking Turtles":
+				case "Bipedal Turtles":
 					maxhp = (int) (90 + 2 * Floor.level);
 					atk = (int) (50 + 3 * Math.pow(Floor.level, 1.5));
 					def = (int) (184 + Floor.level);
