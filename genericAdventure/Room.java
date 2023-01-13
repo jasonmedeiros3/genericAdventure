@@ -128,7 +128,6 @@ public class Room {
 			System.out.println("You haven't been here yet.");
 		}
 		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
-		displayMap(floor);
 		seen=true;
 		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
 		if(xCoord>0) {
@@ -432,11 +431,11 @@ public class Room {
 			}
 		}
 	}
-	public void bossBattle(Floor floor,Player player) {
+	public boolean bossBattle(Floor floor,Player player) {
 		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
-		int turn=0;
+		turn=0;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
@@ -460,7 +459,9 @@ public class Room {
 			turn++;
 			int deadEnemyCounter=0;
 			for(Enemy e:enemies) {
-				e.checkDead();
+				if(e.checkDead()) {
+					enemyWeight-=e.getWeight();
+				}
 			}
 			while(true) {
 				try {
@@ -476,7 +477,7 @@ public class Room {
 				}
 			}
 			if(enemies.size()<1) {
-				break;
+				return true;
 			}
 			if(player.getHp()<=0) {
 				System.out.println("You died.");
@@ -484,45 +485,53 @@ public class Room {
 				System.out.println("Your final item count was "+Inventory.size()+".");
 			}
 			while(true) {
-				displayPlayer(player);
-				displayEnemies(enemies);
-				for(int i=0;i<Inventory.size();i++) {
-					if(Inventory.get(i).isPassive()) {
-						try {
-							Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
-						} catch (Exception e1) {
+				while(true) {
+					displayPlayer(player);
+					displayEnemies(enemies);
+					for(int i=0;i<Inventory.size();i++) {
+						if(Inventory.get(i).isPassive()) {
+							try {
+								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+							} catch (Exception e1) {
+							}
+						}
+						else {
+							hasActiveItem=true;
 						}
 					}
-					else {
-						hasActiveItem=true;
+					System.out.println("1. Struggle");
+					System.out.println("2. Open Inventory");
+					System.out.println("3. Run Away");
+					try {
+						input=getIntInput(1,3);
+						break;
+					}
+					catch(Exception e) {
 					}
 				}
-				System.out.println("1. Struggle");
-				System.out.println("2. Open Inventory");
-				System.out.println("3. Run Away");
-				try {
-					input=getIntInput(1,3);
-					System.out.println("OK!");
+				if(input==1) {
+					displayNumberedEnemies(enemies);
+					System.out.println("Select a target.");
+					try {
+						input=getIntInput(1,5);
+					} catch (Exception e) {
+					}
+					enemies.get(input).damage(15*player.getAtk()/100.0);
+					player.damage(5*player.getAtk()/100.0);
 					break;
 				}
-				catch(Exception e) {
+				else if(input==2&&hasActiveItem) {
+					battleInventory(player,enemies,(byte)input);
+					break;
 				}
-			}
-			if(input==1) {
-				displayNumberedEnemies(enemies);
-				System.out.println("Select a target.");
-				try {
-					input=getIntInput(1,5);
-				} catch (Exception e) {
+				else if(input==2) {
+					System.out.println("No usable items.");
 				}
-				enemies.get(input).damage(15*player.getAtk()/100.0);
-				player.damage(5*player.getAtk()/100.0);
-			}
-			else if(input==2&&hasActiveItem) {
-				battleInventory(player,enemies,(byte)input);
-			}
-			else if(input==2) {
-				System.out.println("No usable items.");
+				else if(input==3) {
+					if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
+						return false;
+					}
+				}
 			}
 		}
 	}
@@ -710,22 +719,17 @@ public class Room {
 				return("You're in some kind of strange state of limbo. Please file a bug report.");
 		}
 	}
-
 	public void displayMap(Floor floor) {
 		for (int x = 0; x < floor.map.size(); x++) {
 			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (x == xCoord && y == yCoord){
-       				System.out.print("()");
+       				System.out.print(";;");
            		}
        			else {
                 	System.out.print("::");
            		}
           	}
-			System.out.println();
+         	System.out.println();
  		}
-
  	}	
-
-	
-
 }
