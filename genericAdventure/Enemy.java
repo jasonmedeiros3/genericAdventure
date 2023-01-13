@@ -619,12 +619,53 @@ public class Enemy {
 						deerCharge(player);
 					}
 					break;
-				case "":
+				case "Semi-Sentient Tree":
+					boolean hasSquirrel=false;
+					for(Enemy e:enemyList) {
+						if(e.name.equals("Squirrel")) {
+							hasSquirrel=true;
+						}
+					}
+					if(seed1<=40&&hasSquirrel) {
+						acornDrop(enemyList);
+					}
+					else if(seed1<=30||(def<104&&seed1<=55)) {
+						ingrain();
+					}
+					else if(seed1<=70) {
+						branchDrop(player);
+					}
+					else {
+						leafBlow(player);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void acornDrop(ArrayList<Enemy>enemyList) {
+		int counter=0;
+		for(Enemy e:enemyList) {
+			if(e.name.equals("Squirrel")) {
+				e.damage(-5-Floor.level);
+				counter++;
+			}
+		}
+		System.out.println(name+" healed "+counter+" squirrels with acorns.");
+	}
+	private void ingrain() {
+		System.out.println(name+" roots deeper into the ground.");
+		def+=10;
+	}
+	private void branchDrop(Player player) {
+		System.out.println(name+" drops a branch on your head.");
+		player.damage(50*atk/100);
+	}
+	private void leafBlow(Player player) {
+		System.out.println("The wind blows "+name+"'s leaves into your face.");
+		player.damage(4*atk/100);
+		player.setUnaware(2);
 	}
 	private void deerCharge(Player player) {
 		System.out.println(name + " charges you with it's cardboard antlers. ");
