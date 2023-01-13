@@ -247,206 +247,247 @@ public class Enemy {
 					atk=(int)(107+0.9*Floor.level);
 					def=(int)(77+15*Math.sqrt(Floor.level));
 					setWeight(3);
+					break;
 				case "Defective Clown":
 					maxhp=1;
 					atk=(int)(112+3.6*Math.pow(Floor.level, 1.15));
 					def=100;
 					setWeight(2);
+					break;
 				case "Assembly Line Machine":
 					maxhp=(int)(300+10*Math.pow(Floor.level,1.45));
 					atk=(int)(90+1.7*Math.pow(Floor.level-1,1.03));
 					def=(int)(107+Floor.level);
 					setWeight(5);
+					break;
 				case "Weaponized Circus Drone":
 					maxhp=(int)(40+2.7*Math.pow(Floor.level-1,1.28));
 					atk=(int)(100+2.5*Floor.level);
 					def=(int)(85+4*Floor.level);
 					setWeight(2);
+					break;
 				case "Polar Camel":
 					maxhp=(int)(133+3.3*Math.pow(Floor.level,1.2));
 					atk=(int)(80+2.9*Math.pow(Floor.level,1.05));
 					def=(int)(93+1.1*Floor.level);
 					setWeight(3);
+					break;
 				case "Psychrophilic Amphibious Jaguar":
 					maxhp=(int)(95+5*Math.pow(1.3*Floor.level, 1.05));
 					atk=(int)(100+0.5*Floor.level);
 					def=(int)(97+0.4*Floor.level);
 					setWeight(3);
+					break;
 				case "Cheese-Coated Tourist":
 					maxhp=(int)(38+Math.pow(1.2*Floor.level, 1.09));
 					atk=(int)(95+2.4*(Floor.level-1));
 					def=(int)(100+Floor.level);
 					setWeight(1);
+					break;
 				case "Completely Normal Shark":
 					maxhp=(int)(96+Floor.level);
 					atk=(int)(66+17*Math.sqrt(Floor.level));
 					def=(int)(98+1.2*Floor.level);
 					setWeight(2);
+					break;
 				case "Lawyer":
 					maxhp=(int)(65+1.23*Math.pow(1.23*Floor.level,1.23));
 					atk=(int)(100+Math.sqrt(3*Floor.level));
 					def=(int)(93);
 					setWeight(2);
+					break;
 				case "Consul":
 					maxhp=(int)(80+3*Floor.level);
 					atk=(int)(91+1.1*Floor.level);
 					def=(int)(93+Floor.level);
 					setWeight(2);
+					break;
 				case "Consulate Janitor":
 					maxhp=(int)(107+1.8*Floor.level);
 					atk=(int)(80+1.25*Math.pow(Floor.level,1.25));
 					def=(int)(97+0.9*Floor.level);
 					setWeight(3);
+					break;
 				case "Protestor":
 					maxhp = (int) (50+2.2 * Math.pow(Floor.level, 1.8));
 					atk = (int) (20 + 5 * Floor.level);
 					def = (int) (97 + 0.9 * Floor.level);
 					setWeight(1);
+					break;
 				case "Sapient Grapevine":
 					maxhp=(int)(90+1.05*Math.pow(Floor.level,1.4));
 					atk=(int)(77+1.13*Math.pow(Floor.level,1.23));
 					def=(int)(107+1.1*Floor.level);
 					setWeight(2);
+					break;
 				case "Grape Seed":
 					maxhp = (int) (40 + 8.2 * Floor.level);
 					atk = (int) (31 + 4 * Math.pow(Floor.level, 1.3));
 					def = (int) (50 + 2 * Math.pow(Floor.level, 1.2));
 					setWeight(1);
+					break;
 				case "Drunkard":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (120 + Math.pow(Floor.level, 1.6));
 					def = (int) (50 + Floor.level);
 					setWeight(2);
+					break;
 				case "Winemaker": 
-				maxhp = (int) (80 + 2 * Floor.level);
+					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (111 + 4 * Floor.level);
 					def = (int) (102 + 2 * Floor.level);
 					setWeight(3);
+					break;
 				case "Rat":
 					maxhp = (int) (40 + 2 * Floor.level);
 					atk = (int) (54 + 4 * Floor.level);
 					def = (int) (124 + Math.pow(Floor.level, 1.36));
 					setWeight(1);
+					break;
 				case "Alligator":
 					maxhp = (int) (102 + 2 * Floor.level);
 					atk = (int) (109 + 3 * Floor.level);
 					def = (int) (104 + 6 * Floor.level);
 					setWeight(2);
+					break;
 				case "Florida Man":
 					maxhp = (int) (94 + Math.pow(Floor.level, 1.46));
 					atk = (int) (127 + 4 * Floor.level);
 					def = (int) (82 + Floor.level);
 					setWeight(2);
+					break;
 				case "Bipedal Turtles":
 					maxhp = (int) (90 + 2 * Floor.level);
 					atk = (int) (50 + 3 * Math.pow(Floor.level, 1.5));
 					def = (int) (184 + Floor.level);
 					setWeight(3);
+					break;
 				case "Call Of The Void":
 					maxhp = (int) (167 + 2 * Floor.level);
 					atk = (int) (40 + 7 * Floor.level);
 					def = (int) (95 + 2 * Math.pow(Floor.level, 1.2));
 					setWeight(2);
+					break;
 				case "Paper Airplane":
 					maxhp = (int) (67 + Floor.level);
 					atk = (int) (112 + 1.2 * Floor.level);
 					def = (int) (40 + 10 * Floor.level);
 					setWeight(2);
+					break;
 				case "Firefighter":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (98 + 1.8 * Floor.level);
 					def = (int) (152 + 1.4 * Floor.level);
 					setWeight(3);
+					break;
 				case "Brick":
 					maxhp = (int) (50 + 2 * Floor.level);
 					atk = (int) (23 + 4 * Floor.level);
 					def = (int) (140 + Floor.level);
 					setWeight(1);
+					break;
 				case "Sand":
 					maxhp = (int) (40 + 2 * Floor.level);
 					atk = (int) (101 + 2.4 * Floor.level);
 					def = (int) (100);
 					setWeight(2);
+					break;
 				case "Real Sun":
 					maxhp = (int) (100 + 2 * Floor.level);
 					atk = (int) (10 + 15 * Floor.level);
 					def = (int) (95);
 					setWeight(2);
+					break;
 				case "Water":
 					maxhp = (int) (50 + 2.8 * Floor.level);
 					atk = (int) (70 + Floor.level);
 					def = (int) (120 + Floor.level);
 					setWeight(1);
+					break;
 				case "Willify":
 					maxhp = (int) (130 + 2.3 * Floor.level);
 					atk = (int) (19 + 1.2 * Floor.level);
 					def = (int) (100 + Floor.level);
 					setWeight(3);
+					break;
 				case "Spirit":
 					maxhp = (int) (40 + 2 * Floor.level);
 					atk = (int) (40 + 2 * Floor.level);
 					def = (int) (40 + 2 * Floor.level);
 					setWeight(1);
+					break;
 				case "Three Headed Dog":
 					maxhp = (int) (102 + 4 * Floor.level);
 					atk = (int) (114 + 5 * Floor.level);
 					def = (int) (84 + Floor.level);
 					setWeight(3);
+					break;
 				case "Pointy Rock":
 					maxhp = (int) (87 + Floor.level);
 					atk = (int) (70 + 2 * Floor.level);
 					def = (int) (120 + Floor.level);
 					setWeight(2);
+					break;
 				case "Uncool Satan":
 					maxhp = (int) (95 + 3 * Floor.level);
 					atk = (int) (105 + 1.3 * Floor.level);
 					def = (int) (100 + Floor.level);
 					setWeight(3);
+					break;
 				case "Pilot":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (119 + 1.9 * Floor.level);
 					def = (int) (90 + Floor.level);
 					setWeight(2);
+					break;
 				case "Flight Attendant":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (45 + 2 * Math.pow(Floor.level, 1.4));
 					def = (int) (50 + 5 * Floor.level);
 					setWeight(1);
+					break;
 				case "I Sell Soap":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (90 + 1.3 * Floor.level);
 					def = (int) (100 + 2 * Math.pow(Floor.level, 1.6));
 					setWeight(2);
+					break;
 				case "Flying Ostrich":
 					maxhp = (int) (112 + Floor.level);
 					atk = (int) (120 + Floor.level);
 					def = (int) (100 + 2 * Floor.level);
 					setWeight(3);
+					break;
 				case "Potato Vendor":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (40 + 5 * Floor.level);
 					def = (int) (90 + Floor.level);
 					setWeight(1);
+					break;
 				case "Catholic Mob":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (75 + Math.pow(Floor.level, 1.6));
 					def = (int) (55 + 6 * Floor.level);
 					setWeight(1);
+					break;
 				case "Blight Immigrant":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (99 + Floor.level);
 					def = (int ) (143 + Floor.level);
 					setWeight(2);
+					break;
 				case "Another Drunkard":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (120 + Math.pow(Floor.level, 1.6));
 					def = (int) (50 + Floor.level);
 					setWeight(2);
+					break;
 				case "Leprechaun":
 					maxhp = (int) (150 + 2 * Floor.level);
 					atk = (int) (79 + Floor.level);
 					def = (int) (15 + 2 * Math.pow(Floor.level, 1.9));
 					setWeight(2);
+					break;
 				case "Doom Guy Protestant":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (112 + 3 * Floor.level);
