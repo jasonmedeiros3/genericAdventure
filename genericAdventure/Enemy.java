@@ -554,14 +554,30 @@ public class Enemy {
 					else {
 						acorn();
 					}
+				case "Branch Manager":
+					if(seed1<=70) {
+						branchAttack(player);
+					}
+					else {
+						citation(player);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
+	private void branchAttack(Player player) {
+		System.out.println(name+" hits you with a branch.");
+		player.damage(24*atk/100.0);
+	}
+	private void citation(Player player) {
+		System.out.println(name+" issues you a citation.");
+		System.out.println("You are damaged emotionally.");
+		player.damage(39);
+	}
 	private void squirrelBite(Player player) {
-		System.out.println("The squirrel bites you.");
+		System.out.println(name+" bites you.");
 		player.damage(10*atk/100.0);
 	}
 	private void acorn() {
