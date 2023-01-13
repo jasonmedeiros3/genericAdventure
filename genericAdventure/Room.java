@@ -128,7 +128,6 @@ public class Room {
 			System.out.println("You haven't been here yet.");
 		}
 		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
-		displayMap(floor);
 		seen=true;
 		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
 		if(xCoord>0) {
@@ -219,45 +218,51 @@ public class Room {
 				}
 			}
 			if(input=='1'&&!itemRoom&&!fought) {
-				battle(floor,player);
-				int seed=rand.nextInt(100);
-				if(seed>=Math.pow(Floor.level,2)) {
-					while(true) {
-						int seed2=rand.nextInt(itempool.size());
-						int seed3=rand.nextInt(100);
-						byte type=itempool.get(seed2).getType();
-						switch(player.getClassName()) {
-							case "Soldier":
-								if((type==0||type==1||type==6)||seed3<=offclassItemChance) {
-									break;
-								}
-								continue;
-							case "Wizard":
-								if((type==0||type==2||type==7)||seed3<=offclassItemChance) {
-									break;
-								}
-								continue;
-							case "Lawyer":
-								if((type==0||type==3)||seed3<=offclassItemChance) {
-									break;
-								}
-								continue;
-							case "Paladin":
-								if((type==0||type==4||type==7)||seed3<=offclassItemChance) {
-									break;
-								}
-								continue;
-							case "Spy":
-								if((type==0||type==5||type==6)||seed3<=offclassItemChance) {
-									break;
-								}
-								continue;
+				fought=true;
+				if(battle(floor,player)) {
+					int seed=rand.nextInt(100);
+					if(seed>=Math.pow(Floor.level,2)) {
+						while(true) {
+							int seed2=rand.nextInt(itempool.size());
+							int seed3=rand.nextInt(100);
+							byte type=itempool.get(seed2).getType();
+							switch(player.getClassName()) {
+								case "Soldier":
+									if((type==0||type==1||type==6)||seed3<=offclassItemChance) {
+										break;
+									}
+									continue;
+								case "Wizard":
+									if((type==0||type==2||type==7)||seed3<=offclassItemChance) {
+										break;
+									}
+									continue;
+								case "Lawyer":
+									if((type==0||type==3)||seed3<=offclassItemChance) {
+										break;
+									}
+									continue;
+								case "Paladin":
+									if((type==0||type==4||type==7)||seed3<=offclassItemChance) {
+										break;
+									}
+									continue;
+								case "Spy":
+									if((type==0||type==5||type==6)||seed3<=offclassItemChance) {
+										break;
+									}
+									continue;
+							}
+							Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 						}
-						Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 					}
 				}
+				else {
+					System.out.println("You coward.");
+				}
 			}
-			else if(input=='1'&&itemRoom) {
+			else if(input=='1'&&itemRoom&&!inspected) {
+				inspected=true;
 				while(true) {
 					int seed=rand.nextInt(itempool.size());
 					int seed2=rand.nextInt(100);
@@ -287,7 +292,6 @@ public class Room {
 							if((type==0||type==5||type==6)||seed2<=offclassItemChance) {
 								break;
 							}
-							continue;
 					}
 					Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 				}
@@ -338,8 +342,8 @@ public class Room {
 			System.out.println(++counter+". "+e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
 		}
 	}
-	public void battle(Floor floor,Player player) {
-		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
+	public boolean battle(Floor floor,Player player) {
+		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
 		int turn=0;
@@ -350,7 +354,7 @@ public class Room {
 		for(int i=0;i<5;i++) {
 			enemies.add(new Enemy(biome,false));
 			enemyWeight+=enemies.get(i).getWeight();
-			if(enemyWeight>maxEnemyWeight) {
+			if(enemyWeight>MAXENEMYWEIGHT) {
 				break;
 			}
 		}
@@ -382,7 +386,7 @@ public class Room {
 				}
 			}
 			if(enemies.size()<1) {
-				break;
+				return true;
 			}
 			if(player.getHp()<=0) {
 				System.out.println("You died.");
@@ -422,7 +426,7 @@ public class Room {
 					input=getIntInput(1,5);
 				} catch (Exception e) {
 				}
-				enemies.get(input).damage(15*player.getAtk()/100.0);
+				enemies.get(input-1).damage(15*player.getAtk()/100.0);
 				player.damage(5*player.getAtk()/100.0);
 			}
 			else if(input==2&&hasActiveItem) {
@@ -431,21 +435,26 @@ public class Room {
 			else if(input==2) {
 				System.out.println("No usable items.");
 			}
+			else if(input==3) {
+				if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
+					return false;
+				}
+			}
 		}
 	}
 	public boolean bossBattle(Floor floor,Player player) {
-		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
+		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
-		turn=0;
+		int turn=0;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 		for(int i=0;i<5;i++) {
-			enemies.add(new Boss(null));
+			enemies.add(new Enemy(biome,false));
 			enemyWeight+=enemies.get(i).getWeight();
-			if(enemyWeight>maxEnemyWeight) {
+			if(enemyWeight>MAXENEMYWEIGHT) {
 				break;
 			}
 		}
@@ -485,6 +494,7 @@ public class Room {
 				System.out.println("You died.");
 				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
 				System.out.println("Your final item count was "+Inventory.size()+".");
+				System.exit(0);
 			}
 			while(true) {
 				while(true) {
@@ -518,7 +528,7 @@ public class Room {
 						input=getIntInput(1,5);
 					} catch (Exception e) {
 					}
-					enemies.get(input).damage(15*player.getAtk()/100.0);
+					enemies.get(input-1).damage(15*player.getAtk()/100.0);
 					player.damage(5*player.getAtk()/100.0);
 					break;
 				}
@@ -722,10 +732,10 @@ public class Room {
 		}
 	}
 	public void displayMap(Floor floor) {
-		for (int y = 0; y < floor.map.size(); y++) {
-			for (int x = 0;x < floor.map.get(0).size(); x++) {
+		for (int x = 0; x < floor.map.size(); x++) {
+			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (x == xCoord && y == yCoord){
-       				System.out.print("()");
+       				System.out.print(";;");
            		}
        			else {
                 	System.out.print("::");
