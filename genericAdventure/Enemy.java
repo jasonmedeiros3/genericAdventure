@@ -502,7 +502,6 @@ public class Enemy {
 					setWeight(3);
 					break;
 			}
-			hp = maxhp;
 		}
 		else {
 			switch(name) {
