@@ -588,10 +588,11 @@ public class Enemy {
 	public void setDead(boolean isDead) {
 		dead=isDead;
 	}
-	public void checkDead() {
+	public boolean checkDead() {
 		if(hp<=0) {
 			dead=true;
 		}
+		return dead;
 	}
 	public boolean getDead() {
 		return dead;

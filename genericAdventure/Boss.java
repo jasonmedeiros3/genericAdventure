@@ -14,7 +14,7 @@ public class Boss extends Enemy {
 	private boolean huntingShotgun=false;
 	private boolean justBlocked;
 	public Boss(String name) {
-		super("placeholder",true);
+		super(name,true);
 		/*Random rand=new Random();
 		int seed=rand.nextInt(101);
 		if(name!=null) {
@@ -890,62 +890,7 @@ public class Boss extends Enemy {
 		System.out.println(name+" is charging up a shot.");
 		sniperCharge++;
 	}
-	public void setAtk(int increment) {
-		atk+=increment;
-	}
-	public void setDef(int increment) {
-		def+=increment;
-	}
-	public int getAtk() {
-		return atk;
-	}
-	public int getDef() {
-		return def;
-	}
-	public int getHp() {
-		return hp;
-	}
-	public int getMaxHp() {
-		return maxhp;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setDead(boolean dead) {
-		this.dead=dead;
-	}
-	public boolean getDead() {
-		return dead;
-	}
-	public void checkDead() {
-		if(hp<=0) {
-			dead=true;
-		}
-	}
-	public void setAfterburn(int increment) {
-		afterburn+=increment;
-	}
-	public int getAfterburn() {
-		return afterburn;
-	}
-	public void setPoison(int increment) {
-		poison+=increment;
-	}
-	public int getPoison() {
-		return poison;
-	}
-	public void setMarkForDeath(int increment) {
-		markedForDeath+=increment;
-	}
-	public int getMarkForDeath() {
-		return markedForDeath;
-	}
-	public void setUnaware(int increment) {
-		unaware+=increment;
-	}
-	public int getUnaware() {
-		return unaware;
-	}
+	@Override
 	public void setFreeze(int increment) {
 		freeze+=increment;
 		if(blackCandle>0&&increment>0) {
@@ -955,88 +900,5 @@ public class Boss extends Enemy {
 	}
 	public int getFreeze() {
 		return freeze;
-	}
-	public void setInvuln(int increment) {
-		invuln+=increment;
-	}
-	public int getInvuln() {
-		return invuln;
-	}
-	public void setIntang(int increment) {
-		intang+=increment;
-	}
-	public int getIntang() {
-		return intang;
-	}
-	public void statusTick() {
-		if(afterburn>0) {
-			afterburn--;
-			hp-=(int)((1/32.0)*maxhp);
-		}
-		if(poison>0) {
-			poison--;
-			hp-=(int)((1/16.0)*maxhp);
-		}
-		if(markedForDeath>0) {
-			markedForDeath--;
-		}
-		if(unaware>0) {
-			unaware--;
-		}
-		if(freeze>0) {
-			freeze--;
-		}
-		if(invuln>0) {
-			invuln--;
-		}
-		if(intang>0) {
-			intang--;
-		}
-	}
-	public String stringAfterburn() {
-		return "("+afterburn+" Afterburn)";
-	}
-	public String stringPoison() {
-		return "("+poison+" Poison)";
-	}
-	public String stringMarkForDeath() {
-		return "("+markedForDeath+" Mark For Death)";
-	}
-	public String stringUnaware() {
-		return "("+unaware+" Unaware)";
-	}
-	public String stringFreeze() {
-		return "("+freeze+" Freeze)";
-	}
-	public String stringInvuln() {
-		return "("+invuln+" Invuln)";
-	}
-	public String stringIntang() {
-		return "("+intang+" Intangible)";
-	}
-	public String stringStatus() {
-		String status="";
-		if(afterburn>0) {
-			status+=stringAfterburn();
-		}
-		if(poison>0) {
-			status+=stringPoison();
-		}
-		if(markedForDeath>0) {
-			status+=stringMarkForDeath();
-		}
-		if(unaware>0) {
-			status+=stringUnaware();
-		}
-		if(freeze>0) {
-			status+=stringFreeze();
-		}
-		if(invuln>0) {
-			status+=stringInvuln();
-		}
-		if(intang>0) {
-			status+=stringIntang();
-		}
-		return status;
 	}
 }
