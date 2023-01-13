@@ -619,6 +619,7 @@ public class Enemy {
 						deerCharge(player);
 					}
 				break;
+				case ""
 			}
 		}
 		else {
