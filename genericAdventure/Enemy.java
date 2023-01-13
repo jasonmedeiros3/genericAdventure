@@ -211,6 +211,7 @@ public class Enemy {
 					break;
 				case 0:
 					nameSelector("The Truth");
+					break;
 			}
 		}
 	}
@@ -499,7 +500,9 @@ public class Enemy {
 					atk = (int) (112 + 3 * Floor.level);
 					def = (int) (170 + 3 * Floor.level);
 					setWeight(3);
+					break;
 			}
+			hp = maxhp;
 		}
 		else {
 			switch(name) {
