@@ -370,7 +370,10 @@ public class Room {
 			turn++;
 			int deadEnemyCounter=0;
 			for(Enemy e:enemies) {
-				e.checkDead();
+				e.statusTick();
+				if(e.checkDead()) {
+					enemyWeight-=e.getWeight();
+				}
 			}
 			while(true) {
 				try {
@@ -388,6 +391,7 @@ public class Room {
 			if(enemies.size()<1) {
 				return true;
 			}
+			player.statusTick();
 			if(player.getHp()<=0) {
 				System.out.println("You died.");
 				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
@@ -470,6 +474,7 @@ public class Room {
 			turn++;
 			int deadEnemyCounter=0;
 			for(Enemy e:enemies) {
+				e.statusTick();
 				if(e.checkDead()) {
 					enemyWeight-=e.getWeight();
 				}
