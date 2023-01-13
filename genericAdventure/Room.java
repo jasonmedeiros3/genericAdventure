@@ -715,12 +715,13 @@ public class Room {
 		for (int x = 0; x < floor.map.size(); x++) {
 			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (x == xCoord && y == yCoord){
-       				System.out.println("()");
+       				System.out.print("()");
            		}
        			else {
-                	System.out.println("::");
+                	System.out.print("::");
            		}
           	}
+			System.out.println();
  		}
 
  	}	
