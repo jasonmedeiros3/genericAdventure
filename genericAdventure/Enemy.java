@@ -613,7 +613,7 @@ public class Enemy {
 					}
 				break;
 				case "Cardboard Deer":
-					if (seed1 <= 40) {
+					if (seed1 <= 60 || (player.getHp() > 80 && seed2 > 90)) {
 						deerKick(player);
 					} else {
 						deerCharge(player);
@@ -630,6 +630,7 @@ public class Enemy {
 		System.out.println(name + "cardboard deer is disorientated from their charge");
 		player.damage(40 * atk /100.0);
 		unaware+= 2;
+		markedForDeath += 2;
 	}
 	private void deerKick (Player player) {
 		System.out.println(name + " kicks you in the face." );
