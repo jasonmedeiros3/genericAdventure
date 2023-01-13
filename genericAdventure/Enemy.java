@@ -582,7 +582,7 @@ public class Enemy {
 					def=1;
 					break;
 				default:
-					n="File A Bug Report Please";
+					name="File A Bug Report Please";
 					maxhp=100;
 					atk=100;
 					def=100;
