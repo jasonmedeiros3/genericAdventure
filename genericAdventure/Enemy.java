@@ -94,6 +94,7 @@ public class Enemy {
 					} else {
 						nameSelector("Winemaker");
 					}
+					break;
 				case "sewer":
 					if (seed <= 37) {
 						nameSelector("Rat");
@@ -104,6 +105,7 @@ public class Enemy {
 					} else {
 						nameSelector("Bipedal Turtles");
 					}
+					break;
 				case "rooftop": 
 					if (seed <= 19) {
 						nameSelector("Call Of The Void");
@@ -114,6 +116,7 @@ public class Enemy {
 					} else {
 						nameSelector("Brick");
 					}
+					break;
 				case "fake beach":
 					if (seed <= 27) {
 						nameSelector("Sand");
@@ -124,6 +127,7 @@ public class Enemy {
 					} else {
 						nameSelector("Willify");
 					}
+					break;
 				case "hell":
 					if (seed <= 30) {
 						nameSelector("Spirit");
@@ -134,6 +138,7 @@ public class Enemy {
 					} else {
 						nameSelector("Uncool Satan");
 					}
+					break;
 				case "flight":
 					if (seed <= 30){
 						nameSelector("Pilot");
@@ -144,6 +149,7 @@ public class Enemy {
 					} else {
 						nameSelector("Flying Ostrich");
 					}
+					break;
 				case "ireland":
 					if (seed <= 25){
 						nameSelector("Another Drunkard");
@@ -158,7 +164,7 @@ public class Enemy {
 					} else {
 						nameSelector("Blight Immigrant");
 					}
-				
+					break;
 			}
 		}
 		else if(biome!=null) {
