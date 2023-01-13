@@ -542,12 +542,30 @@ public class Enemy {
 		hp=maxhp;
 	}
 	public void doMove(Player player,ArrayList<Enemy>enemyList) {
+		Random rand=new Random();
+		int seed1=rand.nextInt(100);
+		int seed2=rand.nextInt(100);
 		if(!isBoss) {
-			
+			switch(name) {
+				case "Squirrel":
+					if(seed1<=50||player.getHp()<=(int)(10*atk/100.0)) {
+						squirrelBite(player);
+					}
+					else {
+						acorn();
+					}
+			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void squirrelBite(Player player) {
+		System.out.println("The squirrel bites you.");
+		player.damage(10*atk/100.0);
+	}
+	private void acorn() {
+		damage(-5-Floor.level);
 	}
 	public void doBossMove(Player player,ArrayList<Enemy>bossList) {
 	}
@@ -563,8 +581,10 @@ public class Enemy {
 		return dead;
 	}
 	public boolean damage(int i) {
-		int damage;
-		damage=(int)(i*(100.0/def));
+		int damage=i;
+		if(damage>0) {
+			damage=(int)(i*(100.0/def));
+		}
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
@@ -595,8 +615,10 @@ public class Enemy {
 		return false;
 	}
 	public boolean damage(double i) {
-		int damage;
-		damage=(int)(i*(100.0/def));
+		int damage=(int)i;
+		if(damage>0) {
+			damage=(int)(i*(100.0/def));
+		}
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
