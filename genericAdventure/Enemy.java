@@ -603,7 +603,7 @@ public class Enemy {
 					else {
 						acorn();
 					}
-				break;
+					break;
 				case "Branch Manager":
 					if(seed1<=70) {
 						branchAttack(player);
@@ -611,31 +611,33 @@ public class Enemy {
 					else {
 						citation(player);
 					}
-				break;
+					break;
 				case "Cardboard Deer":
 					if (seed1 <= 60 || (player.getHp() > 80 && seed2 > 90)) {
-						deerKick(player);
+						deerKick(player,seed2);
 					} else {
 						deerCharge(player);
 					}
-				break;
-				case ""
+					break;
+				case "":
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
-	private void deerCharge (Player player) {
+	private void deerCharge(Player player) {
 		System.out.println(name + " charges you with it's cardboard antlers. ");
 		System.out.println(name + " cardboard deer is disorientated from their charge. ");
 		player.damage(40 * atk /100.0);
 		unaware+= 2;
 		markedForDeath += 2;
 	}
-	private void deerKick (Player player) {
+	private void deerKick(Player player,int seed) {
 		System.out.println(name + " kicks you in the face." );
-		System.out.println("You lost a tooth.");
+		if(seed<=22) {
+			System.out.println("You lost a tooth.");
+		}
 		player.damage(20 * atk/ 100.0);
 	}
 
