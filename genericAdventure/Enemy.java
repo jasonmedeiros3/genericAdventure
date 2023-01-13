@@ -220,7 +220,7 @@ public class Enemy {
 	}
 	public void nameSelector(String n) {
 		name=n;
-		if(!isBoss) {
+		if(isBoss) {
 			switch(name) {
 				case "Squirrel":
 					maxhp=(int)(30+1.9*(Math.pow(Floor.level-1,1.3)));
@@ -667,11 +667,36 @@ public class Enemy {
 					else {
 						aNewBat(player);
 					}
+				case "Defective Clown":
+					if(seed1<=40) {
+						handSaw(player,seed2);
+					}
+					else if(seed1<=69||(seed1<=85&&player.getPoison()<=0)) {
+						expiredPie(player);
+					}
+					else {
+						shortCircuit();
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void handSaw(Player player,int seed) {
+		System.out.println(name+" cuts into you with an old hand saw.");
+		if(seed<=11) {
+			System.out.println("At least you are vaccinated for tetanus.");
+		}
+		player.damage(37*atk/100);
+	}
+	private void expiredPie(Player player) {
+		System.out.println(name+" assaults you with a very expired cream pie. You get sick instantly.");
+		player.setPoison(3);
+	}
+	private void shortCircuit() {
+		System.out.println(name+" short circuits.");
+		damage(15*atk/100);
 	}
 	private void chainsaw(Player player) {
 		if(!clownSaw) {
