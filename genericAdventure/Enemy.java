@@ -459,13 +459,13 @@ public class Enemy {
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (90 + 1.3 * Floor.level);
 					def = (int) (100 + 2 * Math.pow(Floor.level, 1.6));
-					setWeight(2);
+					setWeight(3);
 					break;
 				case "Flying Ostrich":
 					maxhp = (int) (112 + Floor.level);
 					atk = (int) (120 + Floor.level);
-					def = (int) (100 + 2 * Floor.level);
-					setWeight(3);
+					def = (int) (130 + 9/11 + 2 * Floor.level);
+					setWeight(4);
 					break;
 				case "Potato Vendor":
 					maxhp = (int) (80 + 2 * Floor.level);
@@ -476,7 +476,7 @@ public class Enemy {
 				case "Catholic Mob":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (75 + Math.pow(Floor.level, 1.6));
-					def = (int) (55 + 6 * Floor.level);
+					def = (int) (10 + 6 * Floor.level);
 					setWeight(1);
 					break;
 				case "Blight Immigrant":
@@ -500,8 +500,8 @@ public class Enemy {
 				case "Doom Guy Protestant":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (112 + 3 * Floor.level);
-					def = (int) (170 + 3 * Floor.level);
-					setWeight(3);
+					def = (int) (172 + 3 * Floor.level);
+					setWeight(4);
 					break;
 			}
 		}
@@ -640,6 +640,7 @@ public class Enemy {
 					else {
 						leafBlow(player);
 					}
+					break;
 				case "Poacher":
 					if(seed1<=25) {
 						bearTrap(player,enemyList);
@@ -653,12 +654,57 @@ public class Enemy {
 					else {
 						handgun(player);
 					}
+					break;
+				case "Defective Clown":
+					if (player.getHp() < 30) {
+						clownFinisher(player);
+					} else if (player.getHp() > 50 && seed1 > 50) {
+						ballonAnimals(player);
+					} else {
+						loudSqueaky(player);
+					}
+					break;
+				case "Clown":
+					if (player.getHp() < 15 && seed1 > 30) {
+						clownFinisher(player);
+					} else if (seed2 > 40) {
+						coulrophobia(player);
+					} else {
+						ballonAnimals(player);
+					}
+					break;
+				
+				
+				
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
+	private void coulrophobia (Player player) {
+		System.out.println("Your fear of clowns has developped!");
+		player.damage(30 * atk/ 100);
+	}
+
+	private void loudSqueaky (Player player){
+		System.out.println(name + "Their squeaky toy was so loud it damaged your ears");
+		player.damage(15 * atk/100);
+	}
+
+	private void ballonAnimals(Player player){
+		System.out.println("The clown created a ballon animal so repulsive that you are momentairly stunned");
+		player.damage(20 * atk/100);
+		player.setUnaware(3);
+		damage(-5);
+	}
+
+	private void clownFinisher(Player player) {
+		System.out.println("You left the weak " + name + " alive. Your mistake!");
+		player.damage(200 * atk/100);
+	}
+
+
 	private void bearTrap(Player player,ArrayList<Enemy>enemyList) {
 		Random rand=new Random();
 		int trapSeed=rand.nextInt(enemyList.size());
@@ -710,11 +756,13 @@ public class Enemy {
 		markedForDeath += 2;
 	}
 	private void deerKick(Player player,int seed) {
+		int amount = 15;
 		System.out.println(name + " kicks you in the face." );
-		if(seed<=22) {
+		if(seed<= 50) {
 			System.out.println("You lost a tooth.");
+			amount += 10;
 		}
-		player.damage(20 * atk/ 100.0);
+		player.damage(amount * atk/ 100.0);
 	}
 
 	private void branchAttack(Player player) {
