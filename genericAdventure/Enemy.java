@@ -392,6 +392,7 @@ public class Room {
 				System.out.println("You died.");
 				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
 				System.out.println("Your final item count was "+Inventory.size()+".");
+				System.exit(0);
 			}
 			while(true) {
 				displayPlayer(player);
@@ -493,6 +494,7 @@ public class Room {
 				System.out.println("You died.");
 				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
 				System.out.println("Your final item count was "+Inventory.size()+".");
+				System.exit(0);
 			}
 			while(true) {
 				while(true) {
