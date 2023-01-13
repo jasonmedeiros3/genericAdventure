@@ -1,809 +1,740 @@
 package genericAdventure;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
-public class Enemy {
-	protected String name;
-	protected int maxhp;
-	protected int hp;
-	protected int atk;
-	protected int def;
-	protected boolean dead;
-	protected final int infinity=2147483647;
-	protected int afterburn=0;
-	protected int poison=0;
-	protected int markedForDeath=0;
-	protected int unaware=0;
-	protected int weight;
-	protected int freeze=0;
-	protected int invuln=0;
-	protected int intang=0;
-	public final boolean isBoss;
-	public Enemy(String biome,boolean isBoss) {
+public class Room {
+	private final byte xCoord;
+	private final byte yCoord;
+	private final boolean itemRoom;
+	private boolean currentLocation=false;
+	private String biome;
+	private final boolean exitRoom;
+	private boolean seen;
+	private boolean inspected;
+	private boolean fought;
+	private final int offclassItemChance;
+	public static int turn;
+	public Room(byte x,byte y,boolean item,int biomeSeed,boolean exit) {
+		xCoord=x;
+		yCoord=y;
+		itemRoom=item;
+		exitRoom=exit;
+		seen=false;
+		fought=false;
+		inspected=false;
+		boolean offclassItemChanceUp=false;
+		for(int i=0;i<Inventory.size();i++) {
+			if(Inventory.get(i).getName().equals("Multiclass Manual")) {
+				offclassItemChanceUp=true;
+				break;
+			}
+		}
+		if(offclassItemChanceUp) {
+			offclassItemChance=80;
+		}
+		else {
+			offclassItemChance=25;
+		}
+		switch(biomeSeed) {
+			case 0:
+				biome="forest";
+				break;
+			case 1:
+				biome="clown factory";
+				break;
+			case 2:
+				biome="tundra";
+				break;
+			case 3:
+				biome="consulate";
+				break;
+			case 4:
+				biome="vineyard";
+				break;
+			case 5:
+				biome="sewer";
+				break;
+			case 6:
+				biome="rooftop";
+				break;
+			case 7:
+				biome="fake beach";
+				break;
+			case 8:
+				biome="hell";
+				break;
+			case 9:
+				biome="flight";
+				break;
+			case 10:
+				biome="ireland";
+				break;
+		}
+	}
+	public byte getX() {
+		return xCoord;
+	}
+	public byte getY() {
+		return yCoord;
+	}
+	public boolean getItemRoom() {
+		return itemRoom;
+	}
+	public boolean getCurrentLocation() {
+		return currentLocation;
+	}
+	public String getBiome() {
+		return biome;
+	}
+	public boolean getExit() {
+		return exitRoom;
+	}
+	public boolean getSeen() {
+		return seen;
+	}
+	public void setSeen(boolean seen) {
+		this.seen=seen;
+	}
+	public boolean getInspected() {
+		return inspected;
+	}
+	public void setInspected(boolean inspected) {
+		this.inspected=inspected;
+	}
+	public boolean getFought() {
+		return fought;
+	}
+	public void setFought(boolean fought) {
+		this.fought=fought;
+	}
+	public Room display(Floor floor,Player player,ItemPool itempool) throws Exception {
+		char input;
 		Random rand=new Random();
-		int seed=rand.nextInt(101);
-		this.isBoss=isBoss;
-		if(!isBoss) {
-			switch(biome) {
-				case "forest":
-					if(seed<=30) {
-						nameSelector("Squirrel");
-					}
-					else if(seed<=52) {
-						nameSelector("Branch Manager");
-					}
-					else if(seed<=79) {
-						nameSelector("Cardboard Deer");
-					}
-					else if(seed<=89) {
-						nameSelector("Semi-Sentient Tree");
-					}
-					else {
-						nameSelector("Poacher");
-					}
-					break;
-				case "clown factory":
-					if(seed<=18) {
-						nameSelector("Clown");
-					}
-					else if(seed<=40) {
-						nameSelector("Defective Clown");
-					}
-					else if(seed<=54) {
-						nameSelector("Assembly Line Machine");
-					}
-					else {
-						nameSelector("Weaponized Circus Drone");
-					}
-					break;
-				case "tundra":
-					if(seed<=25) {
-						nameSelector("Polar Camel");
-					}
-					else if(seed<=42) {
-						nameSelector("Psychrophilic Amphibious Jaguar");
-					}
-					else if(seed<=69) {
-						nameSelector("Cheese-Coated Tourist");
-					}
-					else {
-						nameSelector("Completely Normal Shark");
-					}
-					break;
-				case "consulate":
-					if(seed<=25) {
-						nameSelector("Lawyer");
-					}
-					else if(seed<=50) {
-						nameSelector("Consul");
-					}
-					else if (seed <= 75){
-						nameSelector("Consulate Janitor");
-					} else {
-						nameSelector("Protestor");
-					}
-					break;
-				case "vineyard":
-					if (seed <= 28) {
-						nameSelector("Sapient Grapevine");
-					} else if (seed <= 41) {
-						nameSelector("Grape Seed");
-					} else if (seed <= 69) {
-						nameSelector("Drunkard");
-					} else {
-						nameSelector("Winemaker");
-					}
-				case "sewer":
-					if (seed <= 37) {
-						nameSelector("Rat");
-					} else if (seed <= 52){
-						nameSelector("Florida Man");
-					} else if (seed <= 87) {
-						nameSelector("Alligator");
-					} else {
-						nameSelector("Bipedal Turtles");
-					}
-				case "rooftop": 
-					if (seed <= 19) {
-						nameSelector("Call Of The Void");
-					} else if (seed <= 48) {
-						nameSelector("Paper Airplane");
-					} else if (seed <= 79){
-						nameSelector("Firefighter");
-					} else {
-						nameSelector("Brick");
-					}
-				case "fake beach":
-					if (seed <= 27) {
-						nameSelector("Sand");
-					} else if (seed <= 57) {
-						nameSelector("Real Sun");
-					} else if (seed <= 96) {
-						nameSelector("Water");
-					} else {
-						nameSelector("Willify");
-					}
-				case "hell":
-					if (seed <= 30) {
-						nameSelector("Spirit");
-					} else if (seed <= 49) {
-						nameSelector("Three Headed Dog");
-					} else if (seed <= 85) {
-						nameSelector("Pointy Rock");
-					} else {
-						nameSelector("Uncool Satan");
-					}
-				case "flight":
-					if (seed <= 30){
-						nameSelector("Pilot");
-					} else if (seed <= 60) {
-						nameSelector("Flight Attendant");
-					} else if (seed <= 70) {
-						nameSelector("I Sell Soap");
-					} else {
-						nameSelector("Flying Ostrich");
-					}
-				case "ireland":
-					if (seed <= 25){
-						nameSelector("Another Drunkard");
-					} else if (seed <= 36) {
-						nameSelector("Doom Guy Protestant");
-					} else if (seed <= 51) {
-						nameSelector("Catholic Mob");
-					} else if (seed <= 69){
-						nameSelector("Leprechaun");
-					} else if (seed <= 83) {
-						nameSelector("Potato Vendor");
-					} else {
-						nameSelector("Blight Immigrant");
-					}
-				
-			}
+		int displaySeed=rand.nextInt(100);
+		System.out.println(welcomeMessage(displaySeed));
+		if(itemRoom||displaySeed<=2) {
+			System.out.println("You get the feeling that something mildly important is here.");
 		}
-		else if(biome!=null) {
-			nameSelector(biome);
+		if(seen) {
+			System.out.println("You've already been here before.");
 		}
 		else {
-			switch(Floor.level) {
-				case 3:
-					if(seed<=25) {
-						nameSelector("The Sniper");
+			System.out.println("You haven't been here yet.");
+		}
+		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
+		seen=true;
+		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
+		if(xCoord>0) {
+			canLeft=true;
+		}
+		if(xCoord<floor.map.size()-1) {
+			canRight=true;
+		}
+		if(yCoord>0) {
+			canDown=true;
+		}
+		if(yCoord<floor.map.get(xCoord).size()-1) {
+			canUp=true;
+		}
+		while(true) {
+			try {
+				input=roomChoice(floor);
+			}
+			catch(Exception e) {
+				System.out.println("That isn't a valid input.");
+				continue;
+			}
+			if((input=='L'||input=='l')&&canLeft) {
+				System.out.println("You moved left.");
+				return floor.map.get(xCoord-1).get(yCoord);
+			}
+			if((input=='R'||input=='r')&&canRight) {
+				System.out.println("You moved right.");
+				return floor.map.get(xCoord+1).get(yCoord);
+			}
+			if((input=='D'||input=='d')&&canDown) {
+				System.out.println("You moved down.");
+				return floor.map.get(xCoord).get(yCoord-1);
+			}
+			if((input=='U'||input=='u')&&canUp) {
+				System.out.println("You moved up.");
+				return floor.map.get(xCoord).get(yCoord+1);
+			}
+			if(input=='S'||input=='s') {
+				File quicksave=new File("quicksave.txt");
+				File mapQuicksave=new File("mapQuicksave.txt");
+				int intInput;
+				if(quicksave.createNewFile()||mapQuicksave.createNewFile()) {
+					System.out.println("A save file already exists. Overwrite save?");
+					System.out.println("1. Yes");
+					System.out.println("2. No");
+					intInput=getIntInput(1,2);
+					if(intInput==2) {
+						continue;
 					}
-					else if(seed<=50) {
-						nameSelector("The Druid");
+				}
+				try {
+					BufferedWriter bw=new BufferedWriter(new FileWriter(quicksave));
+					quicksave.createNewFile();
+					bw.write(Encryption.encryptln(Boolean.toString(player.getHayFever())));
+					bw.write(Encryption.encryptln(player.getClassName().toLowerCase()));
+					bw.write(Encryption.encryptln(Integer.toString(player.getMaxHp())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getHp())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getAtk())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getDef())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getAfterburn())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getPoison())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getMarkForDeath())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getUnaware())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getFreeze())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getInvuln())));
+					bw.write(Encryption.encryptln(Integer.toString(player.getIntang())));
+					bw.write(Encryption.encryptln(Integer.toString(xCoord)));
+					bw.write(Encryption.encryptln(Integer.toString(yCoord)));
+					bw.write(Encryption.encryptln(Integer.toString(Floor.level)));
+					for(int i=0;i<Inventory.size();i++) {
+						bw.write(Encryption.encryptln(Inventory.get(i).getName().toLowerCase()+">"+Inventory.get(i).getDurability()));
 					}
-					else if(seed<=75) {
-						nameSelector("The Trash Compactor");
+					bw.flush();
+					BufferedWriter bw2=new BufferedWriter(new FileWriter(mapQuicksave));
+					bw2.write(Encryption.encryptln(Integer.toString(floor.getXBound())));
+					for(ArrayList<Room> subList:floor.map) {
+						for(Room r:subList) {
+							bw2.write(Encryption.encryptln(r.biome+">"+r.seen+">"+r.fought+">"+r.inspected+">"+r.itemRoom+">"+r.exitRoom));
+						}
+						bw2.write(Encryption.encryptln("."));
 					}
-					else if(seed<=90) {
-						nameSelector("The Cube of Gelatin");
+					bw2.flush();
+					System.out.println("Quicksave created.");
+				}
+				catch(Exception e) {
+					System.out.println("Error creating quicksave.");
+				}
+			}
+			if(input=='1'&&!itemRoom&&!fought) {
+				battle(floor,player);
+				int seed=rand.nextInt(100);
+				if(seed>=Math.pow(Floor.level,2)) {
+					while(true) {
+						int seed2=rand.nextInt(itempool.size());
+						int seed3=rand.nextInt(100);
+						byte type=itempool.get(seed2).getType();
+						switch(player.getClassName()) {
+							case "Soldier":
+								if((type==0||type==1||type==6)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Wizard":
+								if((type==0||type==2||type==7)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Lawyer":
+								if((type==0||type==3)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Paladin":
+								if((type==0||type==4||type==7)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+							case "Spy":
+								if((type==0||type==5||type==6)||seed3<=offclassItemChance) {
+									break;
+								}
+								continue;
+						}
+						Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
 					}
-					else {
-						nameSelector("The British Guy");
+				}
+			}
+			else if(input=='1'&&itemRoom) {
+				while(true) {
+					int seed=rand.nextInt(itempool.size());
+					int seed2=rand.nextInt(100);
+					byte type=itempool.get(seed).getType();
+					switch(player.getClassName()) {
+						case "Soldier":
+							if((type==0||type==1||type==6)||seed2<=offclassItemChance) {
+								break;
+							}
+							continue;
+						case "Wizard":
+							if((type==0||type==2||type==7)||seed2<=offclassItemChance) {
+								break;
+							}
+							continue;
+						case "Lawyer":
+							if((type==0||type==3)||seed2<=offclassItemChance) {
+								break;
+							}
+							continue;
+						case "Paladin":
+							if((type==0||type==4||type==7)||seed2<=offclassItemChance) {
+								break;
+							}
+							continue;
+						case "Spy":
+							if((type==0||type==5||type==6)||seed2<=offclassItemChance) {
+								break;
+							}
+							continue;
 					}
-					break;
-				case 6:
-					if(seed<=25) {
-						nameSelector("The Engineer");
-					}
-					else if(seed<=50) {
-						nameSelector("The Fighter");
-					}
-					else if(seed<=75) {
-						nameSelector("The Supercomputer");
-					}
-					else if(seed<=90) {
-						nameSelector("The Ophan");
-					}
-					else {
-						nameSelector("The Abstract Concept");
-					}
-					break;
-				case 10:
-					nameSelector("The Devil");
-					break;
-				case 0:
-					nameSelector("The Truth");
+					Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
+				}
+			}
+			else if(input=='1'){
+				if(!inspected) {
+					System.out.println("There's nothing here.");
+					inspected=true;
+				}
+				else {
+					System.out.println("There's still nothing here.");
+				}
+			}
+			if(input=='2') {
+				System.out.println("You successfully didn't do anything.");
+			}
+			if(input=='3'&&exitRoom) {
+				if(Floor.level!=3&&Floor.level!=6&&Floor.level!=10) {
+					return null;
+				}
+				bossBattle(floor,player);
+				return null;
 			}
 		}
 	}
-	public void nameSelector(String n) {
-		name=n;
-		if(isBoss) {
-			switch(name) {
-				case "Squirrel":
-					maxhp=(int)(30+1.9*(Math.pow(Floor.level-1,1.3)));
-					atk=(int)(90+7.2*(Floor.level-1));
-					def=(int)(100+1.6*Math.pow(Floor.level-1,1.4));
-					setWeight(1);
-					break;
-				case "Branch Manager":
-					maxhp=(int)(65+5*Math.pow(Floor.level,1.09));
-					atk=(int)(107+1.1*Floor.level);
-					def=(int)(90+3*Floor.level);
-					setWeight(2);
-					break;
-				case "Cardboard Deer":
-					maxhp=(int)(5+3*Math.pow(Floor.level,1.08));
-					atk=(int)(87+9.1*Math.pow(Floor.level,0.9));
-					def=(int)(93+0.5*Floor.level);
-					setWeight(1);
-					break;
-				case "Semi-Sentient Tree":
-					maxhp=(int)(220+15.5*Math.pow(Floor.level,1.2));
-					atk=(int)(60+3.2*Floor.level);
-					def=(int)(100+0.35*Floor.level);
-					setWeight(4);
-					break;
-				case "Poacher":
-					maxhp=(int)(109+0.6*Floor.level);
-					atk=(int)(100+1.5*Math.pow(Floor.level,1.44));
-					def=(int)(103-0.7*Math.pow(Floor.level,1.21));
-					setWeight(4);
-					break;
-				case "Clown":
-					maxhp=(int)(133+3.25*Math.pow(Floor.level,1.34));
-					atk=(int)(107+0.9*Floor.level);
-					def=(int)(77+15*Math.sqrt(Floor.level));
-					setWeight(3);
-				case "Defective Clown":
-					maxhp=1;
-					atk=(int)(112+3.6*Math.pow(Floor.level, 1.15));
-					def=100;
-					setWeight(2);
-				case "Assembly Line Machine":
-					maxhp=(int)(300+10*Math.pow(Floor.level,1.45));
-					atk=(int)(90+1.7*Math.pow(Floor.level-1,1.03));
-					def=(int)(107+Floor.level);
-					setWeight(5);
-				case "Weaponized Circus Drone":
-					maxhp=(int)(40+2.7*Math.pow(Floor.level-1,1.28));
-					atk=(int)(100+2.5*Floor.level);
-					def=(int)(85+4*Floor.level);
-					setWeight(2);
-				case "Polar Camel":
-					maxhp=(int)(133+3.3*Math.pow(Floor.level,1.2));
-					atk=(int)(80+2.9*Math.pow(Floor.level,1.05));
-					def=(int)(93+1.1*Floor.level);
-					setWeight(3);
-				case "Psychrophilic Amphibious Jaguar":
-					maxhp=(int)(95+5*Math.pow(1.3*Floor.level, 1.05));
-					atk=(int)(100+0.5*Floor.level);
-					def=(int)(97+0.4*Floor.level);
-					setWeight(3);
-				case "Cheese-Coated Tourist":
-					maxhp=(int)(38+Math.pow(1.2*Floor.level, 1.09));
-					atk=(int)(95+2.4*(Floor.level-1));
-					def=(int)(100+Floor.level);
-					setWeight(1);
-				case "Completely Normal Shark":
-					maxhp=(int)(96+Floor.level);
-					atk=(int)(66+17*Math.sqrt(Floor.level));
-					def=(int)(98+1.2*Floor.level);
-					setWeight(2);
-				case "Lawyer":
-					maxhp=(int)(65+1.23*Math.pow(1.23*Floor.level,1.23));
-					atk=(int)(100+Math.sqrt(3*Floor.level));
-					def=(int)(93);
-					setWeight(2);
-				case "Consul":
-					maxhp=(int)(80+3*Floor.level);
-					atk=(int)(91+1.1*Floor.level);
-					def=(int)(93+Floor.level);
-					setWeight(2);
-				case "Consulate Janitor":
-					maxhp=(int)(107+1.8*Floor.level);
-					atk=(int)(80+1.25*Math.pow(Floor.level,1.25));
-					def=(int)(97+0.9*Floor.level);
-					setWeight(3);
-				case "Protestor":
-					maxhp = (int) (50+2.2 * Math.pow(Floor.level, 1.8));
-					atk = (int) (20 + 5 * Floor.level);
-					def = (int) (97 + 0.9 * Floor.level);
-					setWeight(1);
-				case "Sapient Grapevine":
-					maxhp=(int)(90+1.05*Math.pow(Floor.level,1.4));
-					atk=(int)(77+1.13*Math.pow(Floor.level,1.23));
-					def=(int)(107+1.1*Floor.level);
-					setWeight(2);
-				case "Grape Seed":
-					maxhp = (int) (40 + 8.2 * Floor.level);
-					atk = (int) (31 + 4 * Math.pow(Floor.level, 1.3));
-					def = (int) (50 + 2 * Math.pow(Floor.level, 1.2));
-					setWeight(1);
-				case "Drunkard":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (120 + Math.pow(Floor.level, 1.6));
-					def = (int) (50 + Floor.level);
-					setWeight(2);
-				case "Winemaker": 
-				maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (111 + 4 * Floor.level);
-					def = (int) (102 + 2 * Floor.level);
-					setWeight(3);
-				case "Rat":
-					maxhp = (int) (40 + 2 * Floor.level);
-					atk = (int) (54 + 4 * Floor.level);
-					def = (int) (124 + Math.pow(Floor.level, 1.36));
-					setWeight(1);
-				case "Alligator":
-					maxhp = (int) (102 + 2 * Floor.level);
-					atk = (int) (109 + 3 * Floor.level);
-					def = (int) (104 + 6 * Floor.level);
-					setWeight(2);
-				case "Florida Man":
-					maxhp = (int) (94 + Math.pow(Floor.level, 1.46));
-					atk = (int) (127 + 4 * Floor.level);
-					def = (int) (82 + Floor.level);
-					setWeight(2);
-				case "Bipedal Turtles":
-					maxhp = (int) (90 + 2 * Floor.level);
-					atk = (int) (50 + 3 * Math.pow(Floor.level, 1.5));
-					def = (int) (184 + Floor.level);
-					setWeight(3);
-				case "Call Of The Void":
-					maxhp = (int) (167 + 2 * Floor.level);
-					atk = (int) (40 + 7 * Floor.level);
-					def = (int) (95 + 2 * Math.pow(Floor.level, 1.2));
-					setWeight(2);
-				case "Paper Airplane":
-					maxhp = (int) (67 + Floor.level);
-					atk = (int) (112 + 1.2 * Floor.level);
-					def = (int) (40 + 10 * Floor.level);
-					setWeight(2);
-				case "Firefighter":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (98 + 1.8 * Floor.level);
-					def = (int) (152 + 1.4 * Floor.level);
-					setWeight(3);
-				case "Brick":
-					maxhp = (int) (50 + 2 * Floor.level);
-					atk = (int) (23 + 4 * Floor.level);
-					def = (int) (140 + Floor.level);
-					setWeight(1);
-				case "Sand":
-					maxhp = (int) (40 + 2 * Floor.level);
-					atk = (int) (101 + 2.4 * Floor.level);
-					def = (int) (100);
-					setWeight(2);
-				case "Real Sun":
-					maxhp = (int) (100 + 2 * Floor.level);
-					atk = (int) (10 + 15 * Floor.level);
-					def = (int) (95);
-					setWeight(2);
-				case "Water":
-					maxhp = (int) (50 + 2.8 * Floor.level);
-					atk = (int) (70 + Floor.level);
-					def = (int) (120 + Floor.level);
-					setWeight(1);
-				case "Willify":
-					maxhp = (int) (130 + 2.3 * Floor.level);
-					atk = (int) (19 + 1.2 * Floor.level);
-					def = (int) (100 + Floor.level);
-					setWeight(3);
-				case "Spirit":
-					maxhp = (int) (40 + 2 * Floor.level);
-					atk = (int) (40 + 2 * Floor.level);
-					def = (int) (40 + 2 * Floor.level);
-					setWeight(1);
-				case "Three Headed Dog":
-					maxhp = (int) (102 + 4 * Floor.level);
-					atk = (int) (114 + 5 * Floor.level);
-					def = (int) (84 + Floor.level);
-					setWeight(3);
-				case "Pointy Rock":
-					maxhp = (int) (87 + Floor.level);
-					atk = (int) (70 + 2 * Floor.level);
-					def = (int) (120 + Floor.level);
-					setWeight(2);
-				case "Uncool Satan":
-					maxhp = (int) (95 + 3 * Floor.level);
-					atk = (int) (105 + 1.3 * Floor.level);
-					def = (int) (100 + Floor.level);
-					setWeight(3);
-				case "Pilot":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (119 + 1.9 * Floor.level);
-					def = (int) (90 + Floor.level);
-					setWeight(2);
-				case "Flight Attendant":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (45 + 2 * Math.pow(Floor.level, 1.4));
-					def = (int) (50 + 5 * Floor.level);
-					setWeight(1);
-				case "I Sell Soap":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (90 + 1.3 * Floor.level);
-					def = (int) (100 + 2 * Math.pow(Floor.level, 1.6));
-					setWeight(2);
-				case "Flying Ostrich":
-					maxhp = (int) (112 + Floor.level);
-					atk = (int) (120 + Floor.level);
-					def = (int) (100 + 2 * Floor.level);
-					setWeight(3);
-				case "Potato Vendor":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (40 + 5 * Floor.level);
-					def = (int) (90 + Floor.level);
-					setWeight(1);
-				case "Catholic Mob":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (75 + Math.pow(Floor.level, 1.6));
-					def = (int) (55 + 6 * Floor.level);
-					setWeight(1);
-				case "Blight Immigrant":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (99 + Floor.level);
-					def = (int ) (143 + Floor.level);
-					setWeight(2);
-				case "Another Drunkard":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (120 + Math.pow(Floor.level, 1.6));
-					def = (int) (50 + Floor.level);
-					setWeight(2);
-				case "Leprechaun":
-					maxhp = (int) (150 + 2 * Floor.level);
-					atk = (int) (79 + Floor.level);
-					def = (int) (15 + 2 * Math.pow(Floor.level, 1.9));
-					setWeight(2);
-				case "Doom Guy Protestant":
-					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (112 + 3 * Floor.level);
-					def = (int) (170 + 3 * Floor.level);
-					setWeight(3);
-			}
-		}
-		else {
-			switch(name) {
-				case "The Sniper":
-					maxhp=375;
-					atk=107;
-					def=100;
-					break;
-				case "The Druid":
-					maxhp=500;
-					atk=93;
-					def=110;
-					break;
-				case "The Trash Compactor":
-					maxhp=575;
-					atk=80;
-					def=117;
-					break;
-				case "The Cube of Gelatin":
-					maxhp=400;
-					atk=93;
-					def=107;
-					break;
-				case "The British Guy":
-					maxhp=480;
-					atk=100;
-					def=95;
-					break;
-				case "The Engineer":
-					maxhp=500;
-					atk=100;
-					def=109;
-					break;
-				case "The Fighter":
-					maxhp=780;
-					atk=112;
-					def=101;
-					break;
-				case "The Supercomputer":
-					maxhp=675;
-					atk=93;
-					def=108;
-					invuln=10;
-					break;
-				case "The Ophan":
-					maxhp=777;
-					atk=107;
-					def=97;
-					break;
-				case "The Abstract Concept":
-					maxhp=15;
-					atk=100;
-					def=100;
-					intang=infinity;
-					break;
-				case "Sentry Gun":
-					maxhp=150;
-					atk=80;
-					def=100;
-					break;
-				case "Dispenser":
-					maxhp=150;
-					atk=20;
-					def=100;
-					break;
-				case "The Beast":
-					maxhp=666;
-					atk=66;
-					def=66;
-				case "The Devil":
-					maxhp=1998;
-					atk=66;
-					def=66;
-					break;
-				case "The Truth":
-					maxhp=1;
-					atk=1;
-					def=1;
-					break;
-				default:
-					n="File A Bug Report Please";
-					maxhp=100;
-					atk=100;
-					def=100;
-			}
-		}
-		hp=maxhp;
+	public static int getIntInput() throws Exception {
+		Scanner s=new Scanner(System.in);
+		return s.nextInt();
 	}
-	public void doMove(Player player,ArrayList<Enemy>enemyList) {
+	public static int getIntInput(int lowerBound,int upperBound) throws Exception {
+		int input;
+		do {
+			input=getIntInput();
+		} while(lowerBound>input||input>upperBound);
+		return input;
+	}
+	public void displayPlayer(Player player) {
+		System.out.println(player.getClassName()+": (HP: "+player.getHp()+"/"+player.getMaxHp()+")"+player.stringStatus());
+	}
+	public void displayEnemies(ArrayList<Enemy> enemies) {
+		for(Enemy e:enemies) {
+			System.out.println(e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
+		}
+	}
+	public void displayNumberedEnemies(ArrayList<Enemy> enemies) {
+		int counter=0;
+		for(Enemy e:enemies) {
+			System.out.println(++counter+". "+e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
+		}
+	}
+	public boolean battle(Floor floor,Player player) {
+		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
+		int enemyWeight=0;
+		int input;
+		int turn=0;
+		boolean hasActiveItem=false;
+		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
-		int seed1=rand.nextInt(100);
-		int seed2=rand.nextInt(100);
-		if(!isBoss) {
-			switch(name) {
-				case "Squirrel":
-					if(seed1<=50||player.getHp()<=(int)(10*atk/100.0)) {
-						squirrelBite(player);
-					}
-					else {
-						acorn();
-					}
-				case "Branch Manager":
-					if(seed1<=70) {
-						branchAttack(player);
-					}
-					else {
-						citation(player);
-					}
+		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+		for(int i=0;i<5;i++) {
+			enemies.add(new Enemy(biome,false));
+			enemyWeight+=enemies.get(i).getWeight();
+			if(enemyWeight>maxEnemyWeight) {
+				break;
 			}
 		}
-		else {
-			doBossMove(player,enemyList);
+		for(int i=0;i<Inventory.size();i++) {
+			if(Inventory.get(i).isPassive()) {
+				try {
+					Inventory.get(i).doEffect("battleStart",player,enemies,null,(byte) 0);
+				} catch (Exception e) {
+				}
+			}
+		}
+		while(true) {
+			turn++;
+			int deadEnemyCounter=0;
+			for(Enemy e:enemies) {
+				e.checkDead();
+			}
+			while(true) {
+				try {
+					if(enemies.get(deadEnemyCounter).getDead()) {
+						enemies.remove(deadEnemyCounter);
+					}
+					else {
+						deadEnemyCounter++;
+					}
+				}
+				catch(Exception e) {
+					break;
+				}
+			}
+			if(enemies.size()<1) {
+				return true;
+			}
+			if(player.getHp()<=0) {
+				System.out.println("You died.");
+				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
+				System.out.println("Your final item count was "+Inventory.size()+".");
+			}
+			while(true) {
+				displayPlayer(player);
+				displayEnemies(enemies);
+				for(int i=0;i<Inventory.size();i++) {
+					if(Inventory.get(i).isPassive()) {
+						try {
+							Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+						} catch (Exception e1) {
+						}
+					}
+					else {
+						hasActiveItem=true;
+					}
+				}
+				System.out.println("1. Struggle");
+				System.out.println("2. Open Inventory");
+				System.out.println("3. Run Away");
+				try {
+					input=getIntInput(1,3);
+					System.out.println("OK!");
+					break;
+				}
+				catch(Exception e) {
+				}
+			}
+			if(input==1) {
+				displayNumberedEnemies(enemies);
+				System.out.println("Select a target.");
+				try {
+					input=getIntInput(1,5);
+				} catch (Exception e) {
+				}
+				enemies.get(input).damage(15*player.getAtk()/100.0);
+				player.damage(5*player.getAtk()/100.0);
+			}
+			else if(input==2&&hasActiveItem) {
+				battleInventory(player,enemies,(byte)input);
+			}
+			else if(input==2) {
+				System.out.println("No usable items.");
+			}
+			else if(input==3) {
+				if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
+					return false;
+				}
+			}
 		}
 	}
-	private void branchAttack(Player player) {
-		System.out.println(name+" hits you with a branch.");
-		player.damage(24*atk/100.0);
-	}
-	private void citation(Player player) {
-		System.out.println(name+" issues you a citation.");
-		System.out.println("You are damaged emotionally.");
-		player.damage(39);
-	}
-	private void squirrelBite(Player player) {
-		System.out.println(name+" bites you.");
-		player.damage(10*atk/100.0);
-	}
-	private void acorn() {
-		damage(-5-Floor.level);
-	}
-	public void doBossMove(Player player,ArrayList<Enemy>bossList) {
-	}
-	public void setDead(boolean isDead) {
-		dead=isDead;
-	}
-	public boolean checkDead() {
-		if(hp<=0) {
-			dead=true;
+	public boolean bossBattle(Floor floor,Player player) {
+		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
+		int enemyWeight=0;
+		int input;
+		turn=0;
+		boolean hasActiveItem=false;
+		Scanner s=new Scanner(System.in);
+		Random rand=new Random();
+		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+		for(int i=0;i<5;i++) {
+			enemies.add(new Boss(null));
+			enemyWeight+=enemies.get(i).getWeight();
+			if(enemyWeight>maxEnemyWeight) {
+				break;
+			}
 		}
-		return dead;
-	}
-	public boolean getDead() {
-		return dead;
-	}
-	public boolean damage(int i) {
-		int damage=i;
-		if(damage>0) {
-			damage=(int)(i*(100.0/def));
+		for(int i=0;i<Inventory.size();i++) {
+			if(Inventory.get(i).isPassive()) {
+				try {
+					Inventory.get(i).doEffect("battleStart",player,enemies,null,(byte) 0);
+				} catch (Exception e) {
+				}
+			}
 		}
-		if(getMarkForDeath()>0&&damage>0) {
-			damage*=1.35;
-		}
-		if(getIntang()>0&&damage>0) {
-			damage=1;
-		}
-		if(getInvuln()>0&&damage>0) {
-			damage=0;
-		}
-		if(damage>0) {
-			System.out.println("Did "+damage+" damage.");
-		}
-		else if(damage<0) {
-			System.out.println("Enemy "+name+" healed "+(-damage)+" health.");
-		}
-		else {
-			System.out.println("Didn't do any damage.");
-		}
-		hp-=damage;
-		if(hp<=0) {
-			dead=true;
-			System.out.println("Enemy "+name+" died.");
-			return true;
-		}
-		if(hp>maxhp) {
-			hp=maxhp;
-		}
-		return false;
-	}
-	public boolean damage(double i) {
-		int damage=(int)i;
-		if(damage>0) {
-			damage=(int)(i*(100.0/def));
-		}
-		if(getMarkForDeath()>0&&damage>0) {
-			damage*=1.35;
-		}
-		if(getIntang()>0&&damage>0) {
-			damage=1;
-		}
-		if(getInvuln()>0&&damage>0) {
-			damage=0;
-		}
-		if(damage>0) {
-			System.out.println("Did "+damage+" damage.");
-		}
-		else if(damage<0) {
-			System.out.println("Enemy "+name+" healed "+(-damage)+" health.");
-		}
-		else {
-			System.out.println("Didn't do any damage.");
-		}
-		hp-=damage;
-		if(hp<=0) {
-			dead=true;
-			System.out.println("Enemy "+name+" died.");
-			return true;
-		}
-		if(hp>maxhp) {
-			hp=maxhp;
-		}
-		return false;
-	}
-	public void setAtk(int increment) {
-		atk+=increment;
-	}
-	public void setDef(int increment) {
-		def+=increment;
-	}
-	public int getAtk() {
-		return atk;
-	}
-	public int getDef() {
-		return def;
-	}
-	public int getHp() {
-		return hp;
-	}
-	public int getMaxHp() {
-		return maxhp;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setAfterburn(int increment) {
-		afterburn+=increment;
-	}
-	public int getAfterburn() {
-		return afterburn;
-	}
-	public void setPoison(int increment) {
-		poison+=increment;
-	}
-	public int getPoison() {
-		return poison;
-	}
-	public void setMarkForDeath(int increment) {
-		markedForDeath+=increment;
-	}
-	public int getMarkForDeath() {
-		return markedForDeath;
-	}
-	public void setUnaware(int increment) {
-		unaware+=increment;
-	}
-	public int getUnaware() {
-		return unaware;
-	}
-	public void setFreeze(int increment) {
-		freeze+=increment;
-	}
-	public int getFreeze() {
-		return freeze;
-	}
-	public void setInvuln(int increment) {
-		invuln+=increment;
-	}
-	public int getInvuln() {
-		return invuln;
-	}
-	public void setIntang(int increment) {
-		intang+=increment;
-	}
-	public int getIntang() {
-		return intang;
-	}
-	public int getWeight() {
-		return weight;
-	}
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-	public void statusTick() {
-		if(afterburn>0) {
-			afterburn--;
-			hp-=3;
-			atk--;
-		}
-		if(poison>0) {
-			poison--;
-			hp-=4;
-		}
-		if(markedForDeath>0) {
-			markedForDeath--;
-		}
-		if(unaware>0) {
-			unaware--;
-		}
-		if(freeze>0) {
-			freeze--;
-		}
-		if(invuln>0) {
-			invuln--;
-		}
-		if(intang>0) {
-			intang--;
+		while(true) {
+			turn++;
+			int deadEnemyCounter=0;
+			for(Enemy e:enemies) {
+				if(e.checkDead()) {
+					enemyWeight-=e.getWeight();
+				}
+			}
+			while(true) {
+				try {
+					if(enemies.get(deadEnemyCounter).getDead()) {
+						enemies.remove(deadEnemyCounter);
+					}
+					else {
+						deadEnemyCounter++;
+					}
+				}
+				catch(Exception e) {
+					break;
+				}
+			}
+			if(enemies.size()<1) {
+				return true;
+			}
+			if(player.getHp()<=0) {
+				System.out.println("You died.");
+				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
+				System.out.println("Your final item count was "+Inventory.size()+".");
+			}
+			while(true) {
+				while(true) {
+					displayPlayer(player);
+					displayEnemies(enemies);
+					for(int i=0;i<Inventory.size();i++) {
+						if(Inventory.get(i).isPassive()) {
+							try {
+								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+							} catch (Exception e1) {
+							}
+						}
+						else {
+							hasActiveItem=true;
+						}
+					}
+					System.out.println("1. Struggle");
+					System.out.println("2. Open Inventory");
+					System.out.println("3. Run Away");
+					try {
+						input=getIntInput(1,3);
+						break;
+					}
+					catch(Exception e) {
+					}
+				}
+				if(input==1) {
+					displayNumberedEnemies(enemies);
+					System.out.println("Select a target.");
+					try {
+						input=getIntInput(1,5);
+					} catch (Exception e) {
+					}
+					enemies.get(input).damage(15*player.getAtk()/100.0);
+					player.damage(5*player.getAtk()/100.0);
+					break;
+				}
+				else if(input==2&&hasActiveItem) {
+					battleInventory(player,enemies,(byte)input);
+					break;
+				}
+				else if(input==2) {
+					System.out.println("No usable items.");
+				}
+				else if(input==3) {
+					if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
+						return false;
+					}
+				}
+			}
 		}
 	}
-	public String stringAfterburn() {
-		return "("+afterburn+" Afterburn)";
-	}
-	public String stringPoison() {
-		return "("+poison+" Poison)";
-	}
-	public String stringMarkForDeath() {
-		return "("+markedForDeath+" Mark For Death)";
-	}
-	public String stringUnaware() {
-		return "("+unaware+" Unaware)";
-	}
-	public String stringFreeze() {
-		return "("+freeze+" Freeze)";
-	}
-	public String stringInvuln() {
-		return "("+invuln+" Invuln)";
-	}
-	public String stringIntang() {
-		return "("+intang+" Intangible)";
-	}
-	public String stringStatus() {
-		String status="";
-		if(afterburn>0) {
-			status+=stringAfterburn();
+	public void battleInventory(Player player,ArrayList<Enemy> enemies,byte target) {
+		int counter=0;
+		int input=0;
+		ArrayList<Item> battleInv=new ArrayList<Item>();
+		for(int i=0;i<Inventory.size();i++) {
+			if(!Inventory.get(i).isPassive()) {
+				System.out.println(++counter+". "+Inventory.get(i).getName()+"("+Inventory.get(i).getDurability()+" Durability)");
+				battleInv.add(Inventory.get(i));
+			}
 		}
-		if(poison>0) {
-			status+=stringPoison();
+		System.out.println("Select an item to use.");
+		try {
+			input=getIntInput(1,battleInv.size());
+		} catch (Exception e) {
 		}
-		if(markedForDeath>0) {
-			status+=stringMarkForDeath();
+		try {
+			Inventory.get(input-1).doEffect("placeholder",player,enemies,new Integer[]{0},target);
+		} catch (Exception e) {
 		}
-		if(unaware>0) {
-			status+=stringUnaware();
-		}
-		if(freeze>0) {
-			status+=stringFreeze();
-		}
-		if(invuln>0) {
-			status+=stringInvuln();
-		}
-		if(intang>0) {
-			status+=stringIntang();
-		}
-		return status;
 	}
+	public char roomChoice(Floor floor) {
+		char input;
+		if(xCoord>0) {
+			System.out.println("L. Go left");
+		}
+		if(xCoord<floor.map.size()-1) {
+			System.out.println("R. Go right");
+		}
+		if(yCoord>0) {
+			System.out.println("D. Go down");
+		}
+		if(yCoord<floor.map.get(xCoord).size()-1) {
+			System.out.println("U. Go up");
+		}
+		System.out.println("S. Create quicksave");
+		Scanner s=new Scanner(System.in);
+		System.out.println("1. Inspect");
+		System.out.println("2. Do nothing");
+		if(exitRoom) {
+			System.out.println("3. Next floor");
+		}
+		input=s.nextLine().charAt(0);
+		return input;
+	}
+	public String welcomeMessage(int displaySeed) {
+		switch(biome) {
+			case "forest":
+				if(displaySeed<=25) {
+					return("It seems to be some kind of forest, but you're not sure. It might be a scone.");
+				}
+				else if(displaySeed<=50) {
+					return("You're in a forest now. You turn 40 degrees to the left. You feel proud of yourself.");
+				}
+				else if(displaySeed==59) {
+					return("It's a forest. It looks the same as the other thousand forests.");
+				}
+				else {
+					return("It's a forest. You kill and eat a squirrel. It had a family, you monster.");
+				}
+			case "clown factory":
+				if(displaySeed<=15) {
+					return("It's a factory. It makes clowns. You put on a clown nose and pretend you're a lawyer.");
+				}
+				else if(displaySeed<=25) {
+					return("You're in a factory that makes clowns, and also lawyers, which are basically the same thing.");
+				}
+				else if(displaySeed<=50) {
+					return("You're in a clown-making factory. It smells of rubber.");
+				}
+				else if(displaySeed<=80) {
+					return("This factory makes clowns. The floor is littered with oversized shoes.");
+				}
+				else {
+					return("This factory manufactures clowns. It's mostly not on fire.");
+				}
+			case "tundra":
+				if(displaySeed<=21) {
+					return("It's an ice-cold tundra. It could be the headquarters of a popsicle mining ring.");
+				}
+				else if(displaySeed<=42) {
+					return("You're in a freezing tundra. What's more, you aren't very well dressed for the weather.");
+				}
+				else {
+					return("This tundra is too cold to adequately describe with words.");
+				}
+			case "consulate":
+				if(displaySeed<=45) {
+					return("You're in a consulate. It's full of white-collar criminals.");
+				}
+				else if(displaySeed<=56) {
+					return("You're in a consulate. It's extremely Swedish.");
+				}
+				else {
+					return("It's a very clinical-looking consulate. You steal classified government documents and eat them.");
+				}
+			case "vineyard":
+				if(displaySeed<=25) {
+					return("You're in a vineyard. The grapes are exhibiting thigmotropism. You jump twice for no reason.");
+				}
+				else if(displaySeed<=50) {
+					return("It's a vineyard full of grapes. Cheap, low-quality wine is made here.");
+				}
+				else if(displaySeed<=75) {
+					return("There are grapes everywhere. This must be a vineyard for making cheap wines.");
+				}
+				else {
+					return("Nothing here but rows on rows of haphazardly cultivated grapevines.");
+				}
+			case "sewer":
+				if(displaySeed<=7) {
+					return("It's a fetid sewer. A red balloon is floating over the sewage.");
+				}
+				else if(displaySeed<=28) {
+					return("It's a sewer. It smells of trash and designer perfume; that is, it smells like trash.");
+				}
+				else {
+					return("This is a sewer. Why are you in a sewer?");
+				}
+			case "rooftop":
+				if(displaySeed<=15) {
+					return("You walk through a door onto a rooftop despite just having been on ground level.");
+				}
+				else if(displaySeed<=40) {
+					return("You're on the roof of a building. You remind yourself not to drink acid.");
+				}
+				else if(displaySeed<=75) {
+					return("It's the rooftop of some building. There's a \"NO TRESPASSING\" sign. You lick the sign.");
+				}
+				else {
+					return("You somehow wind up on a building's rooftop again.");
+				}
+			case "fake beach":
+				if(displaySeed<=25) {
+					return("You're on a beach. It's very obviously made of plastic. You swim in the plastic ocean.");
+				}
+				else if(displaySeed<=60) {
+					return("It's a fake beach made of glass. You play dead in case there are bears watching.");
+				}
+				else {
+					return("You're on a beach. It's actually just a 2D cardboard cutout, but it's good enough to fool you.");
+				}
+			case "hell":
+				if(displaySeed<=6) {
+					return("You're in hell. You only sinned a few thousand times, so this must be a mistake.");
+				}
+				else if(displaySeed<=30) {
+					return("It's hell. The fire is papier mach\u0039, but the screaming is real.");
+				}
+				else if(displaySeed<=54) {
+					return("You are surrounded by a lake of fire. People are roasting marshmallows.");
+				}
+				else if(displaySeed<=78) {
+					return("This is hell, complete with brimstone. You mistake it for Florida.");
+				}
+				else {
+					return("It's hell. You joke about having a hell of a time. The crowd boos you off the stage.");
+				}
+			case "flight":
+				if(displaySeed<=40) {
+					return("You're on a commercial airliner. You didn't buy a ticket first. You are now a hardened criminal.");
+				}
+				else if(displaySeed<=80) {
+					return("You're on a commercial airliner kilometres off the ground, somehow.");
+				}
+				else {
+					return("It's a commercial airliner. You indulge in airplane food, then vomit it into a toilet.");
+				}
+			case "ireland":
+				if(displaySeed<=27) {
+					return("Through some strange sequence of events, you find yourself in Ireland.");
+				}
+				else if(displaySeed<=33) {
+					return("You're in Ireland. How did you end up in Ireland?");
+				}
+				else if(displaySeed<=66) {
+					return("You're in Ireland now. You can't tell because there aren't enough clovers and angry people.");
+				}
+				else {
+					return("It's Ireland. You blink five times in thirty seconds, slightly below average.");
+				}
+			default:
+				return("You're in some kind of strange state of limbo. Please file a bug report.");
+		}
+	}
+	public void displayMap(Floor floor) {
+		for (int x = 0; x < floor.map.size(); x++) {
+			for (int y = 0;y < floor.map.get(0).size(); y++) {
+           		if (x == xCoord && y == yCoord){
+       				System.out.print(";;");
+           		}
+       			else {
+                	System.out.print("::");
+           		}
+          	}
+         	System.out.println();
+ 		}
+ 	}	
 }
