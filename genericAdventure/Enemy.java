@@ -19,6 +19,8 @@ public class Enemy {
 	protected int freeze=0;
 	protected int invuln=0;
 	protected int intang=0;
+	protected Player tempPlayer;
+	protected boolean bearTrap=false;
 	public final boolean isBoss;
 	public Enemy(String biome,boolean isBoss) {
 		Random rand=new Random();
@@ -638,11 +640,44 @@ public class Enemy {
 					else {
 						leafBlow(player);
 					}
+				case "Poacher":
+					if(seed1<=25) {
+						bearTrap(player,enemyList);
+					}
+					else if(seed1<=50&&Floor.level>6) {
+						doubleBarrel(player);
+					}
+					else if(seed1<=60||(seed1<=90&&player.getPoison()<=0)) {
+						huntingMachete(player);
+					}
+					else {
+						handgun(player);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void bearTrap(Player player,ArrayList<Enemy>enemyList) {
+		Random rand=new Random();
+		int trapSeed=rand.nextInt(enemyList.size());
+		tempPlayer=player;
+		enemyList.get(trapSeed).bearTrap=true;
+	}
+	private void doubleBarrel(Player player) {
+		System.out.println(name+" fires a double barrel at you. There is a bit of recoil.");
+		player.damage(80*atk/100);
+		damage(12*atk/100);
+	}
+	private void handgun(Player player) {
+		System.out.println(name+" opens fire with a handgun.");
+		player.damage(40*atk/100);
+	}
+	private void huntingMachete(Player player) {
+		System.out.println(name+" shivs you with a rusty machete. You get infected.");
+		player.damage(32*atk/100);
+		player.setPoison(3);
 	}
 	private void acornDrop(ArrayList<Enemy>enemyList) {
 		int counter=0;
@@ -726,6 +761,10 @@ public class Enemy {
 		if(getInvuln()>0&&damage>0) {
 			damage=0;
 		}
+		if(damage>0&&bearTrap) {
+			tempPlayer.damage(25*tempPlayer.getAtk()/100);
+			bearTrap=false;
+		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage.");
 		}
@@ -759,6 +798,10 @@ public class Enemy {
 		}
 		if(getInvuln()>0&&damage>0) {
 			damage=0;
+		}
+		if(damage>0&&bearTrap) {
+			tempPlayer.damage(25*tempPlayer.getAtk()/100);
+			bearTrap=false;
 		}
 		if(damage>0) {
 			System.out.println("Did "+damage+" damage.");
@@ -850,6 +893,7 @@ public class Enemy {
 		this.weight = weight;
 	}
 	public void statusTick() {
+		bearTrap=false;
 		if(afterburn>0) {
 			afterburn--;
 			hp-=3;
