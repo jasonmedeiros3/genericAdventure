@@ -67,25 +67,29 @@ public class Player {
 		bonusAtk=0;
 		bonusDef=0;*/
 	}
-	public void damage(Integer damage) {
-		if(getMarkForDeath()>0&&damage>0) {
-			damage=(int)(damage*1.35);
+	public void damage(Integer rawDamage) {
+		Integer[] damage=new Integer[1];
+		if(damage[0]>0) {
+			damage[0]=(int)(damage[0]*(100/def));
 		}
-		if(getIntang()>0&&damage>0) {
-			damage=1;
+		if(getMarkForDeath()>0&&damage[0]>0) {
+			damage[0]=(int)(damage[0]*1.35);
 		}
-		if(getInvuln()>0&&damage>0) {
-			damage=0;
+		if(getIntang()>0&&damage[0]>0) {
+			damage[0]=1;
 		}
-		Integer[]arrayDamage={damage};
-		if(damage>0) {
+		if(getInvuln()>0&&damage[0]>0) {
+			damage[0]=0;
+		}
+		Integer[]arrayDamage={damage[0]};
+		if(damage[0]>0) {
 			Inventory.eventFlagHandler("damage", this, null, damage);
 		}
-		if(damage>0) {
-			System.out.println(className+" took "+damage+" damage.");
+		if(damage[0]>0) {
+			System.out.println(className+" took "+damage[0]+" damage.");
 		}
-		else if(damage<0) {
-			System.out.println(className+" healed "+(-damage)+" health.");
+		else if(damage[0]<0) {
+			System.out.println(className+" healed "+(-damage[0])+" health.");
 		}
 		else {
 			System.out.println(className+" didn't take any damage.");
@@ -93,10 +97,13 @@ public class Player {
 		if(hp>maxhp) {
 			hp=maxhp;
 		}
-		hp-=(int)(damage*(100/def));
+		hp-=(int)(damage[0]*(100/def));
 	}
 	public void damage(double damage) {
-		Integer intDamage;
+		Integer[] intDamage=new Integer[1];
+		if(damage>0) {
+			damage=(int)(damage*(100/def));
+		}
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
 		}
@@ -106,15 +113,15 @@ public class Player {
 		if(getInvuln()>0&&damage>0) {
 			damage=0;
 		}
-		intDamage=(int)damage;
-		if(damage>0) {
+		intDamage[0]=(int)damage;
+		if(intDamage[0]>0) {
 			Inventory.eventFlagHandler("damage", this, null, intDamage);
 		}
-		if(damage>0) {
-			System.out.println(className+" took "+damage+" damage.");
+		if(intDamage[0]>0) {
+			System.out.println(className+" took "+intDamage[0]+" damage.");
 		}
-		else if(damage<0) {
-			System.out.println(className+" healed "+(-damage)+" health.");
+		else if(intDamage[0]<0) {
+			System.out.println(className+" healed "+(-intDamage[0])+" health.");
 		}
 		else {
 			System.out.println(className+" didn't take any damage.");
@@ -122,7 +129,7 @@ public class Player {
 		if(hp>maxhp) {
 			hp=maxhp;
 		}
-		hp-=(int)(damage*(100/def));
+		hp-=(int)(intDamage[0]*(100/def));
 	}
 	public int getHp() {
 		return hp;

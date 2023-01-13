@@ -9,17 +9,17 @@ public class Inventory {
 	private static ArrayList<Item> inventory=new ArrayList<Item>();
 	private static short weight;
 	private final static short MAXWEIGHT=100;
-	public static void eventFlagHandler(String eventFlag,Player player,ArrayList<Enemy>enemyList,Integer damage) {
+	public static void eventFlagHandler(String eventFlag,Player player,ArrayList<Enemy>enemyList,Integer[] damage) {
 		for(Item i:inventory) {
 			if(i.isPassive()) {
 				try {
-					i.doEffect(eventFlag,player,enemyList,new Integer[]{damage},(byte)0);
+					i.doEffect(eventFlag,player,enemyList,damage,(byte)0);
 				} catch (Exception e) {
 				}
 			}
 		}
 	}
-	public static void add(Item item) {
+	public static void add(Item item,Player player) {
 		Random rand=new Random();
 		int seed=rand.nextInt(100);
 		weight=0;
@@ -28,11 +28,15 @@ public class Inventory {
 		}
 		if(weight+item.getWeight()<=MAXWEIGHT) {
 			inventory.add(item);
+			try {
+				inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+			} catch (Exception e) {
+			}
 		}
 		else {
 			while(weight+item.getWeight()>MAXWEIGHT) {
 				try {
-					cancellableRemove();
+					cancellableRemove(player);
 				}
 				catch(InputMismatchException e) {
 					System.out.println("Something went wrong. Try again.");
@@ -55,18 +59,22 @@ public class Inventory {
 			System.out.println("You find a "+item.getName().toLowerCase()+". It tastes a little funny.");
 		}
 	}
-	public static void silentAdd(Item item) {
+	public static void silentAdd(Item item,Player player) {
 		weight=0;
 		for(Item i: inventory) {
 			weight+=i.getWeight();
 		}
 		if(weight+item.getWeight()<=MAXWEIGHT) {
 			inventory.add(item);
+			try {
+				inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+			} catch (Exception e) {
+			}
 		}
 		else {
 			while(weight+item.getWeight()>MAXWEIGHT) {
 				try {
-					cancellableRemove();
+					cancellableRemove(player);
 				}
 				catch(InputMismatchException e) {
 					System.out.println("Something went wrong. Try again.");
@@ -77,10 +85,11 @@ public class Inventory {
 			}
 		}
 	}
-	public static void directRemove(Item item) throws Exception {
+	public static void directRemove(Item item,Player player) throws Exception {
+		inventory.get(inventory.indexOf(item)).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
 		inventory.remove(inventory.indexOf(item));
 	}
-	public static void remove() throws Exception {
+	public static void remove(Player player) throws Exception {
 		int count=0;
 		Scanner s = new Scanner(System.in);
 		System.out.println("Select an item to remove.");
@@ -93,10 +102,11 @@ public class Inventory {
 			throw new Exception("That isn't a valid item.");
 		}
 		weight-=inventory.get(count-1).getWeight();
+		inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
 		inventory.remove(count-1);
 		System.out.println("Item removed.");
 	}
-	public static boolean cancellableRemove() throws Exception {
+	public static boolean cancellableRemove(Player player) throws Exception {
 		int count=0;
 		Scanner s = new Scanner(System.in);
 		System.out.println("Select an item to remove, or enter zero to cancel.");
@@ -112,6 +122,7 @@ public class Inventory {
 			throw new Exception("That isn't a valid item.");
 		}
 		weight-=inventory.get(count-1).getWeight();
+		inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
 		inventory.remove(count-1);
 		System.out.println("Item removed.");
 		return false;

@@ -26,6 +26,13 @@ public class ItemPool {
 		pool.add(new PassiveItem("Multiclass Manual",s=3,256,b=0)); //16
 		pool.add(new ActiveItem("Dead Ringer",s=6,1,b=5,false)); //17
 		pool.add(new PassiveItem("Holy Mantle",s=1,14,b=4)); //18
+		pool.add(new PassiveItem("Synthol",s=1,255,b=0)); //19
+		pool.add(new PassiveItem("Brass Knuckles",s=4,160,b=0)); //20
+		pool.add(new ActiveItem("Red Flask",s=3,5,b=7,true)); //21
+		pool.add(new ActiveItem("M1911",s=6,20,b=3,false)); //22
+		pool.add(new ActiveItem("Staple Gun",s=10,30,b=3,false)); //23
+		pool.add(new ActiveItem("Conniver Kunai",s=7,70,b=5,false)); //24
+		pool.add(new ActiveItem("Direct Hit",s=10,20,b=1,false)); //25
 	}
 	public Item get(int index) {
 		return pool.get(index);
