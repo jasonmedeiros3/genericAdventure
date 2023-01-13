@@ -627,7 +627,7 @@ public class Enemy {
 	}
 	private void deerCharge (Player player) {
 		System.out.println(name + " charges you with it's cardboard antlers. ");
-		System.out.println(name + "cardboard deer is disorientated from their charge");
+		System.out.println(name + " cardboard deer is disorientated from their charge. ");
 		player.damage(40 * atk /100.0);
 		unaware+= 2;
 		markedForDeath += 2;
