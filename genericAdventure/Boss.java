@@ -3,19 +3,7 @@ package genericAdventure;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Boss {
-	private String name;
-	private int maxhp;
-	private int hp;
-	private int atk;
-	private int def;
-	private int afterburn=0;
-	private int poison=0;
-	private int markedForDeath=0;
-	private int unaware=0;
-	private int freeze=0;
-	private int invuln=0;
-	private int intang=0;
+public class Boss extends Enemy {
 	private int sniperCharge=0;
 	private int compactorCounter=9;
 	private int metal=200;
@@ -23,10 +11,10 @@ public class Boss {
 	private int csgo=0;
 	private int attackCycle=0;
 	private int blackCandle=0;
-	private final int infinity=2147483647;
 	private boolean huntingShotgun=false;
 	private boolean justBlocked;
 	public Boss(String biome) {
+		super("placeholder",true);
 		Random rand=new Random();
 		int seed=rand.nextInt(101);
 		switch(Floor.level) {
@@ -158,63 +146,8 @@ public class Boss {
 		}
 		hp=maxhp;
 	}
-	public void damage(int i) {
-		int damage;
-		damage=(int)(i*(100.0/def));
-		if(getMarkForDeath()>0&&damage>0) {
-			damage*=1.35;
-		}
-		if(getIntang()>0&&damage>0) {
-			csgo+=damage-1;
-			damage=1;
-		}
-		if(getInvuln()>0&&damage>0) {
-			csgo+=damage;
-			damage=0;
-		}
-		if(damage>0) {
-			System.out.println("Did "+damage+" damage to "+name+".");
-		}
-		else if(damage<0) {
-			System.out.println(name+" healed "+(-damage)+" health.");
-		}
-		else {
-			System.out.println("Didn't do any damage.");
-		}
-		hp-=damage;
-		if(hp>maxhp) {
-			hp=maxhp;
-		}
-	}
-	public void damage(double i) {
-		int damage;
-		damage=(int)(i*(100.0/def));
-		if(getMarkForDeath()>0&&damage>0) {
-			damage*=1.35;
-		}
-		if(getIntang()>0&&damage>0) {
-			csgo+=damage-1;
-			damage=1;
-		}
-		if(getInvuln()>0&&damage>0) {
-			csgo+=damage;
-			damage=0;
-		}
-		if(damage>0) {
-			System.out.println("Did "+damage+" damage to "+name+".");
-		}
-		else if(damage<0) {
-			System.out.println(name+" healed "+(-damage)+" health.");
-		}
-		else {
-			System.out.println("Didn't do any damage.");
-		}
-		hp-=damage;
-		if(hp>maxhp) {
-			hp=maxhp;
-		}
-	}
-	public void doMove(Player player,ArrayList<Boss>bossList) {
+	@Override
+	public void doBossMove(Player player,ArrayList<Enemy>bossList) {
 		Random rand=new Random();
 		int seed1=rand.nextInt(100);
 		int seed2=rand.nextInt(100);
@@ -292,18 +225,27 @@ public class Boss {
 					Boss building=null;
 					boolean buildingDamaged=false;
 					boolean buildingUpgradable=false;
-					for(Boss b:bossList) {
+					for(Enemy b:bossList) {
 						if((b.name.equals("Sentry Gun")||b.name.equals("Dispenser"))&&b.hp<maxhp-40) {
-							building=b;
-							buildingDamaged=true;
+							try {
+								building=(Boss)b;
+								buildingDamaged=true;
+							}
+							catch(Exception e) {
+							}
 						}
 					}
 					if(!buildingDamaged) {
-						for(Boss b:bossList) {
-							if((b.name.equals("Sentry Gun")||b.name.equals("Dispenser"))&&b.buildingLevel<3) {
-								building=b;
-								buildingUpgradable=true;
+						for(Enemy b:bossList) {
+							try {
+								if((b.name.equals("Sentry Gun")||b.name.equals("Dispenser"))&&((Boss)b).buildingLevel<3) {
+									building=(Boss)b;
+									buildingUpgradable=true;
+								}
 							}
+							catch(Exception e) {
+							}
+							
 						}
 					}
 					if(bossList.size()<=5&&metal>=130&&(seed1<=15||(seed1<=85&&bossList.size()<2))) {
@@ -336,9 +278,13 @@ public class Boss {
 					}
 				case "Dispenser":
 					Boss engi=null;
-					for(Boss b:bossList) {
+					for(Enemy b:bossList) {
 						if(b.getName().equals("The Engineer")) {
-							engi=b;
+							try {
+								engi=(Boss)b;
+							}
+							catch(Exception e) {
+							}
 						}
 					}
 					dispense(engi);
@@ -446,9 +392,13 @@ public class Boss {
 					attackCycle++;
 				case "The Devil":
 					Boss beast=null;
-					for(Boss b:bossList) {
+					for(Enemy b:bossList) {
 						if(b.getName().equals("The Beast")) {
-							beast=b;
+							try {
+							beast=(Boss)b;
+							}
+							catch(Exception e) {
+							}
 						}
 					}
 					if(seed1<=13||(seed1<=66&&player.getAfterburn()<2)) {
@@ -474,6 +424,9 @@ public class Boss {
 					}
 					else if(seed1<=96&&beast!=null) {
 						theDragon(beast);
+					}
+					else {
+						blackCandle();
 					}
 				case "The Beast":
 					if(seed1<=60&&hp<=111) {
@@ -520,7 +473,7 @@ public class Boss {
 		player.damage(66*atk/100);
 		player.setAfterburn(6);
 	}
-	private void beast(Player player,ArrayList<Boss>bossList) {
+	private void beast(Player player,ArrayList<Enemy>bossList) {
 		System.out.println(name+" unleashes the Beast of Revelation.");
 		System.out.println(name+" is fined by local authorities because this is a leash only area.");
 		bossList.add(new Boss("The Beast"));
@@ -727,7 +680,7 @@ public class Boss {
 			engi.metal=200;
 		}
 	}
-	private void sentryGoingUp(ArrayList<Boss>bossList,int seed) {
+	private void sentryGoingUp(ArrayList<Enemy>bossList,int seed) {
 		if(seed<=90) {
 			System.out.println(name+" builds a Sentry.");
 		}
@@ -737,7 +690,7 @@ public class Boss {
 		bossList.add(new Boss("Sentry Gun"));
 		metal-=130;
 	}
-	private void dispenserGoingUp(ArrayList<Boss>bossList,int seed) {
+	private void dispenserGoingUp(ArrayList<Enemy>bossList,int seed) {
 		if(seed<=90) {
 			System.out.println(name+" builds a Dispenser.");
 		}
@@ -951,6 +904,17 @@ public class Boss {
 	}
 	public String getName() {
 		return name;
+	}
+	public void setDead(boolean dead) {
+		this.dead=dead;
+	}
+	public boolean getDead() {
+		return dead;
+	}
+	public void checkDead() {
+		if(hp<=0) {
+			dead=true;
+		}
 	}
 	public void setAfterburn(int increment) {
 		afterburn+=increment;
