@@ -265,7 +265,7 @@ public class Enemy {
 					setWeight(2);
 					break;
 				case "Assembly Line Machine":
-					maxhp=(int)(300+10*Math.pow(Floor.level,1.45));
+					maxhp=(int)(300+10*Math.pow(Floor.level,1.4));
 					atk=(int)(90+1.7*Math.pow(Floor.level-1,1.03));
 					def=(int)(107+Floor.level);
 					setWeight(5);
@@ -459,7 +459,7 @@ public class Enemy {
 				case "I Sell Soap":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (90 + 1.3 * Floor.level);
-					def = (int) (100 + 2 * Math.pow(Floor.level, 1.6));
+					def = (int) (100 + 2 * Math.pow(Floor.level, 1.55));
 					setWeight(2);
 					break;
 				case "Flying Ostrich":
@@ -476,7 +476,7 @@ public class Enemy {
 					break;
 				case "Catholic Mob":
 					maxhp = (int) (80 + 2 * Floor.level);
-					atk = (int) (75 + Math.pow(Floor.level, 1.6));
+					atk = (int) (75 + Math.pow(Floor.level, 1.5));
 					def = (int) (55 + 6 * Floor.level);
 					setWeight(1);
 					break;
