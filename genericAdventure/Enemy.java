@@ -47,13 +47,13 @@ public class Enemy {
 					}
 					break;
 				case "clown factory":
-					if(seed<=18) {
+					if(seed<=18||(seed<=25&&Floor.level<3)) {
 						nameSelector("Clown");
 					}
-					else if(seed<=40) {
+					else if(seed<=40||(seed<=60&&Floor.level<3)) {
 						nameSelector("Defective Clown");
 					}
-					else if(seed<=54) {
+					else if((seed<=54&&Floor.level>=4)||(seed<=45&&Floor.level==3)) {
 						nameSelector("Assembly Line Machine");
 					}
 					else {
