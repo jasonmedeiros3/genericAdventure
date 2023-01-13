@@ -13,52 +13,58 @@ public class Boss extends Enemy {
 	private int blackCandle=0;
 	private boolean huntingShotgun=false;
 	private boolean justBlocked;
-	public Boss(String biome) {
+	public Boss(String name) {
 		super("placeholder",true);
-		Random rand=new Random();
+		/*Random rand=new Random();
 		int seed=rand.nextInt(101);
-		switch(Floor.level) {
-			case 3:
-				if(seed<=25) {
-					nameSelector("The Sniper");
-				}
-				else if(seed<=50) {
-					nameSelector("The Druid");
-				}
-				else if(seed<=75) {
-					nameSelector("The Trash Compactor");
-				}
-				else if(seed<=90) {
-					nameSelector("The Cube of Gelatin");
-				}
-				else {
-					nameSelector("The British Guy");
-				}
-				break;
-			case 6:
-				if(seed<=25) {
-					nameSelector("The Engineer");
-				}
-				else if(seed<=50) {
-					nameSelector("The Fighter");
-				}
-				else if(seed<=75) {
-					nameSelector("The Supercomputer");
-				}
-				else if(seed<=90) {
-					nameSelector("The Ophan");
-				}
-				else {
-					nameSelector("The Abstract Concept");
-				}
-				break;
-			case 10:
-				nameSelector("The Devil");
-				break;
-			case 0:
-				nameSelector("The Truth");
+		if(name!=null) {
+			nameSelector(name);
 		}
+		else {
+			switch(Floor.level) {
+				case 3:
+					if(seed<=25) {
+						nameSelector("The Sniper");
+					}
+					else if(seed<=50) {
+						nameSelector("The Druid");
+					}
+					else if(seed<=75) {
+						nameSelector("The Trash Compactor");
+					}
+					else if(seed<=90) {
+						nameSelector("The Cube of Gelatin");
+					}
+					else {
+						nameSelector("The British Guy");
+					}
+					break;
+				case 6:
+					if(seed<=25) {
+						nameSelector("The Engineer");
+					}
+					else if(seed<=50) {
+						nameSelector("The Fighter");
+					}
+					else if(seed<=75) {
+						nameSelector("The Supercomputer");
+					}
+					else if(seed<=90) {
+						nameSelector("The Ophan");
+					}
+					else {
+						nameSelector("The Abstract Concept");
+					}
+					break;
+				case 10:
+					nameSelector("The Devil");
+					break;
+				case 0:
+					nameSelector("The Truth");
+			}
+		}*/
 	}
+	@Override
 	public void nameSelector(String n) {
 		name=n;
 		switch(name) {
