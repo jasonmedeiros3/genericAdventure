@@ -304,6 +304,10 @@ public class Room {
 				System.out.println("You successfully didn't do anything.");
 			}
 			if(input=='3'&&exitRoom) {
+				if(Floor.level!=3&&Floor.level!=6&&Floor.level!=10) {
+					return null;
+				}
+				bossBattle(floor,player);
 				return null;
 			}
 		}
@@ -344,6 +348,100 @@ public class Room {
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 		for(int i=0;i<5;i++) {
 			enemies.add(new Enemy(biome,false));
+			enemyWeight+=enemies.get(i).getWeight();
+			if(enemyWeight>maxEnemyWeight) {
+				break;
+			}
+		}
+		for(int i=0;i<Inventory.size();i++) {
+			if(Inventory.get(i).isPassive()) {
+				try {
+					Inventory.get(i).doEffect("battleStart",player,enemies,null,(byte) 0);
+				} catch (Exception e) {
+				}
+			}
+		}
+		while(true) {
+			turn++;
+			int deadEnemyCounter=0;
+			for(Enemy e:enemies) {
+				e.checkDead();
+			}
+			while(true) {
+				try {
+					if(enemies.get(deadEnemyCounter).getDead()) {
+						enemies.remove(deadEnemyCounter);
+					}
+					else {
+						deadEnemyCounter++;
+					}
+				}
+				catch(Exception e) {
+					break;
+				}
+			}
+			if(enemies.size()<1) {
+				break;
+			}
+			if(player.getHp()<=0) {
+				System.out.println("You died.");
+				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
+				System.out.println("Your final item count was "+Inventory.size()+".");
+			}
+			while(true) {
+				displayPlayer(player);
+				displayEnemies(enemies);
+				for(int i=0;i<Inventory.size();i++) {
+					if(Inventory.get(i).isPassive()) {
+						try {
+							Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+						} catch (Exception e1) {
+						}
+					}
+					else {
+						hasActiveItem=true;
+					}
+				}
+				System.out.println("1. Struggle");
+				System.out.println("2. Open Inventory");
+				System.out.println("3. Run Away");
+				try {
+					input=getIntInput(1,3);
+					System.out.println("OK!");
+					break;
+				}
+				catch(Exception e) {
+				}
+			}
+			if(input==1) {
+				displayNumberedEnemies(enemies);
+				System.out.println("Select a target.");
+				try {
+					input=getIntInput(1,5);
+				} catch (Exception e) {
+				}
+				enemies.get(input).damage(15*player.getAtk()/100.0);
+				player.damage(5*player.getAtk()/100.0);
+			}
+			else if(input==2&&hasActiveItem) {
+				battleInventory(player,enemies,(byte)input);
+			}
+			else if(input==2) {
+				System.out.println("No usable items.");
+			}
+		}
+	}
+	public void bossBattle(Floor floor,Player player) {
+		int maxEnemyWeight=(int)(6+Math.sqrt(2*(Floor.level-1)));
+		int enemyWeight=0;
+		int input;
+		int turn=0;
+		boolean hasActiveItem=false;
+		Scanner s=new Scanner(System.in);
+		Random rand=new Random();
+		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+		for(int i=0;i<5;i++) {
+			enemies.add(new Boss(null));
 			enemyWeight+=enemies.get(i).getWeight();
 			if(enemyWeight>maxEnemyWeight) {
 				break;
