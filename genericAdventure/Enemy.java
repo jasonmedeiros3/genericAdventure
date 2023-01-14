@@ -722,7 +722,6 @@ public class Enemy {
 			doBossMove(player,enemyList);
 		}
 	}
-
 	private void freezingSpit(Player player) {
 		System.out.println(name + " used freezing spit...?");
 		player.damage(5 * atk/100.0);
