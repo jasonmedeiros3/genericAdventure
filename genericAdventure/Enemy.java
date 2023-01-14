@@ -743,10 +743,10 @@ public class Enemy {
 		}
 		for(Enemy e:enemyList) {
 			if(!droneRepair) {
-				e.damage(-20*atk/100);
+				e.damage(-20*atk/100,null);
 			}
 			else {
-				e.damage(-25*atk/100);
+				e.damage(-25*atk/100,null);
 			}
 		}
 		droneRepair=true;
@@ -795,7 +795,7 @@ public class Enemy {
 		for(Enemy e:enemyList) {
 			if(rand.nextInt(100)<=70&&e.hp<e.maxhp&&(e.name.equals("Clown")||e.name.equals("Defective Clown"))) {
 				successful=true;
-				e.damage(-40*atk/100);
+				e.damage(-40*atk/100,null);
 			}
 		}
 		if(!successful) {
@@ -815,7 +815,7 @@ public class Enemy {
 	}
 	private void shortCircuit() {
 		System.out.println(name+" short circuits.");
-		damage(15*atk/100);
+		damage(15*atk/100,null);
 	}
 	private void chainsaw(Player player) {
 		if(!clownSaw) {
@@ -841,7 +841,7 @@ public class Enemy {
 	}
 	private void creamPie() {
 		System.out.println(name+" eats an entire cream pie.");
-		damage(-15);
+		damage(-15,null);
 	}
 	private void aNewBat(Player player) {
 		System.out.println(name+" whacks you with a multicoloured baseball bat wrapped in streamers.");
@@ -856,7 +856,7 @@ public class Enemy {
 	private void doubleBarrel(Player player) {
 		System.out.println(name+" fires a double barrel at you. There is a bit of recoil.");
 		player.damage(80*atk/100);
-		damage(12*atk/100);
+		damage(12*atk/100,null);
 	}
 	private void handgun(Player player) {
 		System.out.println(name+" opens fire with a handgun.");
@@ -871,7 +871,7 @@ public class Enemy {
 		int counter=0;
 		for(Enemy e:enemyList) {
 			if(e.name.equals("Squirrel")) {
-				e.damage(-5-Floor.level);
+				e.damage(-5-Floor.level,null);
 				counter++;
 			}
 		}
@@ -919,7 +919,7 @@ public class Enemy {
 		player.damage(10*atk/100.0);
 	}
 	private void acorn() {
-		damage(-5-Floor.level);
+		damage(-5-Floor.level,null);
 	}
 	public void doBossMove(Player player,ArrayList<Enemy>bossList) {
 	}
@@ -935,10 +935,15 @@ public class Enemy {
 	public boolean getDead() {
 		return dead;
 	}
-	public boolean damage(int i) {
+	public boolean damage(int i,Player player) {
 		int damage=i;
+		ArrayList<Enemy> tempList=new ArrayList<Enemy>();
+		tempList.add(this);
 		if(damage>0) {
 			damage=(int)(i*(100.0/def));
+			if(player!=null) {
+				Inventory.eventFlagHandler("attack",player,tempList,new Integer[]{0});
+			}
 		}
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;
@@ -973,10 +978,15 @@ public class Enemy {
 		}
 		return false;
 	}
-	public boolean damage(double i) {
+	public boolean damage(double i,Player player) {
 		int damage=(int)i;
+		ArrayList<Enemy> tempList=new ArrayList<Enemy>();
+		tempList.add(this);
 		if(damage>0) {
 			damage=(int)(i*(100.0/def));
+			if(player!=null) {
+				Inventory.eventFlagHandler("attack",player,tempList,new Integer[]{0});
+			}
 		}
 		if(getMarkForDeath()>0&&damage>0) {
 			damage*=1.35;

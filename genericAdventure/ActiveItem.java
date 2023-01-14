@@ -110,14 +110,14 @@ public class ActiveItem implements Item {
 	}
 	private void rocketLaunch(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
 		System.out.println("Fired a rocket.");
-		enemyList.get(target).damage(50*player.getAtk()/100.0);
+		enemyList.get(target).damage(50*player.getAtk()/100.0,player);
 		try {
-			enemyList.get(target-1).damage((int)(24*player.getAtk()/100));
+			enemyList.get(target-1).damage((int)(24*player.getAtk()/100),player);
 		}
 		catch(Exception e) {
 		}
 		try {
-			enemyList.get(target+1).damage((int)(24*player.getAtk()/100));
+			enemyList.get(target+1).damage((int)(24*player.getAtk()/100),player);
 		}
 		catch(Exception e) {
 		}
@@ -125,58 +125,58 @@ public class ActiveItem implements Item {
 	}
 	private void backPain(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy back pain.");
-		enemy.damage(25);
+		enemy.damage(25,player);
 		damage(1,player);
 	}
 	private void lawsuit(Player player,Enemy enemy) throws Exception {
 		System.out.println("Filed a lawsuit.");
-		enemy.damage(30*player.getAtk()/100.0);
+		enemy.damage(30*player.getAtk()/100.0,player);
 		enemy.setMarkForDeath(2);
 		damage(1,player);
 	}
 	private void cheapSpear(Player player,Enemy enemy) throws Exception {
 		System.out.println("Thrust the $8 spear.");
-		enemy.damage(65*player.getAtk()/100.0);
+		enemy.damage(65*player.getAtk()/100.0,player);
 		damage(1,player);
 	}
 	private void butterKnife(Player player,Enemy enemy) throws Exception {
 		System.out.println("Swung the butterknife.");
 		if(enemy.getUnaware()>0) {
-			enemy.damage(enemy.getHp()/6.3+32*player.getAtk()/96.0);
+			enemy.damage(enemy.getHp()/6.3+32*player.getAtk()/96.0,player);
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
 		else {
-			enemy.damage(32*player.getAtk()/100.0);
+			enemy.damage(32*player.getAtk()/100.0,player);
 			damage(1,player);
 		}
 	}
 	private void sixShooter(Player player,Enemy enemy) throws Exception {
 		System.out.println("Fired the six shooter.");
 		if(enemy.getUnaware()>0) {
-			enemy.damage(48*player.getAtk()/100.0);
+			enemy.damage(48*player.getAtk()/100.0,player);
 		}
 		else {
-			enemy.damage(32*player.getAtk()/100.0);
+			enemy.damage(32*player.getAtk()/100.0,player);
 		}
 		damage(1,player);
 	}
 	private void arthritis(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy arthritis.");
-		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0));
+		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0),player);
 		damage(1,player);
 	}
 	private void blackBox(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
 		System.out.println("Fired a health-stealing rocket.");
-		enemyList.get(target).damage(50*player.getAtk()/100.0);
+		enemyList.get(target).damage(50*player.getAtk()/100.0,player);
 		try {
-			enemyList.get(target-1).damage(24*player.getAtk()/100.0);
+			enemyList.get(target-1).damage(24*player.getAtk()/100.0,player);
 			player.damage(-3*player.getAtk()/100.0);
 		}
 		catch(Exception e) {
 		}
 		try {
-			enemyList.get(target+1).damage(24*player.getAtk()/100.0);
+			enemyList.get(target+1).damage(24*player.getAtk()/100.0,player);
 			player.damage(-3*player.getAtk()/100.0);
 		}
 		catch(Exception e) {
@@ -186,7 +186,7 @@ public class ActiveItem implements Item {
 	}
 	private void fountainPen(Player player,Enemy enemy) throws Exception {
 		System.out.println("Stabbed with the fountain pen.");
-		enemy.damage(47*player.getAtk()/100.0);
+		enemy.damage(47*player.getAtk()/100.0,player);
 		damage(1,player);
 	}
 	private void waterCanteen(Player player) throws Exception {
@@ -210,37 +210,37 @@ public class ActiveItem implements Item {
 	}
 	private void m1911(Player player,Enemy enemy) {
 		System.out.println("Fired the M1911.");
-		enemy.damage(60*player.getAtk()/100.0);
+		enemy.damage(60*player.getAtk()/100.0,player);
 	}
 	private void stapleGun(Player player,Enemy enemy) {
 		System.out.println("Fired a staple.");
-		enemy.damage(40*player.getAtk()/100.0);
+		enemy.damage(40*player.getAtk()/100.0,player);
 	}
 	private void kunai(Player player,Enemy enemy) {
 		double damage=enemy.getHp()/5.9+32*player.getAtk()/90.0;
 		System.out.println("Swung the kunai.");
 		if(enemy.getUnaware()>0) {
-			if(enemy.damage(damage)) {
+			if(enemy.damage(damage,player)) {
 				player.damage(-damage);
 			}
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
 		else {
-			enemy.damage(40*player.getAtk()/100.0);
+			enemy.damage(40*player.getAtk()/100.0,player);
 			damage(1,player);
 		}
 	}
 	private void directHit(Player player,ArrayList<Enemy>enemyList,byte target) {
 		System.out.println("Fired an accurate rocket.");
-		enemyList.get(target).damage(76*player.getAtk()/100.0);
+		enemyList.get(target).damage(76*player.getAtk()/100.0,player);
 		try {
-			enemyList.get(target-1).damage(7*player.getAtk()/100.0);
+			enemyList.get(target-1).damage(7*player.getAtk()/100.0,player);
 		}
 		catch(Exception e) {
 		}
 		try {
-			enemyList.get(target+1).damage(7*player.getAtk()/100.0);
+			enemyList.get(target+1).damage(7*player.getAtk()/100.0,player);
 		}
 		catch(Exception e) {
 		}

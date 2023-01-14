@@ -62,6 +62,8 @@ public class PassiveItem implements Item {
 			case "Pot Lid":
 				potLid(eventFlag,player,damage);
 				break;
+			case "Immune Deficiency":
+				immuneDeficiency(eventFlag,player,enemyList.get(0));
 			default:
 		}
 	}
@@ -209,6 +211,11 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("damage")) {
 			damage[0]-=1;
 			damage(1,player);
+		}
+	}
+	private void immuneDeficiency(String eventFlag,Player player,Enemy target) {
+		if(eventFlag.equals("attack")) {
+			target.setPoison(player.getPoison());
 		}
 	}
 	@Override

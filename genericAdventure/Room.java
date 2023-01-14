@@ -440,7 +440,7 @@ public class Room {
 					input=getIntInput(1,5);
 				} catch (Exception e) {
 				}
-				enemies.get(input-1).damage(15*player.getAtk()/100.0);
+				enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
 				player.damage(5*player.getAtk()/100.0);
 			}
 			else if(input==2&&hasActiveItem) {
@@ -531,7 +531,7 @@ public class Room {
 						input=getIntInput(1,5);
 					} catch (Exception e) {
 					}
-					enemies.get(input-1).damage(15*player.getAtk()/100.0);
+					enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
 					player.damage(5*player.getAtk()/100.0);
 					break;
 				}
