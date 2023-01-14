@@ -724,16 +724,14 @@ public class Enemy {
 	}
 
 	private void freezingSpit(Player player) {
-		System.out.println(name + " used freezing spit??");
-		player.damage(5 * atk/100);
+		System.out.println(name + " used freezing spit...?");
+		player.damage(5 * atk/100.0);
 		player.setFreeze(2);
 	}
-
 	private void clownFinisher(Player player) {
-		System.out.println(name + " noticed you're low on hp and is going for the finishing kill!");
-		player.damage(100 * atk/100);
+		System.out.println(name + " noticed you're low on hp and is going for a theatrical finisher.");
+		player.damage(99 * atk/100.0);
 	}
-
 	private void swarmRepair(ArrayList<Enemy>enemyList) {
 		if(!droneRepair) {
 			System.out.println(name+" initiates a swarm repair.");
