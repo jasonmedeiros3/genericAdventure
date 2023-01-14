@@ -16,6 +16,7 @@ public class Player {
 	private int freeze=0;
 	private int invuln=0;
 	private int intang=0;
+	private boolean solarArmour=false;
 	private final boolean hayFever;
 	public Player(byte[]inputs,ItemPool itempool) {
 		if(inputs[0]==1) {
@@ -200,6 +201,12 @@ public class Player {
 	public void setHp(int increment) {
 		hp+=increment;
 	}
+	public void setSolarArmour(boolean solarArmour) {
+		this.solarArmour=solarArmour;
+	}
+	public boolean getSolarArmour() {
+		return solarArmour;
+	}
 	public void setAfterburn(int increment) {
 		afterburn+=increment;
 	}
@@ -302,6 +309,10 @@ public class Player {
 	public void statusTick() {
 		if(afterburn>0) {
 			afterburn--;
+			if(solarArmour) {
+				atk++;
+				Inventory.directGet("Solar Panel Armour").damage(1,this);
+			}
 			hp-=(int)((1/32.0)*maxhp);
 		}
 		if(poison>0) {

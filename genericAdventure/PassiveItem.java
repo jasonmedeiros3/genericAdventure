@@ -64,6 +64,10 @@ public class PassiveItem implements Item {
 				break;
 			case "Immune Deficiency":
 				immuneDeficiency(eventFlag,player,enemyList.get(0));
+				break;
+			case "Solar Panel Armour":
+				solarArmour(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -216,6 +220,16 @@ public class PassiveItem implements Item {
 	private void immuneDeficiency(String eventFlag,Player player,Enemy target) {
 		if(eventFlag.equals("attack")) {
 			target.setPoison(player.getPoison());
+		}
+	}
+	private void solarArmour(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setSolarArmour(true);
+			player.setDef(4);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setSolarArmour(false);
+			player.setDef(-4);
 		}
 	}
 	@Override

@@ -133,4 +133,12 @@ public class Inventory {
 	public static Item get(int index) {
 		return inventory.get(index);
 	}
+	public static Item directGet(String name) {
+		for(Item i:inventory) {
+			if(i.getName().equals(name)) {
+				return i;
+			}
+		}
+		return null;
+	}
 }

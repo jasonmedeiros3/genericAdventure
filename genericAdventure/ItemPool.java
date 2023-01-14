@@ -36,6 +36,7 @@ public class ItemPool {
 		pool.add(new PassiveItem("Pot Lid",s=4,30,b=4)); //26
 		pool.add(new ActiveItem("Syrup of Ipecac",s=1,3,b=0,true)); //27
 		pool.add(new PassiveItem("Immune Deficiency",s=0,100,b=0)); //28
+		pool.add(new PassiveItem("Solar Panel Armour",s=20,125,b=4));
 	}
 	public Item get(int index) {
 		return pool.get(index);
