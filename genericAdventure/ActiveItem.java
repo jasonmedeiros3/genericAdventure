@@ -86,6 +86,9 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				directHit(player,enemyList,target);
 				break;
+			case "Syrup of Ipecac":
+				ipecac(player);
+				break;
 			default:
 		}
 	}
@@ -241,6 +244,11 @@ public class ActiveItem implements Item {
 		}
 		catch(Exception e) {
 		}
+	}
+	private void ipecac(Player player) {
+		System.out.println("You drink the syrup of ipecac.");
+		System.out.println("You feel violently nauseous.");
+		player.setPoison(5);
 	}
 	@Override
 	public String getName() {
