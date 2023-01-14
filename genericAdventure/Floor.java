@@ -5,17 +5,27 @@ import java.util.Random;
 
 public final class Floor {
 	public final ArrayList<ArrayList<Room>> map=new ArrayList<ArrayList<Room>>();
-	public static int level=0;
+	public static int level=1;
 	public Floor() {
 		Random rand=new Random();
-		int xBound=rand.nextInt(4)+5;
-		int yBound=xBound+rand.nextInt(4)-2;
+		int xBound=rand.nextInt(2,8)+3;
+		int yBound=xBound+rand.nextInt(-2,3);
 		int itemX=rand.nextInt(xBound);
 		int itemY=rand.nextInt(yBound);
 		int exitX=rand.nextInt(xBound);
 		int exitY=rand.nextInt(yBound);
+		int homeCounter=0;
 		boolean itemRoom=false;
 		boolean exitRoom=false;
+		if(Floor.level==0) {
+			xBound=1;
+			yBound=3;
+			itemX=99;
+			itemY=99;
+			exitX=0;
+			exitY=2;
+			Inventory.removeAll();
+		}
 		for(int i=0;i<=xBound;i++) {
 			map.add(new ArrayList<Room>());
 			for(int j=0;j<=yBound;j++) {
@@ -28,7 +38,12 @@ public final class Floor {
 				while (itemX == exitX) {
        				itemX = rand.nextInt(xBound);
     			}
-				map.get(i).add(new Room((byte)i,(byte)j,itemRoom,rand.nextInt(11),exitRoom));
+				if(Floor.level!=0) {
+					map.get(i).add(new Room((byte)i,(byte)j,itemRoom,rand.nextInt(11),exitRoom));
+				}
+				else {
+					map.get(i).add(new Room((byte)i,(byte)j,itemRoom,--homeCounter,exitRoom));
+				}
 				itemRoom=false;
 				exitRoom=false;
 			}

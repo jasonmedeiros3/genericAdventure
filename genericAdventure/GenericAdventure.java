@@ -13,6 +13,7 @@ public class GenericAdventure {
 	static int xCoord;
 	static int yCoord;
 	static boolean gameLoaded=false;
+	static boolean dealAccepted=false;
 	public ItemPool initItems() {
 		ItemPool itempool=new ItemPool();
 		return itempool;
@@ -202,7 +203,12 @@ public class GenericAdventure {
 						continue;
 					}
 				}
-				Floor.level++;
+				if(!dealAccepted) {
+					Floor.level++;
+				}
+				else {
+					Floor.level=0;
+				}
 			}
 		}
 	}

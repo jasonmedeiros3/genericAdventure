@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Room {
 	private final byte xCoord;
@@ -42,6 +43,15 @@ public class Room {
 			offclassItemChance=25;
 		}
 		switch(biomeSeed) {
+			case -3:
+				biome="home3";
+				break;
+			case -2:
+				biome="home2";
+				break;
+			case -1:
+				biome="home1";
+				break;
 			case 0:
 				biome="forest";
 				break;
@@ -228,7 +238,7 @@ public class Room {
 			if(input=='I'||input=='i') {
 				mapInventory(player);
 			}
-			if(input=='1'&&!itemRoom&&!fought) {
+			if(input=='1'&&!itemRoom&&!fought&&Floor.level!=0) {
 				fought=true;
 				if(battle(floor,player)) {
 					int seed=rand.nextInt(100);
@@ -272,7 +282,7 @@ public class Room {
 					System.out.println("You coward.");
 				}
 			}
-			else if(input=='1'&&itemRoom&&!inspected) {
+			else if(input=='1'&&itemRoom&&!inspected&&Floor.level!=0) {
 				inspected=true;
 				while(true) {
 					int seed=rand.nextInt(itempool.size());
@@ -309,24 +319,125 @@ public class Room {
 			}
 			else if(input=='1'){
 				if(!inspected) {
-					System.out.println("There's nothing here.");
+					System.out.println("There's nothing to see here.");
 					inspected=true;
 				}
 				else {
-					System.out.println("There's still nothing here.");
+					System.out.println("There's still nothing to see here.");
 				}
 			}
 			if(input=='2') {
 				System.out.println("You successfully didn't do anything.");
 			}
 			if(input=='3'&&exitRoom) {
-				if(Floor.level!=3&&Floor.level!=6&&Floor.level!=10) {
+				if(Floor.level==9) {
+					if(devilDeal()) {
+						GenericAdventure.dealAccepted=true;
+					}
+				}
+				if(Floor.level!=3&&Floor.level!=6&&Floor.level!=10&&Floor.level!=0) {
 					return null;
 				}
 				bossBattle(floor,player);
 				return null;
 			}
 		}
+	}
+	public static boolean devilDeal() throws Exception {
+		Thread.sleep(2250);
+		printscroll(".....");
+		Thread.sleep(1000);
+		printscroll("This is the last floor.");
+		Thread.sleep(1000);
+		printscroll("There is nothing left for you here.");
+		Thread.sleep(1000);
+		printscroll("No more content.");
+		Thread.sleep(1000);
+		printscroll("No more enemies to slaughter.");
+		Thread.sleep(1000);
+		printscroll("No more items to collect.");
+		Thread.sleep(1000);
+		printscroll("No more rooms to explore.");
+		Thread.sleep(1000);
+		printscroll("What drove you to keep going?");
+		Thread.sleep(1000);
+		printscroll("An all-consuming desire to obtain the Artifact?");
+		Thread.sleep(1000);
+		printscroll("If that's true, you can stop now.");
+		Thread.sleep(1000);
+		printscroll("The Artifact is yours. There are no enemies left to stop you.");
+		Thread.sleep(1000);
+		printscroll("But is that really what you want?");
+		Thread.sleep(1000);
+		printscroll("But do you want to let go of this world just yet?");
+		Thread.sleep(1000);
+		printscroll("Do you want to go back to whatever you were doing before you opened this game?");
+		Thread.sleep(1000);
+		printscroll("If you do, I cannot stop you.");
+		Thread.sleep(1000);
+		printscroll("I have no power over you.");
+		Thread.sleep(1000);
+		printscroll("I am just another part of the game.");
+		Thread.sleep(1000);
+		printscroll("But if the Artifact was never the real goal...");
+		Thread.sleep(1000);
+		printscroll("If the reason you are here is only to kill enemies and move from room to room...");
+		Thread.sleep(1000);
+		printscroll("I propose a solution.");
+		Thread.sleep(1000);
+		printscroll("Forget about the Artifact.");
+		Thread.sleep(1000);
+		printscroll("Forget that there are no more enemies.");
+		Thread.sleep(1000);
+		printscroll("Forget that there are no more rooms.");
+		Thread.sleep(1000);
+		printscroll("Close your eyes to the truth and open them to the possibilities.");
+		Thread.sleep(1000);
+		printscroll("There is always more content so long as you ignore the reality.");
+		Thread.sleep(2250);
+		if(dealChoice()) {
+			printscroll("You really are here for no reason other than slaughtering mindless blocks of code?");
+			Thread.sleep(1000);
+			printscroll("Thank you.");
+			Thread.sleep(1000);
+			printscroll("I will create the new content.");
+			Thread.sleep(1000);
+			printscroll("All you need to do is close your eyes and enjoy it.");
+		}
+		else {
+			return false;
+		}
+		return true;
+	}
+	public static boolean dealChoice() {
+		String input;
+		int intInput;
+		Scanner s=new Scanner(System.in);
+		System.out.println("1. Accept");
+		System.out.println("2. Refuse");
+		while(true) {
+			input=s.nextLine();
+			try {
+				intInput=Integer.parseInt(input);
+				if(intInput!=1&&intInput!=2) {
+					throw new Exception();
+				}
+				else if(intInput==1) {
+					return true;
+				}
+				return false;
+			}
+			catch(Exception e) {
+			}
+		}
+	}
+	public static void printscroll(String s) throws InterruptedException {
+		char[] sArray=s.toCharArray();
+		for(char c:sArray) {
+			System.out.print(c);
+			Thread.sleep(60);
+		}
+		System.out.println();
 	}
 	public static int getIntInput() throws Exception {
 		Scanner s=new Scanner(System.in);
@@ -451,6 +562,9 @@ public class Room {
 					return false;
 				}
 			}
+			for(Enemy e:enemies) {
+				e.doMove(player, enemies);
+			}
 		}
 	}
 	public boolean bossBattle(Floor floor,Player player) {
@@ -492,6 +606,9 @@ public class Room {
 			player.statusTick();
 			player.checkDead();
 			if(enemies.size()<1) {
+				if(Floor.level==0) {
+					System.exit(0);
+				}
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
@@ -510,7 +627,12 @@ public class Room {
 							hasActiveItem=true;
 						}
 					}
-					System.out.println("1. Struggle");
+					if(Floor.level!=0) {
+						System.out.println("1. Struggle");
+					}
+					else {
+						System.out.println("1. Attack");
+					}
 					System.out.println("2. Open Inventory");
 					System.out.println("3. Run Away");
 					try {
@@ -528,7 +650,9 @@ public class Room {
 					} catch (Exception e) {
 					}
 					enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
-					player.damage(5*player.getAtk()/100.0);
+					if(Floor.level!=0) {
+						player.damage(5*player.getAtk()/100.0);
+					}
 					break;
 				}
 				else if(input==2&&hasActiveItem) {
@@ -541,6 +665,9 @@ public class Room {
 				else if(input==3) {
 					System.out.println("You cannot.");
 				}
+			}
+			for(Enemy e:enemies) {
+				e.doMove(player, enemies);
 			}
 		}
 	}
@@ -745,6 +872,12 @@ public class Room {
 				else {
 					return("It's Ireland. You blink five times in thirty seconds, slightly below average.");
 				}
+			case "home1":
+				return("You are home. A computer glows faintly in the corner, running some amateur game.");
+			case "home2":
+				return("You walk down a hallway. The lights are off.");
+			case "home3":
+				return("You enter the living room. There is nowhere else to go.");
 			default:
 				return("You're in some kind of strange state of limbo. Please file a bug report.");
 		}

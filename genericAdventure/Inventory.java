@@ -141,4 +141,7 @@ public class Inventory {
 		}
 		return null;
 	}
+	public static void removeAll() {
+		inventory.removeAll(inventory);
+	}
 }
