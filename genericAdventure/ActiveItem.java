@@ -89,6 +89,9 @@ public class ActiveItem implements Item {
 			case "Syrup of Ipecac":
 				ipecac(player);
 				break;
+			case "Weighted Coin":
+				coin(player,enemyList);
+				break;
 			default:
 		}
 	}
@@ -249,6 +252,12 @@ public class ActiveItem implements Item {
 		System.out.println("You drink the syrup of ipecac.");
 		System.out.println("You feel violently nauseous.");
 		player.setPoison(5);
+	}
+	private void coin(Player player,ArrayList<Enemy>enemyList) {
+		System.out.println("You throw a coin as a distraction.");
+		for(Enemy e:enemyList) {
+			e.setUnaware(2);
+		}
 	}
 	@Override
 	public String getName() {
