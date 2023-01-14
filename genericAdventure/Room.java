@@ -217,6 +217,9 @@ public class Room {
 					System.out.println("Error creating quicksave.");
 				}
 			}
+			if(input=='I'||input=='i') {
+				mapInventory(player);
+			}
 			if(input=='1'&&!itemRoom&&!fought) {
 				fought=true;
 				if(battle(floor,player)) {
@@ -574,6 +577,7 @@ public class Room {
 	}
 	public char roomChoice(Floor floor) {
 		char input;
+		Scanner s=new Scanner(System.in);
 		if(xCoord>0) {
 			System.out.println("L. Go left");
 		}
@@ -587,7 +591,7 @@ public class Room {
 			System.out.println("U. Go up");
 		}
 		System.out.println("S. Create quicksave");
-		Scanner s=new Scanner(System.in);
+		System.out.println("I. Use item");
 		System.out.println("1. Inspect");
 		System.out.println("2. Do nothing");
 		if(exitRoom) {
@@ -595,6 +599,26 @@ public class Room {
 		}
 		input=s.nextLine().charAt(0);
 		return input;
+	}
+	public void mapInventory(Player player) {
+		int counter=0;
+		int input=0;
+		ArrayList<Item> mapInv=new ArrayList<Item>();
+		for(int i=0;i<Inventory.size();i++) {
+			if(Inventory.get(i).getMapCompatibility()) {
+				System.out.println(++counter+". "+Inventory.get(i).getName()+"("+Inventory.get(i).getDurability()+" Durability)");
+				mapInv.add(Inventory.get(i));
+			}
+		}
+		System.out.println("Select an item to use.");
+		try {
+			input=getIntInput(1,mapInv.size());
+		} catch (Exception e) {
+		}
+		try {
+			Inventory.get(input-1).doEffect("placeholder",player,null,new Integer[]{0},(byte)0);
+		} catch (Exception e) {
+		}
 	}
 	public String welcomeMessage(int displaySeed) {
 		switch(biome) {
