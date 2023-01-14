@@ -41,6 +41,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Taunton Dart Gun",s=5,7,b=5,false)); //31
 		pool.add(new PassiveItem("Booster Shot",s=0,25,b=0)); //32
 		pool.add(new ActiveItem("Blowgun",s=2,1,b=0,false)); //33
+		pool.add(new ActiveItem("Shotgun",s=8,38,b=1,false)); //34
 	}
 	public Item get(int index) {
 		return pool.get(index);

@@ -99,6 +99,10 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				dart(enemyList.get(target),mode);
 				break;
+			case "Shotgun":
+				target=selectTarget(enemyList);
+				shotgun(player,enemyList.get(target));
+				break;
 			default:
 		}
 	}
@@ -293,6 +297,11 @@ public class ActiveItem implements Item {
 		else {
 			enemy.setUnaware(5);
 		}
+	}
+	private void shotgun(Player player,Enemy enemy) {
+		System.out.println("You fire a shotgun. You experience some recoil.");
+		enemy.damage(90*player.getAtk()/100.0, player);
+		player.damage(8*player.getAtk()/100.0);
 	}
 	@Override
 	public String getName() {
