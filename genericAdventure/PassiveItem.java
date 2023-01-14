@@ -12,6 +12,7 @@ public class PassiveItem implements Item {
 	private boolean shimmeringVeil;
 	private boolean mantle;
 	private int deadRingerCounter=2;
+	private static boolean lawLicense;
 	public PassiveItem(String s,short w,int d,byte t) {
 		name=s;
 		weight=w;
@@ -70,6 +71,9 @@ public class PassiveItem implements Item {
 				break;
 			case "Booster Shot":
 				boosterShot(eventFlag,player);
+				break;
+			case "Law License":
+				lawLicense(eventFlag);
 				break;
 			default:
 		}
@@ -244,6 +248,22 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("removeItem")) {
 			player.setVaccinated(-1);
+		}
+	}
+	private void lawLicense(String eventFlag) {
+		if(eventFlag.equals("addItem")||eventFlag.equals("removeItem")) {
+			checkLawLicense();
+		}
+	}
+	public static boolean getLawLicense() {
+		return lawLicense;
+	}
+	public static void checkLawLicense() {
+		if(Inventory.directGet("Law License")!=null) {
+			lawLicense=true;
+		}
+		else {
+			lawLicense=false;
 		}
 	}
 	@Override

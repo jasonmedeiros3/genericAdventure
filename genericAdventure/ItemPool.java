@@ -43,6 +43,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Blowgun",s=2,1,b=0,false)); //33
 		pool.add(new ActiveItem("Shotgun",s=8,38,b=1,false)); //34
 		pool.add(new ActiveItem("Poison Pen",s=1,6,b=8,false)); //35
+		pool.add(new PassiveItem("Law License",s=1,256,b=3)); //36
 	}
 	public Item get(int index) {
 		return pool.get(index);
