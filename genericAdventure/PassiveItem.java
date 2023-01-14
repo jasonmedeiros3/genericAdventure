@@ -42,7 +42,7 @@ public class PassiveItem implements Item {
 				shimmeringVeil(eventFlag,player,damage);
 				break;
 			case "Armed Dead Ringer":
-				armedDeadRinger(eventFlag,player,damage);
+				armedDeadRinger(eventFlag,player,enemyList,damage);
 				break;
 			case "Abstract Concept":
 				abstractConcept(eventFlag,player);
@@ -142,11 +142,14 @@ public class PassiveItem implements Item {
 			damage(-3,player);
 		}
 	}
-	private void armedDeadRinger(String eventFlag,Player player,Integer[] damage) {
+	private void armedDeadRinger(String eventFlag,Player player,ArrayList<Enemy>enemyList,Integer[] damage) {
 		if(eventFlag.equals("turnStart")) {
 			deadRingerCounter--;
 		}
 		else if(eventFlag.equals("damage")) {
+			for(Enemy e:enemyList) {
+				e.setUnaware(2);
+			}
 			damage[0]=(int)(damage[0]/4);
 			damage(1,player);
 		}

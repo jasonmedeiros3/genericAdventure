@@ -398,6 +398,7 @@ public class Room {
 					break;
 				}
 			}
+			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
 			if(enemies.size()<1) {
@@ -487,6 +488,7 @@ public class Room {
 					break;
 				}
 			}
+			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
 			if(enemies.size()<1) {

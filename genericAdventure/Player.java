@@ -1,5 +1,7 @@
 package genericAdventure;
 
+import java.util.ArrayList;
+
 public class Player {
 	private int maxhp;
 	//private int bonusMaxhp;
@@ -19,6 +21,7 @@ public class Player {
 	private int solarArmour=0;
 	private int vaccinated=0;
 	private final boolean hayFever;
+	private ArrayList<Enemy>enemyList;
 	public Player(byte[]inputs,ItemPool itempool) {
 		if(inputs[0]==1) {
 			hayFever=true;
@@ -69,6 +72,10 @@ public class Player {
 		bonusAtk=0;
 		bonusDef=0;*/
 	}
+	public void setEnemyList(ArrayList<Enemy>enemyList) {
+		this.enemyList.removeAll(this.enemyList);
+		this.enemyList.addAll(enemyList);
+	}
 	public void damage(Integer rawDamage) {
 		Integer[] damage=new Integer[1];
 		if(damage[0]>0) {
@@ -85,7 +92,7 @@ public class Player {
 		}
 		Integer[]arrayDamage={damage[0]};
 		if(damage[0]>0) {
-			Inventory.eventFlagHandler("damage", this, null, damage);
+			Inventory.eventFlagHandler("damage", this, enemyList, damage);
 		}
 		if(damage[0]>0) {
 			System.out.println(className+" took "+damage[0]+" damage.");
@@ -117,7 +124,7 @@ public class Player {
 		}
 		intDamage[0]=(int)damage;
 		if(intDamage[0]>0) {
-			Inventory.eventFlagHandler("damage", this, null, intDamage);
+			Inventory.eventFlagHandler("damage", this, enemyList, intDamage);
 		}
 		if(intDamage[0]>0) {
 			System.out.println(className+" took "+intDamage[0]+" damage.");
