@@ -249,7 +249,7 @@ public class Room {
 									}
 									continue;
 								case "Lawyer":
-									if((type==0||type==3)||seed3<=offclassItemChance) {
+									if((type==0||type==3||type==8)||seed3<=offclassItemChance) {
 										break;
 									}
 									continue;
@@ -259,7 +259,7 @@ public class Room {
 									}
 									continue;
 								case "Spy":
-									if((type==0||type==5||type==6)||seed3<=offclassItemChance) {
+									if((type==0||type==5||type==6||type==8)||seed3<=offclassItemChance) {
 										break;
 									}
 									continue;
@@ -290,7 +290,7 @@ public class Room {
 							}
 							continue;
 						case "Lawyer":
-							if((type==0||type==3)||seed2<=offclassItemChance) {
+							if((type==0||type==3||type==8)||seed2<=offclassItemChance) {
 								break;
 							}
 							continue;
@@ -300,7 +300,7 @@ public class Room {
 							}
 							continue;
 						case "Spy":
-							if((type==0||type==5||type==6)||seed2<=offclassItemChance) {
+							if((type==0||type==5||type==6||type==8)||seed2<=offclassItemChance) {
 								break;
 							}
 					}

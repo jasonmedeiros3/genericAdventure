@@ -103,6 +103,10 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				shotgun(player,enemyList.get(target));
 				break;
+			case "Poison Pen":
+				target=selectTarget(enemyList);
+				poisonPen(player,enemyList.get(target));
+				break;
 			default:
 		}
 	}
@@ -302,6 +306,21 @@ public class ActiveItem implements Item {
 		System.out.println("You fire a shotgun. You experience some recoil.");
 		enemy.damage(90*player.getAtk()/100.0, player);
 		player.damage(8*player.getAtk()/100.0);
+		damage(1,player);
+	}
+	private void poisonPen(Player player,Enemy enemy) {
+		if(enemy.getUnaware()>0) {
+			System.out.println("You sneak up on the enemy and inject the poison.");
+			enemy.damage(5*player.getAtk()/100, player);
+			enemy.setPoison(5);
+			damage(1,player);
+		}
+		else {
+			System.out.println("The enemy sees you coming and you haphazardly swing the pen.");
+			enemy.damage(7*player.getAtk()/100, player);
+			enemy.setPoison(1);
+			damage(2,player);
+		}
 	}
 	@Override
 	public String getName() {
