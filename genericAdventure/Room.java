@@ -398,15 +398,11 @@ public class Room {
 					break;
 				}
 			}
-			if(enemies.size()<1) {
-				return true;
-			}
 			player.statusTick();
-			if(player.getHp()<=0) {
-				System.out.println("You died.");
-				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
-				System.out.println("Your final item count was "+Inventory.size()+".");
-				System.exit(0);
+			player.checkDead();
+			if(enemies.size()<1) {
+				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
+				return true;
 			}
 			while(true) {
 				displayPlayer(player);
@@ -457,8 +453,6 @@ public class Room {
 		}
 	}
 	public boolean bossBattle(Floor floor,Player player) {
-		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
-		int enemyWeight=0;
 		int input;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
@@ -478,9 +472,7 @@ public class Room {
 			int deadEnemyCounter=0;
 			for(Enemy e:enemies) {
 				e.statusTick();
-				if(e.checkDead()) {
-					enemyWeight-=e.getWeight();
-				}
+				e.checkDead();
 			}
 			while(true) {
 				try {
@@ -495,10 +487,12 @@ public class Room {
 					break;
 				}
 			}
+			player.statusTick();
+			player.checkDead();
 			if(enemies.size()<1) {
+				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
-			player.checkDead();
 			while(true) {
 				while(true) {
 					displayPlayer(player);
@@ -543,9 +537,7 @@ public class Room {
 					System.out.println("No usable items.");
 				}
 				else if(input==3) {
-					if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
-						return false;
-					}
+					System.out.println("You cannot.");
 				}
 			}
 		}
