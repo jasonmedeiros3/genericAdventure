@@ -452,7 +452,7 @@ public class Boss extends Enemy {
 	}
 	private void beastLunch() {
 		System.out.println(name+" stops for lunch.");
-		damage(-66);
+		damage(-66,null);
 	}
 	private void theMark(Player player) {
 		System.out.println(name+" brands you with the Mark of the Beast.");
@@ -568,7 +568,7 @@ public class Boss extends Enemy {
 	}
 	private void salvation() {
 		System.out.println("The power of God heals "+name+", or something like that.");
-		damage(-77);
+		damage(-77,null);
 	}
 	private void divineIntervention(Player player) {
 		System.out.println(name+" intervenes divinely.");
@@ -611,7 +611,7 @@ public class Boss extends Enemy {
 		else {
 			System.out.println(name+" decides that it would rather you won the game.");
 			invuln=0;
-			damage(infinity);
+			damage(infinity,null);
 		}
 	}
 	private void warCry() {
@@ -681,7 +681,7 @@ public class Boss extends Enemy {
 	private void dispense(Boss engi) {
 		System.out.println(name+" dispensed.");
 		engi.metal+=20+20*buildingLevel;
-		engi.damage(-5-5*buildingLevel);
+		engi.damage(-5-5*buildingLevel,null);
 		if(engi.metal>200) {
 			engi.metal=200;
 		}
@@ -708,7 +708,7 @@ public class Boss extends Enemy {
 	}
 	private void buildingRepair(Boss building) {
 		System.out.println(name+" repairs a "+building.name+".");
-		building.damage(-60);
+		building.damage(-60,null);
 		metal-=20;
 	}
 	private void buildingUpgrade(Boss building) {
@@ -737,7 +737,7 @@ public class Boss extends Enemy {
 		System.out.println(name+" calls a tea break.");
 		System.out.println("Tea. Earl Grey. Hot.");
 		player.damage(-10);
-		damage(-10);
+		damage(-10,null);
 	}
 	private void shivUp(Player player) {
 		System.out.println(name+" shivs you up.");
@@ -762,7 +762,7 @@ public class Boss extends Enemy {
 		System.out.println(name+" shares a traditional British delicacy with you.");
 		System.out.println("It's stale toast with canned beans.");
 		player.damage(25);
-		damage(-25);
+		damage(-25,null);
 	}
 	private void gelatinPunch(Player player) {
 		System.out.println("Somehow, "+name+" punches you.");
@@ -776,10 +776,10 @@ public class Boss extends Enemy {
 	private void gelatinTherapy() {
 		System.out.println(name+" attended cognitive behavioural therapy.");
 		System.out.println(name+" healed on the inside.");
-		damage(-37);
+		damage(-37,null);
 	}
 	private void selfRepair() {
-		damage(-25);
+		damage(-25,null);
 		if(afterburn>0) {
 			afterburn--;
 		}
@@ -819,7 +819,7 @@ public class Boss extends Enemy {
 		if(seed>=77) {
 			System.out.println("This is probably illegal.");
 		}
-		damage(-20);
+		damage(-20,null);
 		unaware+=2;
 	}
 	private void huntingShotgun(Player player,int seed) {
@@ -831,7 +831,7 @@ public class Boss extends Enemy {
 		else {
 			System.out.println(name+" fires the hunting shotgun. The recoil is significant.");
 			player.damage(90*atk/100.0);
-			damage(30);
+			damage(30,null);
 		}
 	}
 	private void beehive(Player player) {

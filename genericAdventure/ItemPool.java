@@ -35,6 +35,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Direct Hit",s=10,20,b=1,false)); //25
 		pool.add(new PassiveItem("Pot Lid",s=4,30,b=4)); //26
 		pool.add(new ActiveItem("Syrup of Ipecac",s=1,3,b=0,true)); //27
+		pool.add(new PassiveItem("Immune Deficiency",s=0,100,b=0)); //28
 	}
 	public Item get(int index) {
 		return pool.get(index);
