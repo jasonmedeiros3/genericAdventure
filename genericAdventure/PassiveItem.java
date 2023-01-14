@@ -245,10 +245,16 @@ public class PassiveItem implements Item {
 	public void setPassive(boolean passive) {
 		isPassive=passive;
 	}
+	@Override
 	public byte getType() {
 		return type;
 	}
+	@Override
 	public boolean isPassive() {
 		return isPassive;
+	}
+	@Override
+	public boolean getMapCompatibility() {
+		return false;
 	}
 }

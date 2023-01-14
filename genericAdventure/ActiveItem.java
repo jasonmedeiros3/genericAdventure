@@ -8,8 +8,8 @@ public class ActiveItem implements Item {
 	private short weight;
 	private int durability;
 	private int maxDurability;
-	private byte type;
-	private boolean mapCompatible;
+	private final byte type;
+	private final boolean mapCompatible;
 	public ActiveItem(String s,short w,int d,byte t,boolean m) {
 		name=s;
 		weight=w;
@@ -280,9 +280,11 @@ public class ActiveItem implements Item {
 	public byte getType() {
 		return type;
 	}
+	@Override
 	public boolean isPassive() {
 		return isPassive;
 	}
+	@Override
 	public boolean getMapCompatibility() {
 		return mapCompatible;
 	}

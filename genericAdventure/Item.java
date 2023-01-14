@@ -49,4 +49,5 @@ public interface Item {
 	public void setMaxDurability(int value);
 	public void setPassive(boolean passive);
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception;
+	public boolean getMapCompatibility();
 }
