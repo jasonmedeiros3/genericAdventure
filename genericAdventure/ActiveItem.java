@@ -94,6 +94,7 @@ public class ActiveItem implements Item {
 				coin(enemyList);
 				break;
 			case "Taunton Dart Gun":
+			case "Blowgun":
 				Boolean mode=selectDartMode();
 				target=selectTarget(enemyList);
 				dart(enemyList.get(target),mode);

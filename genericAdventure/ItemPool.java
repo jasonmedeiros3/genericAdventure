@@ -40,6 +40,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Weighted Coin",s=1,3,b=5,false)); //30
 		pool.add(new ActiveItem("Taunton Dart Gun",s=5,7,b=5,false)); //31
 		pool.add(new PassiveItem("Booster Shot",s=0,25,b=0)); //32
+		pool.add(new ActiveItem("Blowgun",s=2,1,b=0,false)); //33
 	}
 	public Item get(int index) {
 		return pool.get(index);
