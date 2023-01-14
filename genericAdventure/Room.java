@@ -464,13 +464,7 @@ public class Room {
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
-		for(int i=0;i<5;i++) {
-			enemies.add(new Enemy(biome,false));
-			enemyWeight+=enemies.get(i).getWeight();
-			if(enemyWeight>MAXENEMYWEIGHT) {
-				break;
-			}
-		}
+		enemies.add(new Enemy(null,true));
 		for(int i=0;i<Inventory.size();i++) {
 			if(Inventory.get(i).isPassive()) {
 				try {
