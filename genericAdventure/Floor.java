@@ -5,7 +5,7 @@ import java.util.Random;
 
 public final class Floor {
 	public final ArrayList<ArrayList<Room>> map=new ArrayList<ArrayList<Room>>();
-	public static int level=1;
+	public static int level=0;
 	public Floor() {
 		Random rand=new Random();
 		int xBound=rand.nextInt(2,8)+3;
@@ -26,9 +26,9 @@ public final class Floor {
 			exitY=2;
 			Inventory.removeAll();
 		}
-		for(int i=0;i<=xBound;i++) {
+		for(int i=0;i<xBound;i++) {
 			map.add(new ArrayList<Room>());
-			for(int j=0;j<=yBound;j++) {
+			for(int j=0;j<yBound;j++) {
 				if(i==itemX&&j==itemY) {
 					itemRoom=true;
 				}
