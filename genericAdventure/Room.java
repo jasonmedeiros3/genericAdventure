@@ -152,18 +152,26 @@ public class Room {
 			}
 			if((input=='L'||input=='l')&&canLeft) {
 				System.out.println("You moved left.");
+				player.statusTick();
+				player.checkDead();
 				return floor.map.get(xCoord-1).get(yCoord);
 			}
 			if((input=='R'||input=='r')&&canRight) {
 				System.out.println("You moved right.");
+				player.statusTick();
+				player.checkDead();
 				return floor.map.get(xCoord+1).get(yCoord);
 			}
 			if((input=='D'||input=='d')&&canDown) {
 				System.out.println("You moved down.");
+				player.statusTick();
+				player.checkDead();
 				return floor.map.get(xCoord).get(yCoord-1);
 			}
 			if((input=='U'||input=='u')&&canUp) {
 				System.out.println("You moved up.");
+				player.statusTick();
+				player.checkDead();
 				return floor.map.get(xCoord).get(yCoord+1);
 			}
 			if(input=='S'||input=='s') {
@@ -349,7 +357,6 @@ public class Room {
 		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
-		int turn=0;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
@@ -453,7 +460,6 @@ public class Room {
 		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
-		int turn=0;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
 		Random rand=new Random();
@@ -498,12 +504,7 @@ public class Room {
 			if(enemies.size()<1) {
 				return true;
 			}
-			if(player.getHp()<=0) {
-				System.out.println("You died.");
-				System.out.println("You made it "+Floor.level+" floors as the "+player.getClassName()+".");
-				System.out.println("Your final item count was "+Inventory.size()+".");
-				System.exit(0);
-			}
+			player.checkDead();
 			while(true) {
 				while(true) {
 					displayPlayer(player);
