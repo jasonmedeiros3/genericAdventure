@@ -22,6 +22,8 @@ public class Enemy {
 	protected Player tempPlayer;
 	protected boolean bearTrap=false;
 	protected boolean clownSaw=false;
+	private static boolean droneRepair=false;
+	private static boolean canDroneRepair=true;
 	public final boolean isBoss;
 	public Enemy(String biome,boolean isBoss) {
 		Random rand=new Random();
@@ -268,8 +270,8 @@ public class Enemy {
 					setWeight(5);
 					break;
 				case "Weaponized Circus Drone":
-					maxhp=(int)(40+2.7*Math.pow(Floor.level-1,1.28));
-					atk=(int)(100+2.5*Floor.level);
+					maxhp=(int)(60+3*Math.pow(Floor.level-1,1.4));
+					atk=(int)(77+2.5*Floor.level);
 					def=(int)(85+4*Floor.level);
 					setWeight(2);
 					break;
@@ -690,10 +692,49 @@ public class Enemy {
 					else {
 						clownRepair(enemyList);
 					}
+				case "Weaponized Circus Drone":
+					if((hp<=maxhp/2.5||droneRepair)&&canDroneRepair) {
+						swarmRepair(enemyList);
+					}
+					else if(seed1<=85) {
+						canDroneRepair=false;
+						droneGun(player);
+					}
+					else {
+						canDroneRepair=false;
+						uplink(enemyList);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
+		}
+	}
+	private void swarmRepair(ArrayList<Enemy>enemyList) {
+		if(!droneRepair) {
+			System.out.println(name+" initiates a swarm repair.");
+		}
+		else {
+			System.out.println(name+" joins the swarm repair.");
+		}
+		for(Enemy e:enemyList) {
+			if(!droneRepair) {
+				e.damage(-20*atk/100);
+			}
+			else {
+				e.damage(-25*atk/100);
+			}
+		}
+		droneRepair=true;
+	}
+	private void droneGun(Player player) {
+		System.out.println(name+" opens fire with a mounted gun.");
+		player.damage(32*atk/100);
+	}
+	private void uplink(ArrayList<Enemy>enemyList) {
+		System.out.println(name+" establishes an uplink to import damage-dealing strategies.");
+		for(Enemy e:enemyList) {
+			e.setAtk(5);
 		}
 	}
 	private void armSwing(Player player) {
@@ -1016,6 +1057,8 @@ public class Enemy {
 		this.weight = weight;
 	}
 	public void statusTick() {
+		droneRepair=false;
+		canDroneRepair=true;
 		bearTrap=false;
 		if(afterburn>0) {
 			afterburn--;
