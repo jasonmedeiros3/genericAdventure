@@ -39,6 +39,7 @@ public class ItemPool {
 		pool.add(new PassiveItem("Solar Panel Armour",s=20,125,b=4)); //29
 		pool.add(new ActiveItem("Weighted Coin",s=1,3,b=5,false)); //30
 		pool.add(new ActiveItem("Taunton Dart Gun",s=5,7,b=5,false)); //31
+		pool.add(new PassiveItem("Booster Shot",s=0,25,b=0)); //32
 	}
 	public Item get(int index) {
 		return pool.get(index);

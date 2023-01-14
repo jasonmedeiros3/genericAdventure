@@ -68,6 +68,9 @@ public class PassiveItem implements Item {
 			case "Solar Panel Armour":
 				solarArmour(eventFlag,player);
 				break;
+			case "Booster Shot":
+				boosterShot(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -183,7 +186,7 @@ public class PassiveItem implements Item {
 		if(eventFlag.equals("battleStart")) {
 			mantle=true;
 		}
-		else if(eventFlag.equals("damage")) {
+		else if(eventFlag.equals("damage")&&mantle) {
 			damage[0]=0;
 			mantle=false;
 			damage(1,player);
@@ -224,12 +227,20 @@ public class PassiveItem implements Item {
 	}
 	private void solarArmour(String eventFlag,Player player) {
 		if(eventFlag.equals("addItem")) {
-			player.setSolarArmour(true);
+			player.setSolarArmour(1);
 			player.setDef(4);
 		}
 		else if(eventFlag.equals("removeItem")) {
-			player.setSolarArmour(false);
+			player.setSolarArmour(-1);
 			player.setDef(-4);
+		}
+	}
+	private void boosterShot(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setVaccinated(1);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setVaccinated(-1);
 		}
 	}
 	@Override
