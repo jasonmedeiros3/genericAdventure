@@ -1,6 +1,7 @@
 package genericAdventure;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ActiveItem implements Item {
 	private String name;
@@ -90,9 +91,33 @@ public class ActiveItem implements Item {
 				ipecac(player);
 				break;
 			case "Weighted Coin":
-				coin(player,enemyList);
+				coin(enemyList);
+				break;
+			case "Taunton Dart Gun":
+				Boolean mode=selectDartMode();
+				target=selectTarget(enemyList);
+				dart(enemyList.get(target),mode);
 				break;
 			default:
+		}
+	}
+	private boolean selectDartMode() {
+		Scanner s=new Scanner(System.in);
+		byte input=0;
+		while(true) {
+			System.out.println("Select a dart type.\n1. Emetic\n2. Sedative");
+			try {
+				input=s.nextByte();
+				if(input!=1&&input!=2) {
+					throw new Exception();
+				}
+				if(input==1) {
+					return true;
+				}
+				return false;
+			}
+			catch(Exception e) {
+			}
 		}
 	}
 	private byte selectTarget(ArrayList<Enemy> enemyList) {
@@ -253,10 +278,19 @@ public class ActiveItem implements Item {
 		System.out.println("You feel violently nauseous.");
 		player.setPoison(5);
 	}
-	private void coin(Player player,ArrayList<Enemy>enemyList) {
+	private void coin(ArrayList<Enemy>enemyList) {
 		System.out.println("You throw a coin as a distraction.");
 		for(Enemy e:enemyList) {
 			e.setUnaware(2);
+		}
+	}
+	private void dart(Enemy enemy,boolean mode) {
+		System.out.println("You fire a"+(mode?"n emetic":" sedative")+" dart.");
+		if(mode) {
+			enemy.setPoison(3);
+		}
+		else {
+			enemy.setUnaware(5);
 		}
 	}
 	@Override
