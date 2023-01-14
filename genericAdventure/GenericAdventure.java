@@ -45,6 +45,7 @@ public class GenericAdventure {
 		int input;
 		try {
 			File encryptionKey=new File("encryptionKey.txt");
+			encryptionKey.delete();
 			if(encryptionKey.createNewFile()); {
 				BufferedWriter keyWriter=new BufferedWriter(new FileWriter("encryptionKey.txt"));
 				keyWriter.write("1#%$\n2!%&\n3^%*\n4!$&\n5)(&\n");
@@ -53,7 +54,7 @@ public class GenericAdventure {
 				keyWriter.write("b!$!\nd^%$\ne&!%\nf!!!\ng@@#\nh)!#\n");
 				keyWriter.write("i*)(\nj***\nk&$&\nl@%#\nm*))\nn^^!\n");
 				keyWriter.write("o*@@\nq)*^\nr#!*\nt^!^\nw&&#\n");
-				keyWriter.write("x)#(\ny!@#\nz%)%\n>&**\n %%%\n-^*^\n.&!^");
+				keyWriter.write("x)#(\ny!@#\nz%)%\n>&**\n %%%\n-^*^\n.&!^\n$$$*\n #)$");
 				keyWriter.flush();
 			}
 		}

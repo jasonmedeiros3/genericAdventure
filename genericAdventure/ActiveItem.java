@@ -107,6 +107,10 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				poisonPen(player,enemyList.get(target));
 				break;
+			case "$15 Spear":
+				target=selectTarget(enemyList);
+				expensiveSpear(player,enemyList.get(target));
+				break;
 			default:
 		}
 	}
@@ -311,16 +315,20 @@ public class ActiveItem implements Item {
 	private void poisonPen(Player player,Enemy enemy) {
 		if(enemy.getUnaware()>0) {
 			System.out.println("You sneak up on the enemy and inject the poison.");
-			enemy.damage(5*player.getAtk()/100, player);
+			enemy.damage(5*player.getAtk()/100.0, player);
 			enemy.setPoison(5);
 			damage(1,player);
 		}
 		else {
 			System.out.println("The enemy sees you coming and you haphazardly swing the pen.");
-			enemy.damage(7*player.getAtk()/100, player);
+			enemy.damage(7*player.getAtk()/100.0, player);
 			enemy.setPoison(1);
 			damage(2,player);
 		}
+	}
+	private void expensiveSpear(Player player,Enemy enemy) {
+		System.out.println("Thrust the $15 spear.");
+		enemy.damage(85*player.getAtk()/100.0, player);
 	}
 	@Override
 	public String getName() {
