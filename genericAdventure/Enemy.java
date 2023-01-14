@@ -640,6 +640,7 @@ public class Enemy {
 					else {
 						leafBlow(player);
 					}
+					break;
 				case "Poacher":
 					if(seed1<=25) {
 						bearTrap(player,enemyList);
@@ -653,6 +654,7 @@ public class Enemy {
 					else {
 						handgun(player);
 					}
+					break;
 				case "Clown":
 					if(seed1<=25||(seed1<=99&&clownSaw)) {
 						chainsaw(player);
@@ -666,8 +668,11 @@ public class Enemy {
 					else {
 						aNewBat(player);
 					}
+					break;
 				case "Defective Clown":
-					if(seed1<=40) {
+					if (player.getHp() <= 25) {
+						clownFinisher(player);
+					} else if(seed1<=40) {
 						handSaw(player,seed2);
 					}
 					else if(seed1<=69||(seed1<=85&&player.getPoison()<=0)) {
@@ -676,6 +681,7 @@ public class Enemy {
 					else {
 						shortCircuit();
 					}
+					break;
 				case "Assembly Line Machine":
 					if(seed1<=25) {
 						armSwing(player);
@@ -692,6 +698,7 @@ public class Enemy {
 					else {
 						clownRepair(enemyList);
 					}
+					break;
 				case "Weaponized Circus Drone":
 					if((hp<=maxhp/2.5||droneRepair)&&canDroneRepair) {
 						swarmRepair(enemyList);
@@ -704,12 +711,29 @@ public class Enemy {
 						canDroneRepair=false;
 						uplink(enemyList);
 					}
+					break;
+				case "Polar Camel":
+					if (seed1 >= 25 && player.getHp() >= 60) {
+						freezingSpit(player);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
+
+	private void freezingSpit(Player player) {
+		System.out.println(name + " used freezing spit??");
+		player.damage(5 * atk/100);
+		player.setFreeze(2);
+	}
+
+	private void clownFinisher(Player player) {
+		System.out.println(name + " noticed you're low on hp and is going for the finishing kill!");
+		player.damage(100 * atk/100);
+	}
+
 	private void swarmRepair(ArrayList<Enemy>enemyList) {
 		if(!droneRepair) {
 			System.out.println(name+" initiates a swarm repair.");
