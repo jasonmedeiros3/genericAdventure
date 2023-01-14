@@ -33,6 +33,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Staple Gun",s=10,30,b=3,false)); //23
 		pool.add(new ActiveItem("Conniver Kunai",s=7,70,b=5,false)); //24
 		pool.add(new ActiveItem("Direct Hit",s=10,20,b=1,false)); //25
+		pool.add(new PassiveItem("Pot Lid",s=4,30,b=4)); //26
 	}
 	public Item get(int index) {
 		return pool.get(index);

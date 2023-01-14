@@ -59,6 +59,9 @@ public class PassiveItem implements Item {
 			case "Brass Knuckles":
 				brassKnuckles(eventFlag,player);
 				break;
+			case "Pot Lid":
+				potLid(eventFlag,player,damage);
+				break;
 			default:
 		}
 	}
@@ -194,6 +197,18 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("removeItem")) {
 			player.setAtk(-8);
+		}
+	}
+	private void potLid(String eventFlag,Player player,Integer[] damage) {
+		if(eventFlag.equals("addItem")) {
+			player.setDef(10);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setDef(-10);
+		}
+		else if(eventFlag.equals("damage")) {
+			damage[0]-=1;
+			damage(1,player);
 		}
 	}
 	@Override
