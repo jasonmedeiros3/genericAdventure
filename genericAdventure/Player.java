@@ -291,6 +291,14 @@ public class Player {
 	public boolean getHayFever() {
 		return hayFever;
 	}
+	public void checkDead() {
+		if(hp<=0) {
+			System.out.println("You died.");
+			System.out.println("You made it "+Floor.level+" floors as the "+getClassName()+".");
+			System.out.println("Your final item count was "+Inventory.size()+".");
+			System.exit(0);
+		}
+	}
 	public void statusTick() {
 		if(afterburn>0) {
 			afterburn--;
