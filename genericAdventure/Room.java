@@ -144,6 +144,8 @@ public class Room {
 			canLeft=true;
 		}
 		if(xCoord<floor.map.size()-1) {
+			System.out.println(xCoord+" xcoord");
+			System.out.println(floor.map.size()+" size");
 			canRight=true;
 		}
 		if(yCoord>0) {
@@ -574,6 +576,7 @@ public class Room {
 		Random rand=new Random();
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 		enemies.add(new Enemy(null,true));
+		System.out.println(enemies.get(0).getName());
 		for(int i=0;i<Inventory.size();i++) {
 			if(Inventory.get(i).isPassive()) {
 				try {

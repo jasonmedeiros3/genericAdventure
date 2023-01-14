@@ -94,7 +94,7 @@ public class GenericAdventure {
 						break;
 					}
 					catch(Exception e) {
-						System.out.println(e.getMessage()==null?"Something went wrong. Try again.":e.getMessage());
+						e.printStackTrace();
 						continue;
 					}
 				}
@@ -216,10 +216,13 @@ public class GenericAdventure {
 		Random rand=new Random();
 		Room location;
 		do {
-			xCoord=rand.nextInt(floor.map.size()-1);
-			yCoord=rand.nextInt(floor.map.get(xCoord).size()-1);
+			xCoord=rand.nextInt(floor.map.size());
+			yCoord=rand.nextInt(floor.map.get(xCoord).size());
 			location=floor.map.get(xCoord).get(yCoord);
 		} while(location.getExit());
+		if(Floor.level==0) {
+			location=floor.map.get(0).get(0);
+		}
 		while(true) {
 			try {
 				location=location.display(floor,player,itempool);
@@ -228,6 +231,7 @@ public class GenericAdventure {
 				}
 			}
 			catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

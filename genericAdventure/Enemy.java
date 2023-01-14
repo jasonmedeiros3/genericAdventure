@@ -970,7 +970,12 @@ public class Enemy {
 		hp-=damage;
 		if(hp<=0) {
 			dead=true;
-			System.out.println("Enemy "+name+" died.");
+			if(Floor.level!=0) {
+				System.out.println(name+" died.");
+			}
+			else {
+				System.out.println("The game is over.");
+			}
 			return true;
 		}
 		if(hp>maxhp) {
@@ -1013,7 +1018,12 @@ public class Enemy {
 		hp-=damage;
 		if(hp<=0) {
 			dead=true;
-			System.out.println("Enemy "+name+" died.");
+			if(Floor.level!=0) {
+				System.out.println(name+" died.");
+			}
+			else {
+				System.out.println("The game is over.");
+			}
 			return true;
 		}
 		if(hp>maxhp) {
