@@ -170,9 +170,6 @@ public class Enemy {
 					break;
 			}
 		}
-		else if(biome!=null) {
-			nameSelector(biome);
-		}
 		else {
 			switch(Floor.level) {
 				case 3:
@@ -677,10 +674,67 @@ public class Enemy {
 					else {
 						shortCircuit();
 					}
+				case "Assembly Line Machine":
+					if(seed1<=25) {
+						armSwing(player);
+					}
+					else if(seed1<=65&&enemyList.size()<5) {
+						clownAssembly(enemyList);
+					}
+					else if(seed1<=30) {
+						bsod();
+					}
+					else if(seed1<=70) {
+						disassemble(player);
+					}
+					else {
+						clownRepair(enemyList);
+					}
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
+		}
+	}
+	private void armSwing(Player player) {
+		System.out.println(name+" swings a robot arm at you.");
+		player.damage(65*atk/100);
+	}
+	private void clownAssembly(ArrayList<Enemy>enemyList) {
+		Enemy e;
+		int counter=3;
+		do {
+			e=new Enemy("clown factory",false);
+			counter--;
+		} while(!e.name.equals("Clown")&&!e.name.equals("Defective Clown")&&counter!=0);
+		if(counter!=0) {
+			enemyList.add(e);
+			System.out.println(name+" manufactured a "+e.name+".");
+		}
+		else {
+			System.out.println(name+" failed to manufacture anything.");
+		}
+	}
+	private void bsod() {
+		System.out.println(name+" crashes unexpectedly for 3 turns.");
+		freeze+=3;
+	}
+	private void disassemble(Player player) {
+		System.out.println(name+" attempts to disassemble you.");
+		player.damage(50+atk/10);
+	}
+	private void clownRepair(ArrayList<Enemy>enemyList) {
+		Random rand=new Random();
+		boolean successful=false;
+		System.out.println(name+" attempts to repair a clown.");
+		for(Enemy e:enemyList) {
+			if(rand.nextInt(100)<=70&&e.hp<e.maxhp&&(e.name.equals("Clown")||e.name.equals("Defective Clown"))) {
+				successful=true;
+				e.damage(-40*atk/100);
+			}
+		}
+		if(!successful) {
+			System.out.println("It failed to repair anything.");
 		}
 	}
 	private void handSaw(Player player,int seed) {
