@@ -331,8 +331,8 @@ public class Room {
 			}
 			if(input=='3'&&exitRoom) {
 				if(Floor.level==9) {
-					if(devilDeal()) {
-						GenericAdventure.dealAccepted=true;
+					if(!devilDeal()) {
+						GenericAdventure.dealRefused=true;
 					}
 				}
 				if(Floor.level!=3&&Floor.level!=6&&Floor.level!=10&&Floor.level!=0) {
