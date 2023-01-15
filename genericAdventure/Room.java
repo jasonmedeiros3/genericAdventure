@@ -37,10 +37,10 @@ public class Room {
 			}
 		}
 		if(offclassItemChanceUp) {
-			offclassItemChance=80;
+			offclassItemChance=90;
 		}
 		else {
-			offclassItemChance=25;
+			offclassItemChance=50;
 		}
 		switch(biomeSeed) {
 			case -3:
