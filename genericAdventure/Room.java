@@ -561,7 +561,6 @@ public class Room {
 				System.out.println("3. Run Away");
 				try {
 					input=getIntInput(1,3);
-					System.out.println("OK!");
 					break;
 				}
 				catch(Exception e) {
