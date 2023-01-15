@@ -10,8 +10,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GenericAdventure {
-	static int xCoord;
-	static int yCoord;
+	static int xCoord=0;
+	static int yCoord=0;
 	static boolean gameLoaded=false;
 	static boolean dealRefused=false;
 	public ItemPool initItems() {
@@ -90,7 +90,7 @@ public class GenericAdventure {
 				while(true) {
 					try {
 						System.out.println("Floor "+(Floor.level));
-						main.advent(new Floor(),player,itempool);
+						main.advent(new Floor(),player,itempool,false);
 						break;
 					}
 					catch(Exception e) {
@@ -200,7 +200,8 @@ public class GenericAdventure {
 				while(true) {
 					try {
 						System.out.println("Floor "+(Floor.level));
-						main.advent(new Floor(),player,itempool);
+						main.advent(new Floor(),player,itempool,gameLoaded);
+						gameLoaded=false;
 						break;
 					}
 					catch(Exception e) {
@@ -217,14 +218,17 @@ public class GenericAdventure {
 			}
 		}
 	}
-	public void advent(Floor floor,Player player,ItemPool itempool) throws Exception {
+	public void advent(Floor floor,Player player,ItemPool itempool,boolean useExistingCoords) throws Exception {
 		Random rand=new Random();
 		Room location;
-		do {
-			xCoord=rand.nextInt(floor.map.size());
-			yCoord=rand.nextInt(floor.map.get(xCoord).size());
-			location=floor.map.get(xCoord).get(yCoord);
-		} while(location.getExit());
+		location=floor.map.get(xCoord).get(yCoord);
+		if(!useExistingCoords) {
+			do {
+				xCoord=rand.nextInt(floor.map.size());
+				yCoord=rand.nextInt(floor.map.get(xCoord).size());
+				location=floor.map.get(xCoord).get(yCoord);
+			} while(location.getExit());
+		}
 		if(Floor.level==0) {
 			location=floor.map.get(0).get(0);
 		}
