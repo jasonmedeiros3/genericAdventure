@@ -102,8 +102,9 @@ public class Inventory {
 			throw new Exception("That isn't a valid item.");
 		}
 		weight-=inventory.get(count-1).getWeight();
-		inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
-		inventory.remove(count-1);
+		if(inventory.get(count-1).isPassive()) {
+			inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
+		}
 		System.out.println("Item removed.");
 	}
 	public static boolean cancellableRemove(Player player) throws Exception {
@@ -122,7 +123,9 @@ public class Inventory {
 			throw new Exception("That isn't a valid item.");
 		}
 		weight-=inventory.get(count-1).getWeight();
-		inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
+		if(inventory.get(count-1).isPassive()) {
+			inventory.get(count-1).doEffect("removeItem", player, null, new Integer[]{0}, (byte)0);
+		}
 		inventory.remove(count-1);
 		System.out.println("Item removed.");
 		return false;
