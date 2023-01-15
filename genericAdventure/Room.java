@@ -275,6 +275,7 @@ public class Room {
 									continue;
 							}
 							Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
+							break;
 						}
 					}
 				}
@@ -315,6 +316,7 @@ public class Room {
 							}
 					}
 					Inventory.add(itempool.get(rand.nextInt(itempool.size())),player);
+					break;
 				}
 			}
 			else if(input=='1'){
