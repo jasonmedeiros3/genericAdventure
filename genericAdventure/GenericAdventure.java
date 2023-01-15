@@ -84,7 +84,7 @@ public class GenericAdventure {
 			}
 		}
 		if(input==1) {
-			Player player=new Player(main.classSelect(),itempool);
+			Player player=new Player(main.classSelect(),itempool,true);
 			while(true) {
 				Floor.level++;
 				while(true) {
@@ -131,7 +131,7 @@ public class GenericAdventure {
 				default:
 					className=66;
 			}
-			Player player=new Player(new byte[]{hayFever,className},itempool);
+			Player player=new Player(new byte[]{hayFever,className},itempool,false);
 			player.setMaxHp(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getMaxHp());
 			player.setHp(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getHp());
 			player.setAtk(Integer.parseInt(Encryption.decryptString(br.readLine()))-player.getAtk());
@@ -146,9 +146,9 @@ public class GenericAdventure {
 			xCoord=Integer.parseInt(Encryption.decryptString(br.readLine()));
 			yCoord=Integer.parseInt(Encryption.decryptString(br.readLine()));
 			Floor.level=Integer.parseInt(Encryption.decryptString(br.readLine()));
+			int inventoryIndex=0;
 			while((str=Encryption.decryptString(br.readLine()))!=null) {
 				int i=0;
-				int inventoryIndex=0;
 				int chevronIndex=0;
 				char[] itemNameArray=str.toCharArray();
 				for(char c:itemNameArray) {
@@ -158,9 +158,14 @@ public class GenericAdventure {
 					i++;
 				}
 				for(i=0;i<itempool.size();i++) {
-					if(str.substring(0,chevronIndex).equals(itempool.get(i).getName())) {
-							Inventory.silentAdd(itempool.get(i),player);
-							Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)),player);
+					String compactSaveName=str.substring(0,chevronIndex).toLowerCase();
+					String compactPoolName=itempool.get(i).getName().toLowerCase();
+					compactSaveName=compactSaveName.replaceAll("  "," ");
+					compactPoolName=compactPoolName.replaceAll("  "," ");
+					if(compactSaveName.equals(compactPoolName)) {
+						Inventory.silentAdd(itempool.get(i),player);
+						Inventory.get(inventoryIndex).damage(Inventory.get(inventoryIndex).getMaxDurability()-Integer.parseInt(str.substring(chevronIndex+1)),player);
+						break;
 					}
 				}
 				inventoryIndex++;

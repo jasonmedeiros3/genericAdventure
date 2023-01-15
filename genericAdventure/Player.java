@@ -22,7 +22,7 @@ public class Player {
 	private int vaccinated=0;
 	private final boolean hayFever;
 	private ArrayList<Enemy>enemyList;
-	public Player(byte[]inputs,ItemPool itempool) {
+	public Player(byte[]inputs,ItemPool itempool,Boolean getStartingItems) {
 		if(inputs[0]==1) {
 			hayFever=true;
 		}
@@ -35,37 +35,47 @@ public class Player {
 				maxhp=200;
 				atk=120;
 				def=100;
-				Inventory.silentAdd(itempool.get(0),this);
+				if(getStartingItems) {
+					Inventory.silentAdd(itempool.get(0),this);
+				}
 				break;
 			case 2:
 				className="Wizard";
 				maxhp=150;
 				atk=107;
 				def=100;
-				Inventory.silentAdd(itempool.get(1),this);
+				if(getStartingItems) {
+					Inventory.silentAdd(itempool.get(1),this);
+				}
 				break;
 			case 3:
 				className="Lawyer";
 				maxhp=150;
 				atk=113;
 				def=100;
-				Inventory.silentAdd(itempool.get(2),this);
+				if(getStartingItems) {
+					Inventory.silentAdd(itempool.get(2),this);
+				}
 				break;
 			case 4:
 				className="Paladin";
 				maxhp=200;
 				atk=77;
 				def=195;
-				Inventory.silentAdd(itempool.get(3),this);
-				Inventory.silentAdd(itempool.get(8),this);
+				if(getStartingItems) {
+					Inventory.silentAdd(itempool.get(3),this);
+					Inventory.silentAdd(itempool.get(8),this);
+				}
 				break;
 			case 5:
 				className="Spy";
 				maxhp=125;
 				atk=107;
 				def=97;
-				Inventory.silentAdd(itempool.get(4),this);
-				Inventory.silentAdd(itempool.get(7),this);
+				if(getStartingItems) {
+					Inventory.silentAdd(itempool.get(4),this);
+					Inventory.silentAdd(itempool.get(7),this);
+				}
 		}
 		hp=maxhp;
 		/*bonusMaxhp=0;
@@ -73,8 +83,12 @@ public class Player {
 		bonusDef=0;*/
 	}
 	public void setEnemyList(ArrayList<Enemy>enemyList) {
-		this.enemyList.removeAll(this.enemyList);
-		this.enemyList.addAll(enemyList);
+		try {
+			this.enemyList.removeAll(this.enemyList);
+			this.enemyList.addAll(enemyList);
+		}
+		catch(Exception e) {
+		}
 	}
 	public void damage(Integer rawDamage) {
 		Integer[] damage=new Integer[1];
