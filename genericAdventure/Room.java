@@ -464,6 +464,49 @@ public class Room {
 			System.out.println(++counter+". "+e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
 		}
 	}
+	public int cleanDeadEnemies(ArrayList<Enemy>enemyList,int enemyWeight) {
+		int deadEnemyCounter=0;
+		for(Enemy e:enemyList) {
+			e.statusTick();
+			if(e.checkDead()) {
+				enemyWeight-=e.getWeight();
+			}
+		}
+		while(true) {
+			try {
+				if(enemyList.get(deadEnemyCounter).getDead()) {
+					enemyList.remove(deadEnemyCounter);
+				}
+				else {
+					deadEnemyCounter++;
+				}
+			}
+			catch(Exception e) {
+				break;
+			}
+		}
+		return enemyWeight;
+	}
+	public void cleanDeadEnemies(ArrayList<Enemy>enemyList) {
+		int deadEnemyCounter=0;
+		for(Enemy e:enemyList) {
+			e.statusTick();
+			e.checkDead();
+		}
+		while(true) {
+			try {
+				if(enemyList.get(deadEnemyCounter).getDead()) {
+					enemyList.remove(deadEnemyCounter);
+				}
+				else {
+					deadEnemyCounter++;
+				}
+			}
+			catch(Exception e) {
+				break;
+			}
+		}
+	}
 	public boolean battle(Floor floor,Player player) {
 		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
@@ -489,26 +532,7 @@ public class Room {
 		}
 		while(true) {
 			turn++;
-			int deadEnemyCounter=0;
-			for(Enemy e:enemies) {
-				e.statusTick();
-				if(e.checkDead()) {
-					enemyWeight-=e.getWeight();
-				}
-			}
-			while(true) {
-				try {
-					if(enemies.get(deadEnemyCounter).getDead()) {
-						enemies.remove(deadEnemyCounter);
-					}
-					else {
-						deadEnemyCounter++;
-					}
-				}
-				catch(Exception e) {
-					break;
-				}
-			}
+			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
 			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
@@ -562,6 +586,7 @@ public class Room {
 					return false;
 				}
 			}
+			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
 			for(Enemy e:enemies) {
 				e.doMove(player, enemies);
 			}
@@ -585,24 +610,7 @@ public class Room {
 		}
 		while(true) {
 			turn++;
-			int deadEnemyCounter=0;
-			for(Enemy e:enemies) {
-				e.statusTick();
-				e.checkDead();
-			}
-			while(true) {
-				try {
-					if(enemies.get(deadEnemyCounter).getDead()) {
-						enemies.remove(deadEnemyCounter);
-					}
-					else {
-						deadEnemyCounter++;
-					}
-				}
-				catch(Exception e) {
-					break;
-				}
-			}
+			cleanDeadEnemies(enemies);
 			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
@@ -667,6 +675,7 @@ public class Room {
 					System.out.println("You cannot.");
 				}
 			}
+			cleanDeadEnemies(enemies);
 			for(Enemy e:enemies) {
 				e.doMove(player, enemies);
 			}
