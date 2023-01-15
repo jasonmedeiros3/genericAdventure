@@ -730,7 +730,7 @@ public class Enemy {
 	}
 
 	private void clownFinisher(Player player) {
-		System.out.println(name + " noticed you're low on hp and is going for a theatrical finisher.");
+		System.out.println(name + " noticed you're low on hp and is going for a theatrical finisher involving a rubber chicken.");
 		player.damage(99 * atk/100.0);
 	}
 
