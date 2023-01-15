@@ -144,8 +144,6 @@ public class Room {
 			canLeft=true;
 		}
 		if(xCoord<floor.map.size()-1) {
-			System.out.println(xCoord+" xcoord");
-			System.out.println(floor.map.size()+" size");
 			canRight=true;
 		}
 		if(yCoord>0) {
