@@ -506,6 +506,8 @@ public class Enemy {
 					setWeight(3);
 					break;
 			}
+			def = def/2;
+			atk = atk/2;
 		}
 		else {
 			switch(name) {
@@ -593,6 +595,7 @@ public class Enemy {
 			}
 		}
 		hp=maxhp;
+		
 	}
 	public void doMove(Player player,ArrayList<Enemy>enemyList) {
 		Random rand=new Random();
