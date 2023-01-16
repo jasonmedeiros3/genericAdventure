@@ -22,6 +22,7 @@ public class Player {
 	private int vaccinated=0;
 	private int planCCounter=-1;
 	private int reviveType=0;
+	private int swedish=0;
 	private final boolean hayFever;
 	private ArrayList<Enemy>enemyList;
 	public Player(byte[]inputs,ItemPool itempool,Boolean getStartingItems) {
@@ -248,6 +249,12 @@ public class Player {
 	}
 	public int getReviveType() {
 		return reviveType;
+	}
+	public void setSwedish(int swedish) {
+		this.swedish=swedish;
+	}
+	public int getSwedish() {
+		return swedish;
 	}
  	public void setAfterburn(int increment) {
 		afterburn+=increment;

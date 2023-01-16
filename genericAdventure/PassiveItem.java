@@ -81,6 +81,9 @@ public class PassiveItem implements Item {
 			case "Nested Universe":
 				nestedUniverse(eventFlag,player);
 				break;
+			case "Swedish Passport":
+				swedishPassport(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -271,6 +274,14 @@ public class PassiveItem implements Item {
 		if(eventFlag.equals("death")) {
 			player.setReviveType(1);
 			damage(1,player);
+		}
+	}
+	private void swedishPassport(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setSwedish(1);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setSwedish(-1);
 		}
 	}
 	public static boolean getLawLicense() {
