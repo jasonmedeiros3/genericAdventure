@@ -78,6 +78,9 @@ public class PassiveItem implements Item {
 			case "Balaclava":
 				balaclava(eventFlag,player,enemyList.get(0));
 				break;
+			case "Nested Universe":
+				nestedUniverse(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -261,6 +264,12 @@ public class PassiveItem implements Item {
 	private void balaclava(String eventFlag,Player player,Enemy target) {
 		if(eventFlag.equals("attack")) {
 			target.setUnaware(1);
+			damage(1,player);
+		}
+	}
+	private void nestedUniverse(String eventFlag,Player player) {
+		if(eventFlag.equals("death")) {
+			player.setReviveType(1);
 			damage(1,player);
 		}
 	}

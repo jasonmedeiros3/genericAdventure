@@ -509,7 +509,7 @@ public class Room {
 			}
 		}
 	}
-	public boolean battle(Floor floor,Player player) {
+	public boolean battle(Floor floor,Player player) throws InterruptedException {
 		final int MAXENEMYWEIGHT=(int)(4+Math.sqrt(2*(Floor.level-1)));
 		int enemyWeight=0;
 		int input;
@@ -595,11 +595,13 @@ public class Room {
 			}
 			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
 			for(Enemy e:enemies) {
+				Thread.sleep(800);
 				e.doMove(player, enemies);
+				player.checkDead();
 			}
 		}
 	}
-	public boolean bossBattle(Floor floor,Player player) {
+	public boolean bossBattle(Floor floor,Player player) throws InterruptedException {
 		int input;
 		boolean hasActiveItem=false;
 		Scanner s=new Scanner(System.in);
@@ -690,7 +692,9 @@ public class Room {
 			}
 			cleanDeadEnemies(enemies);
 			for(Enemy e:enemies) {
+				Thread.sleep(800);
 				e.doMove(player, enemies);
+				player.checkDead();
 			}
 		}
 	}

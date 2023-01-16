@@ -48,6 +48,7 @@ public class ItemPool {
 		pool.add(new PassiveItem("Balaclava",s=2,125,b=5)); //38
 		pool.add(new ActiveItem("Sewing Needle",s=1,9,b=5,false)); //39
 		pool.add(new ActiveItem("Plan C",s=1,1,b=0,false)); //40
+		pool.add(new PassiveItem("Nested Universe",s=0,1,b=0)); //41
 	}
 	public Item get(int index) {
 		return pool.get(index);

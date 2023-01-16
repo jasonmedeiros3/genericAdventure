@@ -17,6 +17,9 @@ public class Inventory {
 				} catch (Exception e) {
 				}
 			}
+			if(player.getReviveType()!=0&&eventFlag.equals("death")) {
+				break;
+			}
 		}
 	}
 	public static void add(Item item,Player player) {
