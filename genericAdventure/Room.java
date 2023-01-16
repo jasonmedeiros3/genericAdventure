@@ -542,50 +542,55 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
-			while(true) {
-				displayPlayer(player);
-				displayEnemies(enemies);
-				for(int i=0;i<Inventory.size();i++) {
-					if(Inventory.get(i).isPassive()) {
-						try {
-							Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
-						} catch (Exception e1) {
+			if(player.getFreeze()>0) {
+				while(true) {
+					displayPlayer(player);
+					displayEnemies(enemies);
+					for(int i=0;i<Inventory.size();i++) {
+						if(Inventory.get(i).isPassive()) {
+							try {
+								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+							} catch (Exception e1) {
+							}
+						}
+						else {
+							hasActiveItem=true;
 						}
 					}
-					else {
-						hasActiveItem=true;
+					System.out.println("1. Struggle");
+					System.out.println("2. Open Inventory");
+					System.out.println("3. Run Away");
+					try {
+						input=getIntInput(1,3);
+						break;
+					}
+					catch(Exception e) {
 					}
 				}
-				System.out.println("1. Struggle");
-				System.out.println("2. Open Inventory");
-				System.out.println("3. Run Away");
-				try {
-					input=getIntInput(1,3);
-					break;
+				if(input==1) {
+					displayNumberedEnemies(enemies);
+					System.out.println("Select a target.");
+					try {
+						input=getIntInput(1,5);
+					} catch (Exception e) {
+					}
+					enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
+					player.damage(5*player.getAtk()/100.0);
 				}
-				catch(Exception e) {
+				else if(input==2&&hasActiveItem) {
+					battleInventory(player,enemies,(byte)input);
+				}
+				else if(input==2) {
+					System.out.println("No usable items.");
+				}
+				else if(input==3) {
+					if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
+						return false;
+					}
 				}
 			}
-			if(input==1) {
-				displayNumberedEnemies(enemies);
-				System.out.println("Select a target.");
-				try {
-					input=getIntInput(1,5);
-				} catch (Exception e) {
-				}
-				enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
-				player.damage(5*player.getAtk()/100.0);
-			}
-			else if(input==2&&hasActiveItem) {
-				battleInventory(player,enemies,(byte)input);
-			}
-			else if(input==2) {
-				System.out.println("No usable items.");
-			}
-			else if(input==3) {
-				if(rand.nextInt(100)>Math.pow(1.5*enemyWeight,2)) {
-					return false;
-				}
+			else {
+				System.out.println("You are frozen. Your turn is skipped.");
 			}
 			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
 			for(Enemy e:enemies) {
@@ -623,57 +628,62 @@ public class Room {
 				return true;
 			}
 			while(true) {
-				while(true) {
-					displayPlayer(player);
-					displayEnemies(enemies);
-					for(int i=0;i<Inventory.size();i++) {
-						if(Inventory.get(i).isPassive()) {
-							try {
-								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
-							} catch (Exception e1) {
+				if(player.getFreeze()>0) {
+					while(true) {
+						displayPlayer(player);
+						displayEnemies(enemies);
+						for(int i=0;i<Inventory.size();i++) {
+							if(Inventory.get(i).isPassive()) {
+								try {
+									Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+								} catch (Exception e1) {
+								}
+							}
+							else {
+								hasActiveItem=true;
 							}
 						}
+						if(Floor.level!=0) {
+							System.out.println("1. Struggle");
+						}
 						else {
-							hasActiveItem=true;
+							System.out.println("1. Attack");
+						}
+						System.out.println("2. Open Inventory");
+						System.out.println("3. Run Away");
+						try {
+							input=getIntInput(1,3);
+							break;
+						}
+						catch(Exception e) {
 						}
 					}
-					if(Floor.level!=0) {
-						System.out.println("1. Struggle");
-					}
-					else {
-						System.out.println("1. Attack");
-					}
-					System.out.println("2. Open Inventory");
-					System.out.println("3. Run Away");
-					try {
-						input=getIntInput(1,3);
+					if(input==1) {
+						displayNumberedEnemies(enemies);
+						System.out.println("Select a target.");
+						try {
+							input=getIntInput(1,5);
+						} catch (Exception e) {
+						}
+						enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
+						if(Floor.level!=0) {
+							player.damage(5*player.getAtk()/100.0);
+						}
 						break;
 					}
-					catch(Exception e) {
+					else if(input==2&&hasActiveItem) {
+						battleInventory(player,enemies,(byte)input);
+						break;
+					}
+					else if(input==2) {
+						System.out.println("No usable items.");
+					}
+					else if(input==3) {
+						System.out.println("You cannot.");
 					}
 				}
-				if(input==1) {
-					displayNumberedEnemies(enemies);
-					System.out.println("Select a target.");
-					try {
-						input=getIntInput(1,5);
-					} catch (Exception e) {
-					}
-					enemies.get(input-1).damage(15*player.getAtk()/100.0,player);
-					if(Floor.level!=0) {
-						player.damage(5*player.getAtk()/100.0);
-					}
-					break;
-				}
-				else if(input==2&&hasActiveItem) {
-					battleInventory(player,enemies,(byte)input);
-					break;
-				}
-				else if(input==2) {
-					System.out.println("No usable items.");
-				}
-				else if(input==3) {
-					System.out.println("You cannot.");
+				else {
+					System.out.println("You are frozen. Your turn is skipped.");
 				}
 			}
 			cleanDeadEnemies(enemies);
