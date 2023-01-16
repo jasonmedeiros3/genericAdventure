@@ -725,7 +725,7 @@ public class Enemy {
 					if (charge) {
 						pounce(player);
 						charge = false;
-					} else if (hp > 30 || seed >= 20) {
+					} else if (hp > 30 || seed1 >= 20) {
 						System.out.println(name + " gets ready to pounce.");
 						charge = true;
 					} else {
@@ -744,7 +744,7 @@ public class Enemy {
 						System.out.println(name + " shocks you with how normal looking it is");
 						confuse(player);
 					} else if (atk <= 115 && seed2 >= 70) {
-						atkIncrement(player);				
+						atkIncrement();				
 					} else {
 						chomp(player);
 					}
@@ -755,30 +755,30 @@ public class Enemy {
 					} else if (seed1 > 50) {
 						hurtfulLies(player);
 					} else {
-						createsProblems(player);
+						createsProblems();
 					}
 				case "Consul":
 					if (charge) {
 						handgun(player);
 						charge = false;
 					} else if (seed1 >= 40) {
-						bombing(player);
+						bombing();
 					} else if (hp <= 40) {
-						lastStand(player);
+						lastStand();
 					} else {
 						nothing();
 					}
 				case "Consulate Janitor":
 					if (enemyList.size() == 1) {
-						boost(player);
+						boost();
 					} else if (hp <= 30){
-						healingStim(player);
+						healingStim();
 					} else {
 						mopping(player);
 					}
 				case "Protestor": 
 					if (enemyList.size() > 1 && seed1 >= 50) {
-						grenade(player);
+						grenade(player,enemyList);
 					} else if (seed1 > 75) {
 						annoyance(player);
 					} else {
@@ -792,13 +792,13 @@ public class Enemy {
 		}
 	}
 	private void annoyance (Player player){
-		System.out.println(name + " annoys you with their preaching. ");
-		markedForDeath(2);
+		System.out.println(name + " annoys you with their preaching.");
+		setMarkForDeath(2);
 		player.damage(10 * atk/ 100);
 	}
 
-	private void grenade (Player player){
-		System.out.println(name + "threw a grenade at you. Too bad he sucks at throwing and didnt manage to throw it far. ");
+	private void grenade (Player player,ArrayList<Enemy>enemyList){
+		System.out.println(name + " threw a grenade at you. He is not good at throwing.");
 		for (Enemy e: enemyList) {
 			e.damage(5, null);
 		}
@@ -808,33 +808,33 @@ public class Enemy {
 
 
 	private void mopping (Player player){
-		System.out.println(name + " puts a dirty mop in your eyes. ");
+		System.out.println(name + " puts a dirty mop in your eyes.");
 		player.setPoison(2);
 		player.damage(15 * atk/ 100);
 	}
 
-	private void boost (Player player){
+	private void boost (){
 		atk += 10;
 		def += 15;
 		hp += 5;
 	}
 
-	private void healingStim (Player player){
+	private void healingStim (){
 		hp += 10;
 	}
 
 	private void nothing (){
-		System.out.println(name + " does nothing. ");
+		System.out.println(name + " does nothing.");
 	}
 
-	private void lastStand(Player player){
-		System.out.println(name + "makes a last stand, preparing to die. ");
+	private void lastStand(){
+		System.out.println(name + "makes a last stand.");
 		hp = 10;
 		atk += 50;
 		charge = true;
 	}
 
-	private void bombing(Player player){
+	private void bombing(){
 		System.out.println("Someone tried to bomb the " + name);
 		hp -= 5;
 		def -= 5;
@@ -842,23 +842,23 @@ public class Enemy {
 		setMarkForDeath(2);
 	}
 
-	private void createsProblems (Player player){
-		System.out.println(name + "creates problems. ");
+	private void createsProblems (){
+		System.out.println(name + "creates problems.");
 		hp += 10;
 	}
 	private void hurtfulLies(Player player){
-		System.out.println(name + " lies to you. ");
+		System.out.println(name + " lies to you. You are poisoned emotionally.");
 		player.setPoison(2);
 		player.damage(5 * atk/100);
 	}
 
 	private void chomp(Player player){
-		System.out.println(name + "takes a bite out of you. ");
+		System.out.println(name + "takes a bite out of you.");
 		player.damage(25 * atk/100);
 	}
 
-	private void atkIncrement (Player player) {
-		System.out.println(name + "gets ready to attack");
+	private void atkIncrement () {
+		System.out.println(name + "gets ready to attack.");
 		atk += 5;
 	}
 
