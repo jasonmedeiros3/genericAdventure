@@ -653,7 +653,7 @@ public class Enemy {
 						huntingMachete(player);
 					}
 					else {
-						handgun(player);
+						handgun(player,false);
 					}
 					break;
 				case "Clown":
@@ -737,7 +737,7 @@ public class Enemy {
 					} else if (seed2 >= 50) {
 						cheetoTouch(player);
 					} else {
-						handgun(player);
+						handgun(player,false);
 					}
 				case "Completely Normal Shark":
 					if (seed1 >= 80) {
@@ -759,7 +759,7 @@ public class Enemy {
 					}
 				case "Consul":
 					if (charge) {
-						handgun(player);
+						handgun(player,true);
 						charge = false;
 					} else if (seed1 >= 40) {
 						bombing();
@@ -770,7 +770,7 @@ public class Enemy {
 					}
 				case "Consulate Janitor":
 					if (enemyList.size() == 1) {
-						boost();
+						boost(player);
 					} else if (hp <= 30){
 						healingStim();
 					} else {
@@ -810,12 +810,12 @@ public class Enemy {
 	private void mopping (Player player){
 		System.out.println(name + " puts a dirty mop in your eyes.");
 		player.setPoison(2);
-		player.damage(15 * atk/ 100);
+		player.damage((15-(player.getSwedish()*1.5)) * atk/ 100);
 	}
 
-	private void boost (){
+	private void boost (Player player){
 		atk += 10;
-		def += 15;
+		def += 15-player.getSwedish();
 		hp += 5;
 	}
 
@@ -843,7 +843,7 @@ public class Enemy {
 	}
 
 	private void createsProblems (){
-		System.out.println(name + "creates problems.");
+		System.out.println(name + "creates problems and gains health.");
 		hp += 10;
 	}
 	private void hurtfulLies(Player player){
@@ -1028,9 +1028,14 @@ public class Enemy {
 		player.damage(80*atk/100);
 		damage(12*atk/100,null);
 	}
-	private void handgun(Player player) {
+	private void handgun(Player player,boolean swedish) {
 		System.out.println(name+" opens fire with a handgun.");
-		player.damage(40*atk/100);
+		if(swedish) {
+			player.damage(40*atk/(100+(20*player.getSwedish())));
+		}
+		else {
+			player.damage(40*atk/100);
+		}
 	}
 	private void huntingMachete(Player player) {
 		System.out.println(name+" shivs you with a rusty machete. You get infected.");
