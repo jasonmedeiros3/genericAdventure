@@ -957,23 +957,23 @@ public class Enemy {
 	private void 
 
 	private void flamethrower (Player player) {
-		System.out.println(name + " pulled out a flamethrower? What type of firefighter carries a flame thrower. ");
+		System.out.println(name + " pulled out a flamethrower? What type of firefighter carries a flame thrower?");
 		player.damage(10 * atk/100);
 		player.setAfterburn(4);
 	}
 
 	private void axe (Player player) {
-		System.out.println(name + " attacks you with an axe. ");
+		System.out.println(name + " attacks you with an axe.");
 		player.damage(25 * atk/100);
 	}
 
 	private void runAway (ArrayList<Enemy>enemyList) {
-		System.out.println(name+ " runs away. What a coward. ");
+		System.out.println(name+ " runs away. What a coward.");
 		enemyList.remove(this);
 	}
 
 	private void poisonPaperCut (Player player){
-		System.out.println(name + " gives you a paper cut. Turns out the paper is actually used toliet paper. ");
+		System.out.println(name + " gives you a paper cut. Turns out the paper is actually used toilet paper.");
 		player.damage((4 + Floor.level) * atk/100);
 		player.setPoison(4);
 	}
