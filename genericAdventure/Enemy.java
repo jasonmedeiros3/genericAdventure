@@ -654,7 +654,7 @@ public class Enemy {
 						huntingMachete(player);
 					}
 					else {
-						handgun(player);
+						handgun(player,false);
 					}
 					break;
 				case "Clown":
@@ -715,9 +715,9 @@ public class Enemy {
 					}
 					break;
 				case "Polar Camel":
-					if (seed1 >= 25 && player.getHp() >= 60) {
+					if (seed1 <= 25 && player.getHp() >= 60) {
 						freezingSpit(player);
-					} else if (seed2 <= 90 || hp > 50) {
+					} else if (seed2 <= 90 || hp > maxhp/2.5) {
 						humpAbsorption(player);
 					} else {
 						deerKick(player, seed2);
@@ -726,7 +726,7 @@ public class Enemy {
 					if (charge) {
 						pounce(player);
 						charge = false;
-					} else if (hp > 30 || seed1 >= 20) {
+					} else if (hp > 30 || seed1<=70) {
 						System.out.println(name + " gets ready to pounce.");
 						charge = true;
 					} else {
@@ -738,31 +738,31 @@ public class Enemy {
 					} else if (seed2 >= 50) {
 						cheetoTouch(player);
 					} else {
-						handgun(player);
+						handgun(player,false);
 					}
 				case "Completely Normal Shark":
-					if (seed1 >= 80) {
-						System.out.println(name + " shocks you with how normal looking it is");
+					if (seed1 <= 20) {
+						System.out.println(name + " shocks you with how normal looking it is.");
 						confuse(player);
-					} else if (atk <= 115 && seed2 >= 70) {
+					} else if (atk <= 115 && seed2<=70) {
 						atkIncrement();				
 					} else {
 						chomp(player);
 					}
 				case "Lawyer":
-					if (player.getHp() >= 50 && seed1 >= 20) {
-						System.out.println(name + " shows you some documents to look over leaving you confused. ");
+					if (player.getHp() >= 50 && seed1 <= 20) {
+						System.out.println(name + " shows you some documents to look over leaving you confused.");
 						confuse(player);
-					} else if (seed1 > 50) {
+					} else if (seed1<=50) {
 						hurtfulLies(player);
 					} else {
 						createsProblems();
 					}
 				case "Consul":
 					if (charge) {
-						handgun(player);
+						handgun(player,true);
 						charge = false;
-					} else if (seed1 >= 40) {
+					} else if (seed1<=66) {
 						bombing();
 					} else if (hp <= 40) {
 						lastStand();
@@ -771,16 +771,16 @@ public class Enemy {
 					}
 				case "Consulate Janitor":
 					if (enemyList.size() == 1) {
-						boost();
+						boost(player);
 					} else if (hp <= 30){
 						healingStim();
 					} else {
 						mopping(player);
 					}
 				case "Protestor": 
-					if (enemyList.size() > 1 && seed1 >= 50) {
+					if (enemyList.size() > 1 && seed1 <= 50) {
 						grenade(player,enemyList);
-					} else if (seed1 > 75) {
+					} else if (seed1 < 75) {
 						annoyance(player);
 					} else {
 						noiseMaker(enemyList, seed2);
@@ -877,12 +877,12 @@ public class Enemy {
 	private void mopping (Player player){
 		System.out.println(name + " puts a dirty mop in your eyes.");
 		player.setPoison(2);
-		player.damage(15 * atk/ 100);
+		player.damage((15-(player.getSwedish()*1.5)) * atk/ 100);
 	}
 
-	private void boost (){
+	private void boost (Player player){
 		atk += 10;
-		def += 15;
+		def += 15-player.getSwedish();
 		hp += 5;
 	}
 
@@ -910,7 +910,7 @@ public class Enemy {
 	}
 
 	private void createsProblems (){
-		System.out.println(name + "creates problems.");
+		System.out.println(name + "creates problems and gains health.");
 		hp += 10;
 	}
 	private void hurtfulLies(Player player){
@@ -1095,9 +1095,14 @@ public class Enemy {
 		player.damage(80*atk/100);
 		damage(12*atk/100,null);
 	}
-	private void handgun(Player player) {
+	private void handgun(Player player,boolean swedish) {
 		System.out.println(name+" opens fire with a handgun.");
-		player.damage(40*atk/100);
+		if(swedish) {
+			player.damage(40*atk/(100+(20*player.getSwedish())));
+		}
+		else {
+			player.damage(40*atk/100);
+		}
 	}
 	private void huntingMachete(Player player) {
 		System.out.println(name+" shivs you with a rusty machete. You get infected.");
