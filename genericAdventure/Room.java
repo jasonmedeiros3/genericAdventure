@@ -543,7 +543,7 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
-			if(player.getFreeze()>0) {
+			if(player.getFreeze()<=0) {
 				while(true) {
 					displayPlayer(player);
 					displayEnemies(enemies);
@@ -632,7 +632,7 @@ public class Room {
 				return true;
 			}
 			while(true) {
-				if(player.getFreeze()>0) {
+				if(player.getFreeze()<=0) {
 					while(true) {
 						displayPlayer(player);
 						displayEnemies(enemies);
