@@ -1,5 +1,6 @@
 package genericAdventure;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -784,13 +785,79 @@ public class Enemy {
 					} else {
 						noiseMaker(enemyList, seed2);
 					}
-				case "":
+				case "Sapient Grapevine":
+					if (enemyList.size() > 1 && seed1 >= 60 || (enemyList.size() > 1 && charge)){
+						healingWine(enemyList);
+						charge = false;
+					} else if (charge == false && hp > 20) {
+						ferment();
+					} else if (seed1 >= 15) {
+						grapeShot(player, seed2);
+					} else {
+						ingrain();
+					}
+				case "Grape Seed":
+					if (seed1 >= 95) {
+						evolve();
+						//please complete this charles
+					} else if (def < 60) {
+						ingrain();
+					} else if (seed2 >= 70) {
+						hide();
+					} else {
+						nothing();
+					}
+				case "Drunkard":
+				
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
+
+	private void evolve () {
+
+	}
+
+	private void hide () {
+		intang(2);
+		System.out.println(name + " hides from you. ");
+	}
+
+	private void ferment () {
+		System.out.println(name + " fermented to create better wine");
+		charge = true;
+	}
+
+	private void grapeShot(Player player, int seed2) {
+		int counter = 0;
+		System.out.println(name + " put grapes in a cannon and shot you with it");
+		for (int x = 0; x < 6; x++) {
+			if (seed2 >= Math.pow(x, 3) - 30) {
+				counter++;
+			}
+		}
+		player.damage(5 * counter * atk/ 100);
+
+	}
+
+	private void healingWine (ArrayList<Enemy>enemyList) {
+		int counter=0;
+		for(Enemy e:enemyList) {
+			if(e.name.equals("Drunkard") || e.name.equals("Winemaker")) {
+				if (charge) {
+					e.damage(-5- 4 *Floor.level,null);
+				} else {
+					e.damage(-3 - Floor.level,null);
+				}
+				counter++;
+			}
+		}
+		charge = false;
+		System.out.println(name+" healed "+counter+" enemies with healing wine.");
+	}
+
 	private void annoyance (Player player){
 		System.out.println(name + " annoys you with their preaching.");
 		setMarkForDeath(2);
