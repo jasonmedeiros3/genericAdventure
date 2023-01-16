@@ -773,7 +773,7 @@ public class Enemy {
 					if (enemyList.size() == 1) {
 						boost(player);
 					} else if (hp <= 30){
-						healingStim();
+						healingStim(0);
 					} else {
 						mopping(player);
 					}
@@ -807,12 +807,128 @@ public class Enemy {
 						nothing();
 					}
 				case "Drunkard":
-				
+					if (seed1 <= 30) {
+						brokenBottle(player);
+					} else {
+						nothing();
+						charge = true;
+					}
+				case "Winemaker":
+					int hasDrunkard = 0;
+					for(Enemy e:enemyList) {
+						if(e.name.equals("Drunkard")) {
+							hasDrunkard++;
+						}
+					}
+					if (hasDrunkard > 0 && seed1 <= 40 * hasDrunkard) {
+						giveWine(enemyList);
+					} else if (seed2 >= 60 && charge) {
+						healingWine(enemyList);
+					} else if (hp > 80 && charge == false) {
+						ferment();
+					} else {
+						hide();
+					}
+				case "Rat":
+					if (seed1 > 40) {
+						squirrelBite(player);
+					} else if (seed2 > 50) {
+						hide();
+					} else {
+						nothing();
+					}
+				case "Alligator":
+					int hasGator = 0;
+					for(Enemy e:enemyList) {
+						if(e.name.equals("Drunkard")) {
+							hasGator++;
+						}
+					}
+					hasGator--;
+					if (hasGator > 0 && seed1 <= 40 * hasGator) {
+						gatorGrab(player, enemyList);
+					} else if (seed1 >= 60) {
+						chomp(player);
+					} else {
+						squirrelBite(player);
+					}
+				case "Florida Man":
+					if (seed1 > 50) {
+						brokenBottle(player);
+						atk += 15;
+					} else {
+						nothing();
+					}
+				case "Bipedal Turtle":
+					if (hp <= 40 && seed1 >= 10) {
+						healingStim(15);
+					} else {
+						ninjaAttack(player, seed2);
+					} 
+				case "Call Of The Void":
+					if (player.getHp() <= 30) {
+						voidFinisher(player);
+					} else if (player.getHp() >= 70) {
+						lowerDef(player);
+					} else {
+						confuse(player);
+					}
+
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void lowerDef (Player player) {
+		System.out.println(name +" lowers your guard temperarly");
+		player.setMarkForDeath(4);
+	}
+
+	private void voidFinisher (Player player) {
+		System.out.println(name + " noticed you are low on hp and is making you jump off the rooftop!");
+		player.damage(99 * atk/100);	
+	}
+
+
+	private void ninjaAttack(Player player, int seed) {
+		if (seed < 40) {
+			seed += 10;
+		}
+		player.damage(seed/2 * atk / 100);
+		System.out.println(name + " attacks you with his various weapons");
+	}
+
+	private void gatorGrab (Player player, ArrayList<Enemy>enemyList){
+		int counter=0;
+		for(Enemy e:enemyList) {
+			if(e.name.equals("Alligator")) {
+				player.damage(15 * atk/100);
+				counter++;
+			}
+		}
+		System.out.println(counter + "gators attacked you once you got dragged in the water.");
+	}
+
+	private void giveWine(ArrayList<Enemy>enemyList) {
+		int counter=0;
+		for(Enemy e:enemyList) {
+			if(e.name.equals("Drunkard")) {
+				e.atk += 20;
+				counter++;
+			}
+		}
+		System.out.println(name+" gave "+counter+" drunkards wine.");
+	}
+
+	private void brokenBottle(Player player) {
+		int amount = 15;
+		if (charge) {
+			amount += 10;
+			atk += 5;
+		} 
+		System.out.println(name +" attacks you with a broken bottle. ");
+		player.damage(amount * atk/100);
 	}
 
 	private void evolve (ArrayList<Enemy>enemyList) {
@@ -891,8 +1007,10 @@ public class Enemy {
 		hp += 5;
 	}
 
-	private void healingStim (){
+	private void healingStim (int n){
+		System.out.println(name + " used a healing stim");
 		hp += 10;
+		hp += n;
 	}
 
 	private void nothing (){
@@ -936,6 +1054,7 @@ public class Enemy {
 
 	private void confuse (Player player) {
 		player.setMarkForDeath(2);
+		
 	}
 
 	private void cheetoTouch (Player player) {
