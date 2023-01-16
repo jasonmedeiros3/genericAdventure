@@ -722,6 +722,7 @@ public class Enemy {
 					} else {
 						deerKick(player, seed2);
 					}
+					break;
 				case "Psychrophilic Amphibious Jaguar": 
 					if (charge) {
 						pounce(player);
@@ -732,6 +733,7 @@ public class Enemy {
 					} else {
 						swipe(player);
 					}
+					break;
 				case "Cheese-Coated Tourist":
 					if (seed1 >= 50) {
 						photoshoot(player);
@@ -740,6 +742,7 @@ public class Enemy {
 					} else {
 						handgun(player,false);
 					}
+					break;
 				case "Completely Normal Shark":
 					if (seed1 <= 20) {
 						System.out.println(name + " shocks you with how normal looking it is.");
@@ -749,6 +752,7 @@ public class Enemy {
 					} else {
 						chomp(player);
 					}
+					break;
 				case "Lawyer":
 					if (player.getHp() >= 50 && seed1 <= 20) {
 						System.out.println(name + " shows you some documents to look over leaving you confused.");
@@ -758,6 +762,7 @@ public class Enemy {
 					} else {
 						createsProblems();
 					}
+					break;
 				case "Consul":
 					if (charge) {
 						handgun(player,true);
@@ -769,6 +774,7 @@ public class Enemy {
 					} else {
 						nothing();
 					}
+					break;
 				case "Consulate Janitor":
 					if (enemyList.size() == 1) {
 						boost(player);
@@ -777,6 +783,7 @@ public class Enemy {
 					} else {
 						mopping(player);
 					}
+					break;
 				case "Protestor": 
 					if (enemyList.size() > 1 && seed1 <= 50) {
 						grenade(player,enemyList);
@@ -785,6 +792,7 @@ public class Enemy {
 					} else {
 						noiseMaker(enemyList, seed2);
 					}
+					break;
 				case "Sapient Grapevine":
 					if (enemyList.size() > 1 && seed1 >= 60 || (enemyList.size() > 1 && charge)){
 						healingWine(enemyList);
@@ -796,6 +804,7 @@ public class Enemy {
 					} else {
 						ingrain();
 					}
+					break;
 				case "Grape Seed":
 					if (seed1 <= 12) {
 						evolve(enemyList);
@@ -806,6 +815,7 @@ public class Enemy {
 					} else {
 						nothing();
 					}
+					break;
 				case "Drunkard":
 					if (seed1 <= 30) {
 						brokenBottle(player);
@@ -813,6 +823,7 @@ public class Enemy {
 						nothing();
 						charge = true;
 					}
+					break;
 				case "Winemaker":
 					int hasDrunkard = 0;
 					for(Enemy e:enemyList) {
@@ -829,6 +840,7 @@ public class Enemy {
 					} else {
 						hide();
 					}
+					break;
 				case "Rat":
 					if (seed1 > 40) {
 						squirrelBite(player);
@@ -837,6 +849,7 @@ public class Enemy {
 					} else {
 						nothing();
 					}
+					break;
 				case "Alligator":
 					int hasGator = 0;
 					for(Enemy e:enemyList) {
@@ -852,6 +865,7 @@ public class Enemy {
 					} else {
 						squirrelBite(player);
 					}
+					break;
 				case "Florida Man":
 					if (seed1 > 50) {
 						brokenBottle(player);
@@ -859,12 +873,14 @@ public class Enemy {
 					} else {
 						nothing();
 					}
+					break;
 				case "Bipedal Turtle":
 					if (hp <= 40 && seed1 >= 10) {
 						healingStim(15);
 					} else {
 						ninjaAttack(player, seed2);
 					} 
+					break;
 				case "Call Of The Void":
 					if (player.getHp() <= 30) {
 						voidFinisher(player);
@@ -873,6 +889,7 @@ public class Enemy {
 					} else {
 						confuse(player);
 					}
+					break;
 
 			}
 		}
