@@ -85,6 +85,12 @@ public class GenericAdventure {
 		}
 		if(input==1) {
 			Player player=new Player(main.classSelect(),itempool,true);
+			Room.printscroll("You have to get the Artifact.");
+			Thread.sleep(1000);
+			Room.printscroll("Name is uncreative but I assure you, it's very important.");
+			Thread.sleep(1000);
+			Room.printscroll("Go on and get this over with.");
+			Thread.sleep(2250);
 			while(true) {
 				Floor.level++;
 				while(true) {
