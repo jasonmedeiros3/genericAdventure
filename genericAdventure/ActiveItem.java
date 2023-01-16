@@ -1,6 +1,7 @@
 package genericAdventure;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ActiveItem implements Item {
@@ -11,6 +12,12 @@ public class ActiveItem implements Item {
 	private int maxDurability;
 	private final byte type;
 	private final boolean mapCompatible;
+	private final String[] wineTastingAdjectives= {"light-bodied","oaky","dry","steely","velvety","hot","buttery","corked","earthy","full-bodied","herbaceous"
+			,"lingering","musty","nutty","opulent","perfumed","raisiny","robust","supple","young"
+	};
+	private final String[] wineTastingNouns= {"malt","vintage","hop","body","backbone","bouquet","fermentation","grip","legs","lees","length","mouthfeel"
+			,"nose","noble rot","structure","tannin","typicity","texture"
+	};
 	public ActiveItem(String s,short w,int d,byte t,boolean m) {
 		name=s;
 		weight=w;
@@ -118,6 +125,8 @@ public class ActiveItem implements Item {
 			case "Plan C":
 				planC(player,enemyList);
 				break;
+			case "Pinot Noir":
+				pinotNoir(player);
 			default:
 		}
 	}
@@ -355,6 +364,20 @@ public class ActiveItem implements Item {
 			e.damage(199, player);
 		}
 		player.setPlanCCounter(3);
+	}
+	private void pinotNoir(Player player) {
+		Random rand=new Random();
+		if(rand.nextInt(48)!=47) {
+			System.out.println("Drank some Pinot Noir.");
+		}
+		else {
+			System.out.println("Decanted the Pinot Noir and drank it.");
+		}
+		System.out.println("The wine is very "+wineTastingAdjectives[rand.nextInt(wineTastingAdjectives.length)]);
+		System.out.println("The "+wineTastingNouns[rand.nextInt(wineTastingNouns.length)]+" is alright but not great.");
+		player.setAtk(10);
+		player.setMarkForDeath(3);
+		player.setUnaware(5);
 	}
 	@Override
 	public String getName() {
