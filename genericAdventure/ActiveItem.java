@@ -111,6 +111,10 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				expensiveSpear(player,enemyList.get(target));
 				break;
+			case "Sewing Needle":
+				target=selectTarget(enemyList);
+				needle(player,enemyList.get(target));
+				break;
 			default:
 		}
 	}
@@ -329,6 +333,18 @@ public class ActiveItem implements Item {
 	private void expensiveSpear(Player player,Enemy enemy) {
 		System.out.println("Thrust the $15 spear.");
 		enemy.damage(85*player.getAtk()/100.0, player);
+	}
+	private void needle(Player player,Enemy enemy) {
+		System.out.println("Swung the sewing needle.");
+		if(enemy.getUnaware()>0) {
+			enemy.damage(enemy.getHp()/4.9+54*player.getAtk()/96.0,player);
+			System.out.println("A backstab.");
+			damage(2,player);
+		}
+		else {
+			enemy.damage(40*player.getAtk()/100.0,player);
+			damage(1,player);
+		}
 	}
 	@Override
 	public String getName() {

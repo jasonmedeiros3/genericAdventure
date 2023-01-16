@@ -46,6 +46,7 @@ public class ItemPool {
 		pool.add(new PassiveItem("Law License",s=1,256,b=3)); //36
 		pool.add(new ActiveItem("$15 Spear",s=18,96,b=4,false)); //37
 		pool.add(new PassiveItem("Balaclava",s=2,125,b=5)); //38
+		pool.add(new ActiveItem("Sewing Needle",s=1,9,b=5,false)); //39
 	}
 	public Item get(int index) {
 		return pool.get(index);
