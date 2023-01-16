@@ -539,6 +539,7 @@ public class Room {
 			player.statusTick();
 			player.checkDead();
 			if(enemies.size()<1) {
+				player.setPlanCCounter(-1);
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
@@ -624,6 +625,7 @@ public class Room {
 				if(Floor.level==0) {
 					System.exit(0);
 				}
+				player.setPlanCCounter(-1);
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}

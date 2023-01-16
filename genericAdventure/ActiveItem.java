@@ -115,6 +115,9 @@ public class ActiveItem implements Item {
 				target=selectTarget(enemyList);
 				needle(player,enemyList.get(target));
 				break;
+			case "Plan C":
+				planC(player,enemyList);
+				break;
 			default:
 		}
 	}
@@ -345,6 +348,13 @@ public class ActiveItem implements Item {
 			enemy.damage(40*player.getAtk()/100.0,player);
 			damage(1,player);
 		}
+	}
+	private void planC(Player player,ArrayList<Enemy>enemyList) {
+		System.out.println("Used Plan C.");
+		for(Enemy e:enemyList) {
+			e.damage(199, player);
+		}
+		player.setPlanCCounter(3);
 	}
 	@Override
 	public String getName() {

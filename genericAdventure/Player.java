@@ -20,6 +20,7 @@ public class Player {
 	private int intang=0;
 	private int solarArmour=0;
 	private int vaccinated=0;
+	private int planCCounter=-1;
 	private final boolean hayFever;
 	private ArrayList<Enemy>enemyList;
 	public Player(byte[]inputs,ItemPool itempool,Boolean getStartingItems) {
@@ -235,6 +236,12 @@ public class Player {
 	public int getVaccinated() {
 		return vaccinated;
 	}
+	public void setPlanCCounter(int planCCounter) {
+		this.planCCounter=planCCounter;
+	}
+	public int getPlanCCounter() {
+		return planCCounter;
+	}
 	public void setAfterburn(int increment) {
 		afterburn+=increment;
 	}
@@ -340,6 +347,12 @@ public class Player {
 		}
 	}
 	public void statusTick() {
+		if(planCCounter>0) {
+			planCCounter--;
+		}
+		else if(planCCounter==0) {
+			damage(999);
+		}
 		if(afterburn>0) {
 			afterburn--;
 			if(solarArmour>0) {
