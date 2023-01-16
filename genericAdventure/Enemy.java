@@ -821,7 +821,7 @@ public class Enemy {
 	}
 
 	private void hide () {
-		intang(2);
+		setIntang(2);
 		System.out.println(name + " hides from you. ");
 	}
 
