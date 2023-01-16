@@ -875,6 +875,7 @@ public class Enemy {
 						atk += 15;
 					} else {
 						nothing();
+						charge=true;
 					}
 					break;
 				case "Bipedal Turtle":
@@ -887,19 +888,19 @@ public class Enemy {
 				case "Call Of The Void":
 					if (player.getHp() <= 30) {
 						voidFinisher(player);
-					} else if (player.getHp() >= 70) {
+					} else if ((player.getHp() <= 70&&seed1<=90)||seed1<=40) {
 						lowerDef(player);
 					} else {
 						confuse(player);
 					}
 					break;
 				case "Paper Airplane":
-					if (hp < 20 && seed1 >= 70) {
+					if (hp < 20 && seed1 <= 40) {
 						runAway(enemyList);
-					} else if (seed2 >= 50) {
+					} else if (seed1 <= 50) {
 						poisonPaperCut(player);
 					} else {
-						System.out.println("Paper Airplane flies around you to confuse you");
+						System.out.println("Paper Airplane flies around you to confuse you.");
 						confuse(player);
 					}
 					break;
