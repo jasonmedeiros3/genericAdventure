@@ -797,12 +797,11 @@ public class Enemy {
 						ingrain();
 					}
 				case "Grape Seed":
-					if (seed1 >= 95) {
-						evolve();
-						//please complete this charles
+					if (seed1 <= 12) {
+						evolve(enemyList);
 					} else if (def < 60) {
 						ingrain();
-					} else if (seed2 >= 70) {
+					} else if (seed2 <= 50) {
 						hide();
 					} else {
 						nothing();
@@ -816,8 +815,14 @@ public class Enemy {
 		}
 	}
 
-	private void evolve () {
-
+	private void evolve (ArrayList<Enemy>enemyList) {
+		System.out.println(name+" evolves into a grapevine.");
+		enemyList.remove(this);
+		Enemy e=null;
+		do {
+			e=new Enemy("vineyard",false);
+		}while(!e.name.equals("Sapient Grapevine"));
+		enemyList.add(e);
 	}
 
 	private void hide () {
