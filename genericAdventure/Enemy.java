@@ -979,7 +979,7 @@ public class Enemy {
 	}
 
 	private void lowerDef (Player player) {
-		System.out.println(name +" lowers your guard temperarly");
+		System.out.println(name +" lowers your guard temporarily. Somehow. Don't ask.");
 		player.setMarkForDeath(4);
 	}
 
@@ -988,13 +988,12 @@ public class Enemy {
 		player.damage(99 * atk/100);	
 	}
 
-
 	private void ninjaAttack(Player player, int seed) {
 		if (seed < 40) {
 			seed += 10;
 		}
 		player.damage(seed/2 * atk / 100);
-		System.out.println(name + " attacks you with his various weapons");
+		System.out.println(name + " attacks you with his various weapons.");
 	}
 
 	private void gatorGrab (Player player, ArrayList<Enemy>enemyList){
@@ -1005,7 +1004,7 @@ public class Enemy {
 				counter++;
 			}
 		}
-		System.out.println(counter + "gators attacked you once you got dragged in the water.");
+		System.out.println(counter + " gators attacked you once you got dragged in the water.");
 	}
 
 	private void giveWine(ArrayList<Enemy>enemyList) {
@@ -1016,7 +1015,7 @@ public class Enemy {
 				counter++;
 			}
 		}
-		System.out.println(name+" gave "+counter+" drunkards wine.");
+		System.out.println(name+" gave "+counter+" the Drunkard's wine.");
 	}
 
 	private void brokenBottle(Player player) {
@@ -1025,7 +1024,7 @@ public class Enemy {
 			amount += 10;
 			atk += 5;
 		} 
-		System.out.println(name +" attacks you with a broken bottle. ");
+		System.out.println(name +" attacks you with a broken bottle.");
 		player.damage(amount * atk/100);
 	}
 
@@ -1041,17 +1040,20 @@ public class Enemy {
 
 	private void hide () {
 		setIntang(2);
-		System.out.println(name + " hides from you. ");
+		System.out.println(name + " hides from you.");
 	}
 
 	private void ferment () {
-		System.out.println(name + " fermented to create better wine");
+		System.out.println(name + " fermented to create better wine.");
 		charge = true;
 	}
 
 	private void grapeShot(Player player, int seed2) {
 		int counter = 0;
-		System.out.println(name + " put grapes in a cannon and shot you with it");
+		System.out.println(name + " put grapes in a cannon and shot you with it.");
+		if(seed2==50) {
+			System.out.println("It's funny. Laugh. Why aren't you laughing? Laugh, damn it.");
+		}
 		for (int x = 0; x < 6; x++) {
 			if (seed2 >= Math.pow(x, 3) - 30) {
 				counter++;

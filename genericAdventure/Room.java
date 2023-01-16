@@ -138,7 +138,6 @@ public class Room {
 			System.out.println("You haven't been here yet.");
 		}
 		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
-		displayMap(floor);
 		seen=true;
 		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
 		if(xCoord>0) {
@@ -237,6 +236,16 @@ public class Room {
 				}
 			}
 			if(input=='I'||input=='i') {
+				boolean hasMapCompatibleItem=false;
+				for(int i=0;i<Inventory.size();i++) {
+					if(Inventory.get(i).getMapCompatibility()) {
+						hasMapCompatibleItem=true;
+						break;
+					}
+					else {
+						throw new Exception("There are no valid items to use.");
+					}
+				}
 				mapInventory(player);
 			}
 			if(input=='1'&&!itemRoom&&!fought&&Floor.level!=0) {
@@ -557,9 +566,9 @@ public class Room {
 			}
 			if(player.getFreeze()<=0) {
 				while(true) {
-					System.out.println();
 					displayPlayer(player);
 					displayEnemies(enemies);
+					hasActiveItem=false;
 					for(int i=0;i<Inventory.size();i++) {
 						if(Inventory.get(i).isPassive()) {
 							try {
@@ -649,6 +658,7 @@ public class Room {
 					while(true) {
 						displayPlayer(player);
 						displayEnemies(enemies);
+						hasActiveItem=false;
 						for(int i=0;i<Inventory.size();i++) {
 							if(Inventory.get(i).isPassive()) {
 								try {
@@ -766,15 +776,18 @@ public class Room {
 				mapInv.add(Inventory.get(i));
 			}
 		}
-		System.out.println("Select an item to use.");
+		System.out.println("Select an item to use. Enter '0' to cancel.");
 		try {
-			input=getIntInput(1,mapInv.size());
+			input=getIntInput(0,mapInv.size());
+			if(input!=0) {
+				try {
+					Inventory.get(input-1).doEffect("placeholder",player,null,new Integer[]{0},(byte)0);
+				} catch (Exception e) {
+				}
+			}
 		} catch (Exception e) {
 		}
-		try {
-			Inventory.get(input-1).doEffect("placeholder",player,null,new Integer[]{0},(byte)0);
-		} catch (Exception e) {
-		}
+		
 	}
 	public String welcomeMessage(int displaySeed) {
 		switch(biome) {
@@ -923,10 +936,10 @@ public class Room {
 		}
 	}
 	public void displayMap(Floor floor) {
-		for (int x = floor.map.get(0).size(); x > 0; x--) {
-			for (int y = 0;y < floor.map.size(); y++) {
-           		if (y == xCoord && x == yCoord){
-       				System.out.print("()");
+		for (int x = 0; x < floor.map.size(); x++) {
+			for (int y = 0;y < floor.map.get(0).size(); y++) {
+           		if (x == xCoord && y == yCoord){
+       				System.out.print(";;");
            		}
        			else {
                 	System.out.print("::");
