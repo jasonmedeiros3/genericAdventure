@@ -839,7 +839,7 @@ public class Enemy {
 		hp -= 5;
 		def -= 5;
 		atk += 10;
-		setMarkForDeath(2);
+		markedForDeath(2);
 	}
 
 	private void createsProblems (Player player){
