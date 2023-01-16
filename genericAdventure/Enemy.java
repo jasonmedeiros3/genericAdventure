@@ -24,6 +24,7 @@ public class Enemy {
 	protected boolean clownSaw=false;
 	private static boolean droneRepair=false;
 	private static boolean canDroneRepair=true;
+	private static boolean charge = false;
 	public final boolean isBoss;
 	public Enemy(String biome,boolean isBoss) {
 		Random rand=new Random();
@@ -715,12 +716,181 @@ public class Enemy {
 				case "Polar Camel":
 					if (seed1 >= 25 && player.getHp() >= 60) {
 						freezingSpit(player);
+					} else if (seed2 <= 90 || hp > 50) {
+						humpAbsorption(player);
+					} else {
+						deerKick(player, seed2);
 					}
+				case "Psychrophilic Amphibious Jaguar": 
+					if (charge) {
+						pounce(player);
+						charge = false;
+					} else if (hp > 30 || seed >= 20) {
+						System.out.println(name + " gets ready to pounce.");
+						charge = true;
+					} else {
+						swipe(player);
+					}
+				case "Cheese-Coated Tourist":
+					if (seed1 >= 50) {
+						photoshoot(player);
+					} else if (seed2 >= 50) {
+						cheetoTouch(player);
+					} else {
+						handgun(player);
+					}
+				case "Completely Normal Shark":
+					if (seed1 >= 80) {
+						System.out.println(name + " shocks you with how normal looking it is");
+						confuse(player);
+					} else if (atk <= 115 && seed2 >= 70) {
+						atkIncrement(player);				
+					} else {
+						chomp(player);
+					}
+				case "Lawyer":
+					if (player.getHp() >= 50 && seed1 >= 20) {
+						System.out.println(name + " shows you some documents to look over leaving you confused. ");
+						confuse(player);
+					} else if (seed1 > 50) {
+						hurtfulLies(player);
+					} else {
+						createsProblems(player);
+					}
+				case "Consul":
+					if (charge) {
+						handgun(player);
+						charge = false;
+					} else if (seed1 >= 40) {
+						bombing(player);
+					} else if (hp <= 40) {
+						lastStand(player);
+					} else {
+						nothing();
+					}
+				case "Consulate Janitor":
+					if (enemyList.size() == 1) {
+						boost(player);
+					} else if (hp <= 30){
+						healingStim(player);
+					} else {
+						mopping(player);
+					}
+				case "Protestor": 
+					if (enemyList.size() > 1 && seed1 >= 50) {
+						grenade(player);
+					} else if (seed1 > 75) {
+						annoyance(player);
+					} else {
+						noiseMaker(enemyList, seed2);
+					}
+				case "":
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	private void annoyance (Player player){
+		System.out.println(name + " annoys you with their preaching. ");
+		markedForDeath(2);
+		player.damage(10 * atk/ 100);
+	}
+
+	private void grenade (Player player){
+		System.out.println(name + "threw a grenade at you. Too bad he sucks at throwing and didnt manage to throw it far. ");
+		for (Enemy e: enemyList) {
+			e.damage(5, null);
+		}
+		hp -= 5;
+		player.damage(10 * atk/100);
+	}
+
+
+	private void mopping (Player player){
+		System.out.println(name + " puts a dirty mop in your eyes. ");
+		player.setPoison(2);
+		player.damage(15 * atk/ 100);
+	}
+
+	private void boost (Player player){
+		atk += 10;
+		def += 15;
+		hp += 5;
+	}
+
+	private void healingStim (Player player){
+		hp += 10;
+	}
+
+	private void nothing (){
+		System.out.println(name + " does nothing. ");
+	}
+
+	private void lastStand(Player player){
+		System.out.println(name + "makes a last stand, preparing to die. ");
+		hp = 10;
+		atk += 50;
+		charge = true;
+	}
+
+	private void bombing(Player player){
+		System.out.println("Someone tried to bomb the " + name);
+		hp -= 5;
+		def -= 5;
+		atk += 10;
+		markedForDeath(2);
+	}
+
+	private void createsProblems (Player player){
+		System.out.println(name + "creates problems. ");
+		hp += 10;
+	}
+	private void hurtfulLies(Player player){
+		System.out.println(name + " lies to you. ");
+		player.setPoison(2);
+		player.damage(5 * atk/100);
+	}
+
+	private void chomp(Player player){
+		System.out.println(name + "takes a bite out of you. ");
+		player.damage(25 * atk/100);
+	}
+
+	private void atkIncrement (Player player) {
+		System.out.println(name + "gets ready to attack");
+		atk += 5;
+	}
+
+	private void confuse (Player player) {
+		player.setMarkForDeath(2);
+	}
+
+	private void cheetoTouch (Player player) {
+		System.out.println(name + " touches you with their disgusting cheeto stained fingers.");
+		player.setPoison(2);
+		player.damage(5 * atk/100);
+	}
+
+	private void photoshoot (Player player) {
+		System.out.println(name + " blinds you with flash photography.");
+		player.setFreeze(2);
+		player.setUnaware(2);
+	}
+
+	private void swipe (Player player){
+		System.out.println(name + "swipes at you");
+		player.damage(15 * atk/100);
+	}
+
+	private void pounce(Player player) {
+		System.out.println(name + " pounced on you and tried to maul you to death.");
+		player.damage(40 * atk/100);
+	}
+
+	private void humpAbsorption (Player player) {
+		System.out.println(name + " absorbed a hump. Who knew they could do that.");
+		def += 30;
 	}
 
 	private void freezingSpit(Player player) {
