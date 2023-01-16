@@ -371,7 +371,7 @@ public class Room {
 		Thread.sleep(1000);
 		printscroll("But is that really what you want?");
 		Thread.sleep(1000);
-		printscroll("But do you want to let go of this world just yet?");
+		printscroll("Do you want to let go of this world just yet?");
 		Thread.sleep(1000);
 		printscroll("Do you want to go back to whatever you were doing before you opened this game?");
 		Thread.sleep(1000);
