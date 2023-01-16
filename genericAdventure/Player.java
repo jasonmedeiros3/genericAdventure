@@ -20,6 +20,9 @@ public class Player {
 	private int intang=0;
 	private int solarArmour=0;
 	private int vaccinated=0;
+	private int planCCounter=-1;
+	private int reviveType=0;
+	private int swedish=0;
 	private final boolean hayFever;
 	private ArrayList<Enemy>enemyList;
 	public Player(byte[]inputs,ItemPool itempool,Boolean getStartingItems) {
@@ -235,7 +238,25 @@ public class Player {
 	public int getVaccinated() {
 		return vaccinated;
 	}
-	public void setAfterburn(int increment) {
+	public void setPlanCCounter(int planCCounter) {
+		this.planCCounter=planCCounter;
+	}
+	public int getPlanCCounter() {
+		return planCCounter;
+	}
+	public void setReviveType(int reviveType) {
+		this.reviveType=reviveType;
+	}
+	public int getReviveType() {
+		return reviveType;
+	}
+	public void setSwedish(int swedish) {
+		this.swedish=swedish;
+	}
+	public int getSwedish() {
+		return swedish;
+	}
+ 	public void setAfterburn(int increment) {
 		afterburn+=increment;
 	}
 	public int getAfterburn() {
@@ -332,14 +353,45 @@ public class Player {
 		return hayFever;
 	}
 	public void checkDead() {
+		Inventory.eventFlagHandler("death",this,enemyList,new Integer[] {0});
 		if(hp<=0) {
-			System.out.println("You died.");
-			System.out.println("You made it "+Floor.level+" floors as the "+getClassName()+".");
-			System.out.println("Your final item count was "+Inventory.size()+".");
-			System.exit(0);
+			if(reviveType==0) {
+				System.out.println("You died.");
+				System.out.println("You made it "+Floor.level+" floors as the "+getClassName()+".");
+				System.out.println("Your final item count was "+Inventory.size()+".");
+				System.exit(0);
+			}
+			else if(reviveType==1) {
+				System.out.println("You died.");
+				System.out.println("You escape into a nested universe where you're still alive and continue playing.");
+				hp=maxhp;
+				clearNegativeStatus();
+			}
 		}
 	}
+	public void clearNegativeStatus() {
+		planCCounter=-1;
+		afterburn=0;
+		poison=0;
+		markedForDeath=0;
+		unaware=0;
+		freeze=0;
+	}
+	public void clearPositiveStatus() {
+		invuln=0;
+		intang=0;
+	}
+	public void clearStatus() {
+		clearNegativeStatus();
+		clearPositiveStatus();
+	}
 	public void statusTick() {
+		if(planCCounter>0) {
+			planCCounter--;
+		}
+		else if(planCCounter==0) {
+			damage(999);
+		}
 		if(afterburn>0) {
 			afterburn--;
 			if(solarArmour>0) {

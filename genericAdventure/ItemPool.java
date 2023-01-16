@@ -45,6 +45,11 @@ public class ItemPool {
 		pool.add(new ActiveItem("Poison Pen",s=1,6,b=8,false)); //35
 		pool.add(new PassiveItem("Law License",s=1,256,b=3)); //36
 		pool.add(new ActiveItem("$15 Spear",s=18,96,b=4,false)); //37
+		pool.add(new PassiveItem("Balaclava",s=2,125,b=5)); //38
+		pool.add(new ActiveItem("Sewing Needle",s=1,9,b=5,false)); //39
+		pool.add(new ActiveItem("Plan C",s=1,1,b=0,false)); //40
+		pool.add(new PassiveItem("Nested Universe",s=0,1,b=0)); //41
+		pool.add(new PassiveItem("Swedish Passport",s=1,100,b=0)); //42
 	}
 	public Item get(int index) {
 		return pool.get(index);
