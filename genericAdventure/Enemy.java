@@ -320,9 +320,9 @@ public class Enemy {
 					setWeight(3);
 					break;
 				case "Protestor":
-					maxhp = (int) (50+2.2 * Math.pow(Floor.level, 1.8));
+					maxhp = (int) (80+2.2 * Math.pow(Floor.level, 1.8));
 					atk = (int) (20 + 5 * Floor.level);
-					def = (int) (97 + 0.9 * Floor.level);
+					def = (int) (57 + 0.9 * Floor.level);
 					setWeight(1);
 					break;
 				case "Sapient Grapevine":
@@ -362,7 +362,7 @@ public class Enemy {
 					setWeight(2);
 					break;
 				case "Florida Man":
-					maxhp = (int) (94 + Math.pow(Floor.level, 1.46));
+					maxhp = (int) (80 + Math.pow(Floor.level, 1.46));
 					atk = (int) (127 + 4 * Floor.level);
 					def = (int) (82 + Floor.level);
 					setWeight(2);
@@ -380,9 +380,9 @@ public class Enemy {
 					setWeight(2);
 					break;
 				case "Paper Airplane":
-					maxhp = (int) (67 + Floor.level);
+					maxhp = (int) (22 + Floor.level);
 					atk = (int) (112 + 1.2 * Floor.level);
-					def = (int) (40 + 10 * Floor.level);
+					def = (int) (20 + 10 * Floor.level);
 					setWeight(2);
 					break;
 				case "Firefighter":
@@ -416,7 +416,7 @@ public class Enemy {
 					setWeight(1);
 					break;
 				case "Willify":
-					maxhp = (int) (130 + 2.3 * Floor.level);
+					maxhp = (int) (80 + 2.3 * Floor.level);
 					atk = (int) (19 + 1.2 * Floor.level);
 					def = (int) (100 + Floor.level);
 					setWeight(3);
@@ -893,13 +893,91 @@ public class Enemy {
 						confuse(player);
 					}
 					break;
-
+				case "Paper Airplane":
+					if (hp < 20 && seed1 >= 70) {
+						runAway(enemyList);
+					} else if (seed2 >= 50) {
+						poisonPaperCut(player);
+					} else {
+						System.out.println("Paper Airplane flies around you to confuse you");
+						confuse(player);
+					}
+					break;
+				case "Firefighter":
+					if (hp < 20 && player.getHp() > 20) {
+						
+					}
+					break;
+				case "Brick":
+					break;
+				case "Sand":
+					break;
+				case "Real Sun":
+					break;
+				case "Water":
+					break;
+				case "Willify":
+					break;
+				case "Spirit":
+					break;
+				case "Three Headed Dog":
+					break;
+				case "Pointy Rock":
+					break;
+				case "Uncool Satan":
+					break;
+				case "Pilot":
+					break;
+				case "Flight Attendant":
+					break;
+				case "I Sell Soap":
+					break;
+				case "Flying Ostrich":
+					break;
+				case "Potato Vendor":
+					break;
+				case "Catholic Mob":
+					break;
+				case "Blight Immigrant":
+					break;
+				case "Another Drunkard":
+					break;
+				case "Leprehaun":
+					break;
+				case "Doom Guy Protestant":
+					break;
+				
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
 	}
+
+	private void 
+
+	private void flamethrower (Player player) {
+		System.out.println(name + " pulled out a flamethrower? What type of firefighter carries a flame thrower. ");
+		player.damage(10 * atk/100);
+		player.setAfterburn(4);
+	}
+
+	private void axe (Player player) {
+		System.out.println(name + " attacks you with an axe. ");
+		player.damage(25 * atk/100);
+	}
+
+	private void runAway (ArrayList<Enemy>enemyList) {
+		System.out.println(name+ " runs away. What a coward. ");
+		enemyList.remove(this);
+	}
+
+	private void poisonPaperCut (Player player){
+		System.out.println(name + " gives you a paper cut. Turns out the paper is actually used toliet paper. ");
+		player.damage((4 + Floor.level) * atk/100);
+		player.setPoison(4);
+	}
+
 	private void lowerDef (Player player) {
 		System.out.println(name +" lowers your guard temperarly");
 		player.setMarkForDeath(4);
@@ -1064,7 +1142,7 @@ public class Enemy {
 
 	private void chomp(Player player){
 		System.out.println(name + "takes a bite out of you.");
-		player.damage(25 * atk/100);
+		player.damage(20 * atk/100);
 	}
 
 	private void atkIncrement () {
