@@ -405,8 +405,11 @@ public class Room {
 			printscroll("I will create the new content.");
 			Thread.sleep(1000);
 			printscroll("All you need to do is close your eyes and enjoy it.");
+			Thread.sleep(2250);
 		}
 		else {
+			slowPrintscroll("You got the Artifact.");
+			Thread.sleep(2250);
 			return false;
 		}
 		return true;
@@ -438,6 +441,14 @@ public class Room {
 		for(char c:sArray) {
 			System.out.print(c);
 			Thread.sleep(60);
+		}
+		System.out.println();
+	}
+	public static void slowPrintscroll(String s) throws InterruptedException {
+		char[] sArray=s.toCharArray();
+		for(char c:sArray) {
+			System.out.print(c);
+			Thread.sleep(300);
 		}
 		System.out.println();
 	}
