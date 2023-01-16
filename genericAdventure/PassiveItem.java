@@ -75,6 +75,9 @@ public class PassiveItem implements Item {
 			case "Law License":
 				lawLicense(eventFlag);
 				break;
+			case "Balaclava":
+				balaclava(eventFlag,player,enemyList.get(0));
+				break;
 			default:
 		}
 	}
@@ -253,6 +256,12 @@ public class PassiveItem implements Item {
 	private void lawLicense(String eventFlag) {
 		if(eventFlag.equals("addItem")||eventFlag.equals("removeItem")) {
 			checkLawLicense();
+		}
+	}
+	private void balaclava(String eventFlag,Player player,Enemy target) {
+		if(eventFlag.equals("attack")) {
+			target.setUnaware(1);
+			damage(1,player);
 		}
 	}
 	public static boolean getLawLicense() {
