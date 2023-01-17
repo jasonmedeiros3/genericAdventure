@@ -91,7 +91,6 @@ public class PassiveItem implements Item {
 		if(eventFlag.equals("battleStart")) {
 			for(Enemy e:enemyList) {
 				e.setUnaware(1);
-				System.out.println(e.stringStatus());
 				damage(1,player);
 			}
 		}
