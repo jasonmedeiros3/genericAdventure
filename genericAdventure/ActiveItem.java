@@ -221,7 +221,7 @@ public class ActiveItem implements Item {
 	}
 	private void arthritis(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy arthritis.");
-		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0),player);
+		enemy.damage((26+(enemy.getDef()/5))*(player.getAtk()/120.0),player);
 		damage(1,player);
 	}
 	private void blackBox(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
