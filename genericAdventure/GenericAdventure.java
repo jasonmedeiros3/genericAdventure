@@ -290,9 +290,9 @@ public class GenericAdventure {
 		if(input==1) {
 			Player player=new Player(main.classSelect(),itempool,true);
 			Room.printscroll("You have to get the Artifact.");
-			Thread.sleep(1000);
+			Thread.sleep(800);
 			Room.printscroll("Name is uncreative but I assure you, it's very important.");
-			Thread.sleep(1000);
+			Thread.sleep(800);
 			Room.printscroll("Go on and get this over with.");
 			Thread.sleep(2250);
 			while(true) {
@@ -304,7 +304,6 @@ public class GenericAdventure {
 						break;
 					}
 					catch(Exception e) {
-						e.printStackTrace();
 						continue;
 					}
 				}
