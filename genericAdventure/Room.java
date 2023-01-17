@@ -546,14 +546,7 @@ public class Room {
 				break;
 			}
 		}
-		for(int i=0;i<Inventory.size();i++) {
-			if(Inventory.get(i).isPassive()) {
-				try {
-					Inventory.get(i).doEffect("battleStart",player,enemies,null,(byte) 0);
-				} catch (Exception e) {
-				}
-			}
-		}
+		turn=0;
 		while(true) {
 			turn++;
 			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
@@ -570,7 +563,18 @@ public class Room {
 					displayPlayer(player);
 					displayEnemies(enemies);
 					hasActiveItem=false;
+					if(turn==0) {
+						for(int j=0;j<Inventory.size();j++) {
+							if(Inventory.get(j).isPassive()) {
+								try {
+									Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
+								} catch (Exception e) {
+								}
+							}
+						}
+					}
 					for(int i=0;i<Inventory.size();i++) {
+						
 						if(Inventory.get(i).isPassive()) {
 							try {
 								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
@@ -632,14 +636,7 @@ public class Room {
 		ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 		enemies.add(new Boss(null));
 		System.out.println(enemies.get(0).getName());
-		for(int i=0;i<Inventory.size();i++) {
-			if(Inventory.get(i).isPassive()) {
-				try {
-					Inventory.get(i).doEffect("battleStart",player,enemies,null,(byte) 0);
-				} catch (Exception e) {
-				}
-			}
-		}
+		turn=0;
 		while(true) {
 			turn++;
 			cleanDeadEnemies(enemies);
@@ -660,6 +657,16 @@ public class Room {
 						displayPlayer(player);
 						displayEnemies(enemies);
 						hasActiveItem=false;
+						if(turn==0) {
+							for(int j=0;j<Inventory.size();j++) {
+								if(Inventory.get(j).isPassive()) {
+									try {
+										Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
+									} catch (Exception e) {
+									}
+								}
+							}
+						}
 						for(int i=0;i<Inventory.size();i++) {
 							if(Inventory.get(i).isPassive()) {
 								try {
