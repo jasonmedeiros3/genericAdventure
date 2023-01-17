@@ -391,13 +391,13 @@ public class Enemy {
 					def = (int) (152 + 1.4 * Floor.level);
 					setWeight(3);
 					break;
-				case "Brick":
+				case "Sand":
 					maxhp = (int) (50 + 2 * Floor.level);
 					atk = (int) (23 + 4 * Floor.level);
-					def = (int) (140 + Floor.level);
+					def = (int) (65 + Floor.level);
 					setWeight(1);
 					break;
-				case "Sand":
+				case "Brick":
 					maxhp = (int) (40 + 2 * Floor.level);
 					atk = (int) (101 + 2.4 * Floor.level);
 					def = (int) (100);
@@ -422,7 +422,7 @@ public class Enemy {
 					setWeight(3);
 					break;
 				case "Spirit":
-					maxhp = (int) (40 + 2 * Floor.level);
+					maxhp = (int) (3 + 2 * Floor.level);
 					atk = (int) (40 + 2 * Floor.level);
 					def = (int) (40 + 2 * Floor.level);
 					setWeight(1);
@@ -904,25 +904,84 @@ public class Enemy {
 					}
 					break;
 				case "Firefighter":
-					if (hp < 20 && player.getHp() > 20) {
-						
+					if (hp < 40 && player.getHp() > 20) {
+						flamethrower(player);
+					} else if (hp < 30) {
+						healingStim(5);
+					} else if (player.getAfterburn() == 0 && seed1 >= 70) {
+						hoseDown(player);
+					} else {
+						axe(player);
 					}
 					break;
 				case "Brick":
+					if (def < 180 && seed1 >= 10) {
+						strenghten();
+					} else {
+						throwSelf(player, enemyList);
+					}
 					break;
 				case "Sand":
+					int counter = 0;
+					if (counter > 3) {
+						sandEvolve(enemyList);
+					} else {
+						nothing();
+						counter++;
+					}
 					break;
 				case "Real Sun":
+					if (player.getAfterburn() == 0) {
+						if (seed1 >= 30) {
+							sunburn(player);
+						} else {
+							flamethrower(player);
+						}
+					} else {
+						heatUp();
+					}
 					break;
 				case "Water":
+					if (seed1 >= 50) {
+						System.out.println(name + " why does water need a hose? ");
+						hoseDown(player);
+					} else {
+						System.out.println(name + " talk's now?");
+						annoyance(player);
+					}
 					break;
 				case "Willify":
+					if (seed1 >= 30) {
+						confuse(player);
+						System.out.println("What is this even supposed to be?");
+					} else if (seed2 >= 90) {
+						annoyance(player);
+					} else {
+						axe(player);
+					}
 					break;
 				case "Spirit":
+					if (seed1 >= 30) {
+						jumpScareStrike(player);
+					} else {
+						hide();
+					}
 					break;
 				case "Three Headed Dog":
+					if (seed1 >= 44) {
+						chomp(player);
+					} else {
+						squirrelBite(player);
+						squirrelBite(player);
+						squirrelBite(player);
+					}
 					break;
 				case "Pointy Rock":
+					if (seed1 >= 44) {
+						wrongStep(player);
+					} else {
+						hide();
+					}
 					break;
 				case "Uncool Satan":
 					break;
@@ -939,8 +998,17 @@ public class Enemy {
 				case "Catholic Mob":
 					break;
 				case "Blight Immigrant":
+					
 					break;
 				case "Another Drunkard":
+					if (seed1 <= 30) {
+						brokenBottle(player);
+					} else if (seed2 >= 50) {
+						axe(player);
+					} else {
+						nothing();
+						charge = true;
+					}
 					break;
 				case "Leprehaun":
 					break;
@@ -954,10 +1022,61 @@ public class Enemy {
 		}
 	}
 
-	private void 
+	private void wrongStep (Player player) {
+		System.out.println("You stepped in the wrong place and cut your foot on a poisonous " + name);
+		player.damage(10 * atk/100);
+		player.setPoison(4);
+		damage(5, null);
+	}
+
+	private void jumpScareStrike (Player player) {
+		System.out.println(name + " comes out of no where, attacks you and then disappears. ");
+		player.setMarkForDeath(2);
+		player.damage(10 * atk/100);
+		intang += 2;
+	}
+
+	private void heatUp () {
+		System.out.println(name + " heats up for the next time");
+		atk += 5;
+	}
+
+	private void sunburn (Player player) {
+		System.out.println(name + " burns you. ");
+		player.setAfterburn(2);
+		player.damage(3 * atk/10);
+	}
+
+	private void sandEvolve (ArrayList<Enemy>enemyList) {
+		System.out.println(name+" evolves into a brick.");
+		enemyList.remove(this);
+		Enemy e=null;
+		do {
+			e=new Enemy("rooftop",false);
+		}while(!e.name.equals("Brick"));
+		enemyList.add(e);
+	}
+
+	private void throwSelf (Player player, ArrayList<Enemy>enemyList) {
+		System.out.println(name+ " throws himself at you");
+		enemyList.remove(this);
+		player.damage(45 * atk/100);
+	}
+	
+	private void strenghten () {
+		def += 30;
+		atk += 15;
+	}
+
+	private void hoseDown (Player player) {
+		System.out.println(name + " uses a hose to push you onto the floor. The water is blinding. ");
+		player.setAfterburn(-player.getAfterburn());
+		confuse(player);
+		player.damage(5 * atk/100);
+	}
 
 	private void flamethrower (Player player) {
-		System.out.println(name + " pulled out a flamethrower? What type of firefighter carries a flame thrower. ");
+		System.out.println(name + " pulled out a flamethrower? What type of " + name + " carries a flame thrower. ");
 		player.damage(10 * atk/100);
 		player.setAfterburn(4);
 	}
@@ -1154,7 +1273,7 @@ public class Enemy {
 
 	private void confuse (Player player) {
 		player.setMarkForDeath(2);
-		
+		player.setUnaware(2);
 	}
 
 	private void cheetoTouch (Player player) {
