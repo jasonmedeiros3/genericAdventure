@@ -513,7 +513,7 @@ public class Enemy {
 					setWeight(3);
 					break;
 			}
-			atk = atk/2;
+			atk = (int) (atk/1.75);
 		}
 		else {
 			switch(name) {
