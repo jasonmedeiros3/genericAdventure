@@ -73,7 +73,7 @@ public class Player {
 			case 5:
 				className="Spy";
 				maxhp=125;
-				atk=107;
+				atk=120;
 				def=97;
 				if(getStartingItems) {
 					Inventory.silentAdd(itempool.get(4),this);
