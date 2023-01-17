@@ -724,12 +724,13 @@ public class Enemy {
 					}
 					break;
 				case "Polar Camel":
-					if (seed1 <= 25 && player.getHp() >= 60) {
+					if (seed1 <= 25 && player.getHp() >= 60 && player.getFreeze() == 0) {
 						freezingSpit(player);
-					} else if (seed2 <= 90 || hp > maxhp/2.5) {
+					} else if ((seed2 <= 90 || hp > maxhp/2.5) && charge) {
 						humpAbsorption(player);
 					} else {
 						deerKick(player, seed2);
+						charge = true;
 					}
 					break;
 				case "Psychrophilic Amphibious Jaguar": 
