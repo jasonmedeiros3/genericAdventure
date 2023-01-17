@@ -98,13 +98,13 @@ public class ActiveItem implements Item {
 				ipecac(player);
 				break;
 			case "Weighted Coin":
-				coin(enemyList);
+				coin(player,enemyList);
 				break;
 			case "Taunton Dart Gun":
 			case "Blowgun":
 				Boolean mode=selectDartMode();
 				target=selectTarget(enemyList);
-				dart(enemyList.get(target),mode);
+				dart(player,enemyList.get(target),mode);
 				break;
 			case "Shotgun":
 				target=selectTarget(enemyList);
@@ -183,6 +183,7 @@ public class ActiveItem implements Item {
 	private void backPain(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy back pain.");
 		enemy.damage(25,player);
+		enemy.setAtk(-2);
 		damage(1,player);
 	}
 	private void lawsuit(Player player,Enemy enemy) throws Exception {
@@ -220,7 +221,7 @@ public class ActiveItem implements Item {
 	}
 	private void arthritis(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy arthritis.");
-		enemy.damage(26+(enemy.getDef()/9.8)*(player.getAtk()/120.0),player);
+		enemy.damage((26+(enemy.getDef()/5))*(player.getAtk()/120.0),player);
 		damage(1,player);
 	}
 	private void blackBox(Player player,ArrayList<Enemy> enemyList,byte target) throws Exception {
@@ -264,14 +265,22 @@ public class ActiveItem implements Item {
 	private void redFlask(Player player) throws Exception {
 		System.out.println("Drank from the red flask.");
 		player.damage(-(player.getMaxHp())/2.5);
+		damage(1,player);
 	}
 	private void m1911(Player player,Enemy enemy) {
 		System.out.println("Fired the M1911.");
-		enemy.damage(60*player.getAtk()/100.0,player);
+		if(enemy.getMarkForDeath()>0) {
+			enemy.damage(90*player.getAtk()/100.0,player);
+		}
+		else {
+			enemy.damage(60*player.getAtk()/100.0,player);
+		}
+		damage(1,player);
 	}
 	private void stapleGun(Player player,Enemy enemy) {
 		System.out.println("Fired a staple.");
 		enemy.damage(40*player.getAtk()/100.0,player);
+		damage(1,player);
 	}
 	private void kunai(Player player,Enemy enemy) {
 		double damage=enemy.getHp()/5.9+32*player.getAtk()/90.0;
@@ -301,19 +310,22 @@ public class ActiveItem implements Item {
 		}
 		catch(Exception e) {
 		}
+		damage(1,player);
 	}
 	private void ipecac(Player player) {
 		System.out.println("You drink the syrup of ipecac.");
 		System.out.println("You feel violently nauseous.");
 		player.setPoison(5);
+		damage(1,player);
 	}
-	private void coin(ArrayList<Enemy>enemyList) {
+	private void coin(Player player,ArrayList<Enemy>enemyList) {
 		System.out.println("You throw a coin as a distraction.");
 		for(Enemy e:enemyList) {
 			e.setUnaware(2);
 		}
+		damage(1,player);
 	}
-	private void dart(Enemy enemy,boolean mode) {
+	private void dart(Player player,Enemy enemy,boolean mode) {
 		System.out.println("You fire a"+(mode?"n emetic":" sedative")+" dart.");
 		if(mode) {
 			enemy.setPoison(3);
@@ -321,6 +333,7 @@ public class ActiveItem implements Item {
 		else {
 			enemy.setUnaware(5);
 		}
+		damage(1,player);
 	}
 	private void shotgun(Player player,Enemy enemy) {
 		System.out.println("You fire a shotgun. You experience some recoil.");
@@ -345,6 +358,7 @@ public class ActiveItem implements Item {
 	private void expensiveSpear(Player player,Enemy enemy) {
 		System.out.println("Thrust the $15 spear.");
 		enemy.damage(85*player.getAtk()/100.0, player);
+		damage(1,player);
 	}
 	private void needle(Player player,Enemy enemy) {
 		System.out.println("Swung the sewing needle.");
@@ -363,6 +377,7 @@ public class ActiveItem implements Item {
 		for(Enemy e:enemyList) {
 			e.damage(199, player);
 		}
+		damage(1,player);
 		player.setPlanCCounter(3);
 	}
 	private void pinotNoir(Player player) {
@@ -378,6 +393,7 @@ public class ActiveItem implements Item {
 		player.setAtk(10);
 		player.setMarkForDeath(3);
 		player.setUnaware(5);
+		damage(1,player);
 	}
 	@Override
 	public String getName() {
