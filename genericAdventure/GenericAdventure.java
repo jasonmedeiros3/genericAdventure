@@ -203,7 +203,7 @@ public class GenericAdventure {
 				bw.write("WEIGHTED COIN\n");
 				bw.write("Weapon for the Spy.\n");
 				bw.write("Inflicts 2 turns of Unaware on all enemies.\n");
-				bw.write("You get 3 coins.");
+				bw.write("You get 3 coins.\n");
 				bw.write("--------------------------------------------------\n");
 				bw.write("TAUNTON DART GUN\n");
 				bw.write("Weapon for the Spy.\n");
