@@ -562,7 +562,7 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
-			if(turn==0) {
+			if(turn==1) {
 				for(int j=0;j<Inventory.size();j++) {
 					if(Inventory.get(j).isPassive()) {
 						try {
@@ -654,7 +654,7 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
-			if(turn==0) {
+			if(turn==1) {
 				for(int j=0;j<Inventory.size();j++) {
 					if(Inventory.get(j).isPassive()) {
 						try {
