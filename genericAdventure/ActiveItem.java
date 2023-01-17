@@ -328,10 +328,10 @@ public class ActiveItem implements Item {
 	private void dart(Player player,Enemy enemy,boolean mode) {
 		System.out.println("You fire a"+(mode?"n emetic":" sedative")+" dart.");
 		if(mode) {
-			enemy.setPoison(3);
+			enemy.setPoison(5);
 		}
 		else {
-			enemy.setUnaware(5);
+			enemy.setFreeze(2);
 		}
 		damage(1,player);
 	}
