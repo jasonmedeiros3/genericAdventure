@@ -111,7 +111,7 @@ public class Enemy {
 					} else if (seed <= 87) {
 						nameSelector("Alligator");
 					} else {
-						nameSelector("Bipedal Turtles");
+						nameSelector("Bipedal Turtle");
 					}
 					break;
 				case "rooftop": 
