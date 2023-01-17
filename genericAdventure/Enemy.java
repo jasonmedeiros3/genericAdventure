@@ -1105,19 +1105,19 @@ public class Enemy {
 	}
 	
 	private void potOfGold (ArrayList<Enemy> enemyList) {
-		System.out.println(name + " gives a pot of gold to his friends. ");
+		System.out.println(name + " gives a pot of gold to his friends. They eat some.");
 		for (Enemy e: enemyList) {
 			e.damage(-10-Floor.level, null);
 		} 
 	}
 
 	private void potato (Player player) {
-		System.out.println(name + " shoots you with a potato");
+		System.out.println(name + " shoots you with a potato.");
 		player.damage(10 * atk/100);
 	}
 
 	private void poisonPotato (Player player) {
-		System.out.println(name + " shoots you with a poisonous potato in his potato cannon. ");
+		System.out.println(name + " shoots you with a poisonous potato in his potato cannon.");
 		player.damage(10 * atk/100);
 		player.setPoison(2);
 	}
@@ -1129,7 +1129,7 @@ public class Enemy {
 	}
 
 	private void fight (Player player) {
-		System.out.println(name + " randomly starts punching you. ");
+		System.out.println(name + " randomly starts punching you.");
 		if (charge) {
 			player.damage(15 * atk/100);
 			atk += 15;
@@ -1140,12 +1140,12 @@ public class Enemy {
 	}
 
 	private void airplaneFood (Player player) {
-		System.out.println(name + " gives you airplane food, turns out its poisonous. ");
+		System.out.println(name + " gives you airplane food. It's very obviously poisonous.");
 		player.setPoison(4);
 	}
 
 	private void swerve (Player player) {
-		System.out.println(name + " swerves the plane, knocking you into the side. ");
+		System.out.println(name + " swerves the plane, knocking you into the side.");
 		player.damage(10 * atk/100);
 		player.setUnaware(2);
 	}
@@ -1159,11 +1159,11 @@ public class Enemy {
 			}while(!e.name.equals("Paper Airplane"));
 			enemyList.add(e);
 		}
-		System.out.println(name + " turns into a swam of paper airplanes!");
+		System.out.println(name + " turns into a swarm of paper airplanes!");
 	}
 
 	private void summon (ArrayList<Enemy> enemyList) {
-		System.out.println(name + " summons a spirit");
+		System.out.println(name + " summons a spirit.");
 		Enemy e=null;
 		do {
 			e=new Enemy("hell",false);
