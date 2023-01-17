@@ -475,7 +475,7 @@ public class Room {
 		return input;
 	}
 	public void displayPlayer(Player player) {
-		System.out.println(player.getClassName()+": (HP: "+player.getHp()+"/"+player.getMaxHp()+")"+player.stringStatus());
+		System.out.println("\n"+player.getClassName()+": (HP: "+player.getHp()+"/"+player.getMaxHp()+")"+player.stringStatus());
 	}
 	public void displayEnemies(ArrayList<Enemy> enemies) {
 		for(Enemy e:enemies) {
