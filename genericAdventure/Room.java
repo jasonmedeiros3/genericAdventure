@@ -127,6 +127,7 @@ public class Room {
 		char input;
 		Random rand=new Random();
 		int displaySeed=rand.nextInt(100);
+		displayPlayer(player);
 		System.out.println(welcomeMessage(displaySeed));
 		if(itemRoom||displaySeed<=2) {
 			System.out.println("You get the feeling that something mildly important is here.");
@@ -954,7 +955,7 @@ public class Room {
        				System.out.print("()");
            		}
            		else if(floor.map.get(x).get(y).exitRoom) {
-           			System.out.println("<>");
+           			System.out.print("<>");
            		}
        			else {
                 	System.out.print("::");
