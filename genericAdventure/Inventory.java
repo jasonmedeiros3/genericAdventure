@@ -31,9 +31,11 @@ public class Inventory {
 		}
 		if(weight+item.getWeight()<=MAXWEIGHT) {
 			inventory.add(item);
-			try {
-				inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
-			} catch (Exception e) {
+			if(item.isPassive()) {
+				try {
+					inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+				} catch (Exception e) {
+				}
 			}
 		}
 		else {
