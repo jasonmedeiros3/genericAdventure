@@ -1003,7 +1003,7 @@ public class Enemy {
 				case "Another Drunkard":
 					if (seed1 <= 30) {
 						brokenBottle(player);
-					} else if (seed2 >= 50) {
+					} else if (seed1 <= 80) {
 						axe(player);
 					} else {
 						nothing();
