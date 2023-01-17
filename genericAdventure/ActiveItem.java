@@ -429,6 +429,7 @@ public class ActiveItem implements Item {
 		durability-=damage;
 		if(durability<=0) {
 			try {
+				System.out.println(name+" broke.");
 				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}

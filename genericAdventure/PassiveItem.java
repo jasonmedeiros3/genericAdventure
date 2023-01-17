@@ -91,6 +91,7 @@ public class PassiveItem implements Item {
 		if(eventFlag.equals("battleStart")) {
 			for(Enemy e:enemyList) {
 				e.setUnaware(1);
+				System.out.println(e.stringStatus());
 				damage(1,player);
 			}
 		}
@@ -316,6 +317,7 @@ public class PassiveItem implements Item {
 		durability-=damage;
 		if(durability<=0) {
 			try {
+				System.out.println(name+" broke.");
 				Inventory.directRemove(this,player);
 			} catch (Exception e) {
 			}
