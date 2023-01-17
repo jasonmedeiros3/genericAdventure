@@ -300,7 +300,14 @@ public class GenericAdventure {
 			Room.printscroll("Go on and get this over with.");
 			Thread.sleep(2250);
 			while(true) {
-				Floor.level++;
+				if(!dealRefused) {
+					Floor.level++;
+				}
+				else {
+					Floor.level=0;
+				}
+				player.setHp(player.getMaxHp());
+				player.clearStatus();
 				while(true) {
 					try {
 						System.out.println("Floor "+(Floor.level));
@@ -410,9 +417,12 @@ public class GenericAdventure {
 			}
 			gameLoaded=true;
 			while(true) {
+				player.setHp(player.getMaxHp());
+				player.clearStatus();
 				while(true) {
 					try {
 						System.out.println("Floor "+(Floor.level));
+						
 						main.advent(new Floor(),player,itempool,gameLoaded);
 						gameLoaded=false;
 						break;
