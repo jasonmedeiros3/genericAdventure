@@ -260,6 +260,10 @@ public class GenericAdventure {
 				bw.write("Increases ATK by 10 permanently.\n");
 				bw.write("Self-inflicts 5 Unaware and 3 Mark-For-Death.\n");
 				bw.write("--------------------------------------------------\n");
+				bw.write("THICK SKIN\n");
+				bw.write("Passive item for all classes.\n");
+				bw.write("Increases DEF by 1 and HP by 10.\n");
+				bw.write("--------------------------------------------------\n");
 				bw.flush();
 			}
 		}

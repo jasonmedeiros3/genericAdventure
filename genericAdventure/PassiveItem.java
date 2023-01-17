@@ -92,6 +92,9 @@ public class PassiveItem implements Item {
 			case "Swedish Passport":
 				swedishPassport(eventFlag,player);
 				break;
+			case "Thick Skin":
+				thickSkin(eventFlag,player);
+				break;
 			default:
 		}
 	}
@@ -290,6 +293,16 @@ public class PassiveItem implements Item {
 		}
 		else if(eventFlag.equals("removeItem")) {
 			player.setSwedish(-1);
+		}
+	}
+	private void thickSkin(String eventFlag,Player player) {
+		if(eventFlag.equals("addItem")) {
+			player.setDef(1);
+			player.setMaxHp(10);
+		}
+		else if(eventFlag.equals("removeItem")) {
+			player.setDef(-1);
+			player.setMaxHp(-10);
 		}
 	}
 	public static boolean getLawLicense() {
