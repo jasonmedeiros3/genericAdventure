@@ -269,7 +269,12 @@ public class ActiveItem implements Item {
 	}
 	private void m1911(Player player,Enemy enemy) {
 		System.out.println("Fired the M1911.");
-		enemy.damage(60*player.getAtk()/100.0,player);
+		if(enemy.getMarkForDeath()>0) {
+			enemy.damage(90*player.getAtk()/100.0,player);
+		}
+		else {
+			enemy.damage(60*player.getAtk()/100.0,player);
+		}
 		damage(1,player);
 	}
 	private void stapleGun(Player player,Enemy enemy) {
