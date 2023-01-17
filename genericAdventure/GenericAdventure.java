@@ -260,6 +260,7 @@ public class GenericAdventure {
 				bw.write("Increases ATK by 10 permanently.\n");
 				bw.write("Self-inflicts 5 Unaware and 3 Mark-For-Death.\n");
 				bw.write("--------------------------------------------------\n");
+				bw.flush();
 			}
 		}
 		catch(Exception e) {
