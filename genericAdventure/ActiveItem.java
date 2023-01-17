@@ -205,7 +205,7 @@ public class ActiveItem implements Item {
 			damage(2,player);
 		}
 		else if(enemy.getUnaware()>0) {
-			enemy.damage(enemy.getMaxHp()/2.7+32*player.getAtk()/96.0,player);
+			enemy.damage(enemy.getMaxHp()/2.6+36*player.getAtk()/96.0,player);
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
