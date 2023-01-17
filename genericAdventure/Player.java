@@ -36,7 +36,7 @@ public class Player {
 			case 1:
 				className="Soldier";
 				maxhp=200;
-				atk=113;
+				atk=107;
 				def=100;
 				if(getStartingItems) {
 					Inventory.silentAdd(itempool.get(0),this);
@@ -45,7 +45,7 @@ public class Player {
 			case 2:
 				className="Wizard";
 				maxhp=150;
-				atk=107;
+				atk=113;
 				def=100;
 				if(getStartingItems) {
 					Inventory.silentAdd(itempool.get(1),this);
