@@ -26,6 +26,7 @@ public class Enemy {
 	private static boolean droneRepair=false;
 	private static boolean canDroneRepair=true;
 	private static boolean charge = false;
+	private static boolean blight = false;
 	public final boolean isBoss;
 	public Enemy(String biome,boolean isBoss) {
 		Random rand=new Random();
@@ -158,6 +159,9 @@ public class Enemy {
 					}
 					break;
 				case "ireland":
+					if (seed % 3 > 1) {
+						blight = true;
+					}
 					if (seed <= 25){
 						nameSelector("Another Drunkard");
 					} else if (seed <= 36) {
@@ -463,7 +467,7 @@ public class Enemy {
 				case "I Sell Soap":
 					maxhp = (int) (80 + 2 * Floor.level);
 					atk = (int) (90 + 1.3 * Floor.level);
-					def = (int) (100 + 2 * Math.pow(Floor.level, 1.55));
+					def = (int) (120 + 2 * Math.pow(Floor.level, 1.55));
 					setWeight(2);
 					break;
 				case "Flying Ostrich":
@@ -509,7 +513,6 @@ public class Enemy {
 					setWeight(3);
 					break;
 			}
-			def = def/2;
 			atk = atk/2;
 		}
 		else {
@@ -823,7 +826,7 @@ public class Enemy {
 					}
 					break;
 				case "Drunkard":
-					if (seed1 <= 30) {
+					if (seed1 <= 30 || charge) {
 						brokenBottle(player);
 					} else {
 						nothing();
@@ -965,7 +968,7 @@ public class Enemy {
 					}
 					break;
 				case "Spirit":
-					if (seed1 >= 30) {
+					if (seed1 >= 30 && getIntang() == 0) {
 						jumpScareStrike(player);
 					} else {
 						hide();
@@ -988,23 +991,75 @@ public class Enemy {
 					}
 					break;
 				case "Uncool Satan":
+					if (seed1 >= 80) {
+						summon(enemyList);
+					} else {
+						flamethrower(player);
+					}
 					break;
 				case "Pilot":
+					if (hp <= 30) {
+						reincarnation(enemyList);
+					} else if (seed1 >= 50) {
+						swerve(player);
+					} else {
+						annoyance(player);
+					}
 					break;
 				case "Flight Attendant":
+					if (player.getHp() >= 50 && seed1 >= 20) {
+						airplaneFood(player);
+					} else {
+						nothing();
+					}
 					break;
 				case "I Sell Soap":
+					if (player.getHp() >= 100 && seed1 >= 50) {
+						System.out.println("What do you mean you sell soap?");
+						confuse(player);
+					} else {
+						fight(player);
+						charge = true;
+					}
 					break;
 				case "Flying Ostrich":
+					if (player.getMarkForDeath() == 0) {
+						intimidationScreech(player);
+					} else {
+						deerKick(player, seed1);
+					} 
 					break;
 				case "Potato Vendor":
+					if (blight) {
+						def = def/2;
+					} else if (player.getPoison() < 2 && seed1 > 50) {
+						poisonPotato(player);
+					} else {
+						potato(player);
+					}
 					break;
 				case "Catholic Mob":
+					if (blight) {
+						def = def/2;
+					}
+					if (seed1 >= 50) {
+						axe(player);
+					} else {
+						handgun(player, false);
+					}
 					break;
 				case "Blight Immigrant":
-					
+					if (blight) {
+						def = def/2;
+					}
+					grenade(player, enemyList);
+
 					break;
 				case "Another Drunkard":
+					if (blight) {
+						def = def/2;
+					}
+
 					if (seed1 <= 30||charge) {
 						brokenBottle(player);
 						charge=false;
@@ -1016,16 +1071,103 @@ public class Enemy {
 						charge = true;
 					}
 					break;
-				case "Leprehaun":
+				case "Leprechaun":
+					if (blight) {
+						def = def/2;
+					}
+					if (enemyList.size() > 1) {
+						potOfGold(enemyList);
+					} else {
+						squirrelBite(player);
+					}
 					break;
 				case "Doom Guy Protestant":
+					if (blight) {
+						def = def/2;
+					}
+					if (hp < 50) {
+						healingStim(20);
+					}
+					else if (seed1 >= 50) {
+						doubleBarrel(player);
+					} else if (seed2 >= 50) {
+						bearTrap(player, enemyList);
+					} else {
+						handgun(player, false);
+					}
 					break;
-				
 			}
 		}
 		else {
 			doBossMove(player,enemyList);
 		}
+	}
+	
+	private void potOfGold (ArrayList<Enemy> enemyList) {
+		System.out.println(name + " gives a pot of gold to his friends. ");
+		for (Enemy e: enemyList) {
+			e.damage(-10-Floor.level, null);
+		} 
+	}
+
+	private void potato (Player player) {
+		System.out.println(name + " shoots you with a potato");
+		player.damage(10 * atk/100);
+	}
+
+	private void poisonPotato (Player player) {
+		System.out.println(name + " shoots you with a poisonous potato in his potato cannon. ");
+		player.damage(10 * atk/100);
+		player.setPoison(2);
+	}
+
+	private void intimidationScreech (Player player) {
+		System.out.println("They fly now!");
+		player.setMarkForDeath(6);
+		player.damage(2 * atk/100);
+	}
+
+	private void fight (Player player) {
+		System.out.println(name + " randomly starts punching you. ");
+		if (charge) {
+			player.damage(15 * atk/100);
+			atk += 15;
+		} else {
+			System.out.println("Its not very effective");
+			player.damage(5 * atk/100);
+		}
+	}
+
+	private void airplaneFood (Player player) {
+		System.out.println(name + " gives you airplane food, turns out its poisonous. ");
+		player.setPoison(4);
+	}
+
+	private void swerve (Player player) {
+		System.out.println(name + " swerves the plane, knocking you into the side. ");
+		player.damage(10 * atk/100);
+		player.setUnaware(2);
+	}
+
+	private void reincarnation (ArrayList<Enemy> enemyList) {
+		enemyList.remove(this);
+		for (int x = 0; x < 3; x++){
+			Enemy e=null;
+			do {
+				e=new Enemy("rooftop",false);
+			}while(!e.name.equals("Paper Airplane"));
+			enemyList.add(e);
+		}
+		System.out.println(name + " turns into a swam of paper airplanes!");
+	}
+
+	private void summon (ArrayList<Enemy> enemyList) {
+		System.out.println(name + " summons a spirit");
+		Enemy e=null;
+		do {
+			e=new Enemy("hell",false);
+		}while(!e.name.equals("Spirit"));
+		enemyList.add(e);
 	}
 
 	private void wrongStep (Player player) {
