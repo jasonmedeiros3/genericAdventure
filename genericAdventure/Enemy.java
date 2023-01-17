@@ -944,10 +944,9 @@ public class Enemy {
 					break;
 				case "Water":
 					if (seed1 >= 50) {
-						System.out.println(name + " why does water need a hose? ");
 						hoseDown(player);
 					} else {
-						System.out.println(name + " talk's now?");
+						System.out.println(name + " talks now, apparently.");
 						annoyance(player);
 					}
 					break;
@@ -1024,14 +1023,14 @@ public class Enemy {
 	}
 
 	private void wrongStep (Player player) {
-		System.out.println("You stepped in the wrong place and cut your foot on a poisonous " + name);
+		System.out.println("You stepped in the wrong place and cut your foot on a poisonous " + name+".");
 		player.damage(10 * atk/100);
 		player.setPoison(4);
 		damage(5, null);
 	}
 
 	private void jumpScareStrike (Player player) {
-		System.out.println(name + " comes out of no where, attacks you and then disappears. ");
+		System.out.println(name + " comes out of nowhere, attacks you, and then disappears.");
 		player.setMarkForDeath(2);
 		player.damage(10 * atk/100);
 		intang += 2;
@@ -1070,14 +1069,14 @@ public class Enemy {
 	}
 
 	private void hoseDown (Player player) {
-		System.out.println(name + " uses a hose to push you onto the floor. The water is blinding. ");
+		System.out.println(name + " uses a hose to push you onto the floor. The water is blinding.");
 		player.setAfterburn(-player.getAfterburn());
 		confuse(player);
 		player.damage(5 * atk/100);
 	}
 
 	private void flamethrower (Player player) {
-		System.out.println(name + " pulled out a flamethrower? What type of " + name + " carries a flame thrower. ");
+		System.out.println(name + " pulled out a flamethrower? What type of " + name + " carries a flame thrower?");
 		player.damage(10 * atk/100);
 		player.setAfterburn(4);
 	}
