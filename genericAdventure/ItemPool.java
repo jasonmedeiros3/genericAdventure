@@ -1,6 +1,7 @@
 package genericAdventure;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ItemPool {
 	private ArrayList<Item> pool=new ArrayList<Item>();
@@ -53,7 +54,12 @@ public class ItemPool {
 		pool.add(new ActiveItem("Pinot Noir",s=5,5,b=8,false)); //43
 	}
 	public Item get(int index) {
-		return pool.get(index);
+		if(pool.get(index).isPassive()) {
+			return new PassiveItem(pool.get(index));
+		}
+		else {
+			return new ActiveItem(pool.get(index));
+		}
 	}
 	public int size() {
 		return pool.size();

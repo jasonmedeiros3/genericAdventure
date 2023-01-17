@@ -27,6 +27,15 @@ public class ActiveItem implements Item {
 		mapCompatible=m;
 		isPassive=false;
 	}
+	public ActiveItem(Item i) {
+		name=i.getName();
+		weight=i.getWeight();
+		durability=i.getMaxDurability();
+		maxDurability=i.getMaxDurability();
+		type=i.getType();
+		mapCompatible=i.getMapCompatibility();
+		isPassive=false;
+	}
 	@Override
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception {
 		switch(getName()) {

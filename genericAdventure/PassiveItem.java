@@ -8,7 +8,7 @@ public class PassiveItem implements Item {
 	private short weight;
 	private int durability;
 	private int maxDurability;
-	private byte type;
+	private final byte type;
 	private boolean shimmeringVeil;
 	private boolean mantle;
 	private int deadRingerCounter=2;
@@ -23,6 +23,14 @@ public class PassiveItem implements Item {
 		shimmeringVeil=true;
 		mantle=true;
 		deadRingerCounter=0;
+	}
+	public PassiveItem(Item i) {
+		name=i.getName();
+		weight=i.getWeight();
+		durability=i.getMaxDurability();
+		maxDurability=i.getMaxDurability();
+		type=i.getType();
+		isPassive=false;
 	}
 	@Override
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) {
