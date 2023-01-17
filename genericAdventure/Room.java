@@ -572,8 +572,8 @@ public class Room {
 					}
 				}
 			}
+			hasActiveItem=false;
 			for(int i=0;i<Inventory.size();i++) {
-				
 				if(Inventory.get(i).isPassive()) {
 					try {
 						Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
@@ -588,8 +588,6 @@ public class Room {
 				while(true) {
 					displayPlayer(player);
 					displayEnemies(enemies);
-					hasActiveItem=false;
-					
 					System.out.println("1. Struggle");
 					System.out.println("2. Open Inventory");
 					System.out.println("3. Run Away");
@@ -666,6 +664,7 @@ public class Room {
 					}
 				}
 			}
+			hasActiveItem=false;
 			for(int i=0;i<Inventory.size();i++) {
 				if(Inventory.get(i).isPassive()) {
 					try {
@@ -682,7 +681,6 @@ public class Room {
 					while(true) {
 						displayPlayer(player);
 						displayEnemies(enemies);
-						hasActiveItem=false;
 						if(Floor.level!=0) {
 							System.out.println("1. Struggle");
 						}
