@@ -1001,10 +1001,12 @@ public class Enemy {
 					
 					break;
 				case "Another Drunkard":
-					if (seed1 <= 30) {
+					if (seed1 <= 30||charge) {
 						brokenBottle(player);
+						charge=false;
 					} else if (seed1 <= 80) {
 						axe(player);
+						charge=false;
 					} else {
 						nothing();
 						charge = true;
