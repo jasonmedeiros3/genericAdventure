@@ -138,6 +138,7 @@ public class Room {
 			System.out.println("You haven't been here yet.");
 		}
 		System.out.println("Coordinates: ("+xCoord+","+yCoord+")");
+		displayMap(floor);
 		seen=true;
 		boolean canLeft=false,canRight=false,canDown=false,canUp=false;
 		if(xCoord>0) {
@@ -936,10 +937,10 @@ public class Room {
 		}
 	}
 	public void displayMap(Floor floor) {
-		for (int x = 0; x < floor.map.size(); x++) {
+		for (int x = floor.map.size(); x > 0; x--) {
 			for (int y = 0;y < floor.map.get(0).size(); y++) {
-           		if (x == xCoord && y == yCoord){
-       				System.out.print(";;");
+           		if (y == xCoord && x == yCoord){
+       				System.out.print("()");
            		}
        			else {
                 	System.out.print("::");

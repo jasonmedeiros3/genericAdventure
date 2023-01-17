@@ -1240,7 +1240,7 @@ public class Enemy {
 	}
 
 	private void lastStand(){
-		System.out.println(name + "makes a last stand.");
+		System.out.println(name + " makes a last stand.");
 		hp = 10;
 		atk += 50;
 		charge = true;
@@ -1255,7 +1255,7 @@ public class Enemy {
 	}
 
 	private void createsProblems (){
-		System.out.println(name + "creates problems and gains health.");
+		System.out.println(name + " creates problems and gains health.");
 		hp += 10;
 	}
 	private void hurtfulLies(Player player){
@@ -1265,12 +1265,12 @@ public class Enemy {
 	}
 
 	private void chomp(Player player){
-		System.out.println(name + "takes a bite out of you.");
+		System.out.println(name + " takes a bite out of you.");
 		player.damage(20 * atk/100);
 	}
 
 	private void atkIncrement () {
-		System.out.println(name + "gets ready to attack.");
+		System.out.println(name + " gets ready to attack.");
 		atk += 5;
 	}
 
@@ -1292,7 +1292,7 @@ public class Enemy {
 	}
 
 	private void swipe (Player player){
-		System.out.println(name + "swipes at you");
+		System.out.println(name + " swipes at you");
 		player.damage(15 * atk/100);
 	}
 
