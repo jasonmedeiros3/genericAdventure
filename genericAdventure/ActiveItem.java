@@ -183,6 +183,7 @@ public class ActiveItem implements Item {
 	private void backPain(Player player,Enemy enemy) throws Exception {
 		System.out.println("Gave an enemy back pain.");
 		enemy.damage(25,player);
+		enemy.setAtk(-2);
 		damage(1,player);
 	}
 	private void lawsuit(Player player,Enemy enemy) throws Exception {
