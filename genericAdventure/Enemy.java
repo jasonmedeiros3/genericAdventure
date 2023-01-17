@@ -875,6 +875,7 @@ public class Enemy {
 						atk += 15;
 					} else {
 						nothing();
+						charge=true;
 					}
 					break;
 				case "Bipedal Turtle":
@@ -887,19 +888,19 @@ public class Enemy {
 				case "Call Of The Void":
 					if (player.getHp() <= 30) {
 						voidFinisher(player);
-					} else if (player.getHp() >= 70) {
+					} else if ((player.getHp() <= 70&&seed1<=90)||seed1<=40) {
 						lowerDef(player);
 					} else {
 						confuse(player);
 					}
 					break;
 				case "Paper Airplane":
-					if (hp < 20 && seed1 >= 70) {
+					if (hp < 20 && seed1 <= 40) {
 						runAway(enemyList);
-					} else if (seed2 >= 50) {
+					} else if (seed1 <= 50) {
 						poisonPaperCut(player);
 					} else {
-						System.out.println("Paper Airplane flies around you to confuse you");
+						System.out.println("Paper Airplane flies around you to confuse you.");
 						confuse(player);
 					}
 					break;
@@ -1082,17 +1083,17 @@ public class Enemy {
 	}
 
 	private void axe (Player player) {
-		System.out.println(name + " attacks you with an axe. ");
+		System.out.println(name + " attacks you with an axe.");
 		player.damage(25 * atk/100);
 	}
 
 	private void runAway (ArrayList<Enemy>enemyList) {
-		System.out.println(name+ " runs away. What a coward. ");
+		System.out.println(name+ " runs away. What a coward.");
 		enemyList.remove(this);
 	}
 
 	private void poisonPaperCut (Player player){
-		System.out.println(name + " gives you a paper cut. Turns out the paper is actually used toliet paper. ");
+		System.out.println(name + " gives you a paper cut. Turns out the paper is actually used toilet paper.");
 		player.damage((4 + Floor.level) * atk/100);
 		player.setPoison(4);
 	}
