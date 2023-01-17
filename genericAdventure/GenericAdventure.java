@@ -106,7 +106,7 @@ public class GenericAdventure {
 				bw.write("--------------------------------------------------\n");
 				bw.write("CARDBOARD SHIELD\n");
 				bw.write("Passive item for the Paladin.\n");
-				bw.write("Increases DEF by 5. Nullifies all damage less than 5.\n");
+				bw.write("Increases DEF by 5. Nullifies all damage less than 3.\n");
 				bw.write("--------------------------------------------------\n");
 				bw.write("BLACK BOX\n");
 				bw.write("Weapon for the Soldier.\n");

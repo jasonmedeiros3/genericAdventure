@@ -64,7 +64,7 @@ public class Player {
 				className="Paladin";
 				maxhp=300;
 				atk=77;
-				def=195;
+				def=175;
 				if(getStartingItems) {
 					Inventory.silentAdd(itempool.get(3),this);
 					Inventory.silentAdd(itempool.get(8),this);

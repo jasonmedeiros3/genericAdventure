@@ -103,7 +103,7 @@ public class PassiveItem implements Item {
 			player.setDef(-5);
 		}
 		else if(eventFlag.equals("damage")) {
-			if(damage[0]<=5) {
+			if(damage[0]<=3) {
 				damage[0]=0;
 				damage(1,player);
 			}
