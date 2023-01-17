@@ -488,10 +488,12 @@ public class Room {
 			System.out.println(++counter+". "+e.getName()+": (HP: "+e.getHp()+"/"+e.getMaxHp()+")"+e.stringStatus());
 		}
 	}
-	public int cleanDeadEnemies(ArrayList<Enemy>enemyList,int enemyWeight) {
+	public int cleanDeadEnemies(ArrayList<Enemy>enemyList,int enemyWeight,boolean doStatusTick) {
 		int deadEnemyCounter=0;
 		for(Enemy e:enemyList) {
-			e.statusTick();
+			if(doStatusTick) {
+				e.statusTick();
+			}
 			if(e.checkDead()) {
 				enemyWeight-=e.getWeight();
 			}
@@ -511,10 +513,12 @@ public class Room {
 		}
 		return enemyWeight;
 	}
-	public void cleanDeadEnemies(ArrayList<Enemy>enemyList) {
+	public void cleanDeadEnemies(ArrayList<Enemy>enemyList,boolean doStatusTick) {
 		int deadEnemyCounter=0;
 		for(Enemy e:enemyList) {
-			e.statusTick();
+			if(doStatusTick) {
+				e.statusTick();
+			}
 			e.checkDead();
 		}
 		while(true) {
@@ -549,7 +553,7 @@ public class Room {
 		turn=0;
 		while(true) {
 			turn++;
-			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
+			enemyWeight=cleanDeadEnemies(enemies,enemyWeight,true);
 			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
@@ -558,33 +562,34 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
+			if(turn==0) {
+				for(int j=0;j<Inventory.size();j++) {
+					if(Inventory.get(j).isPassive()) {
+						try {
+							Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
+						} catch (Exception e) {
+						}
+					}
+				}
+			}
+			for(int i=0;i<Inventory.size();i++) {
+				
+				if(Inventory.get(i).isPassive()) {
+					try {
+						Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+					} catch (Exception e1) {
+					}
+				}
+				else {
+					hasActiveItem=true;
+				}
+			}
 			if(player.getFreeze()<=0) {
 				while(true) {
 					displayPlayer(player);
 					displayEnemies(enemies);
 					hasActiveItem=false;
-					if(turn==0) {
-						for(int j=0;j<Inventory.size();j++) {
-							if(Inventory.get(j).isPassive()) {
-								try {
-									Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
-								} catch (Exception e) {
-								}
-							}
-						}
-					}
-					for(int i=0;i<Inventory.size();i++) {
-						
-						if(Inventory.get(i).isPassive()) {
-							try {
-								Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
-							} catch (Exception e1) {
-							}
-						}
-						else {
-							hasActiveItem=true;
-						}
-					}
+					
 					System.out.println("1. Struggle");
 					System.out.println("2. Open Inventory");
 					System.out.println("3. Run Away");
@@ -620,7 +625,7 @@ public class Room {
 			else {
 				System.out.println("You are frozen. Your turn is skipped.");
 			}
-			enemyWeight=cleanDeadEnemies(enemies,enemyWeight);
+			enemyWeight=cleanDeadEnemies(enemies,enemyWeight,false);
 			for(Enemy e:enemies) {
 				Thread.sleep(800);
 				e.doMove(player, enemies);
@@ -639,7 +644,7 @@ public class Room {
 		turn=0;
 		while(true) {
 			turn++;
-			cleanDeadEnemies(enemies);
+			cleanDeadEnemies(enemies,true);
 			player.setEnemyList(enemies);
 			player.statusTick();
 			player.checkDead();
@@ -651,33 +656,33 @@ public class Room {
 				Inventory.eventFlagHandler("battleEnd", player, enemies, new Integer[] {0});
 				return true;
 			}
+			if(turn==0) {
+				for(int j=0;j<Inventory.size();j++) {
+					if(Inventory.get(j).isPassive()) {
+						try {
+							Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
+						} catch (Exception e) {
+						}
+					}
+				}
+			}
+			for(int i=0;i<Inventory.size();i++) {
+				if(Inventory.get(i).isPassive()) {
+					try {
+						Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
+					} catch (Exception e1) {
+					}
+				}
+				else {
+					hasActiveItem=true;
+				}
+			}
 			while(true) {
 				if(player.getFreeze()<=0) {
 					while(true) {
 						displayPlayer(player);
 						displayEnemies(enemies);
 						hasActiveItem=false;
-						if(turn==0) {
-							for(int j=0;j<Inventory.size();j++) {
-								if(Inventory.get(j).isPassive()) {
-									try {
-										Inventory.get(j).doEffect("battleStart",player,enemies,null,(byte) 0);
-									} catch (Exception e) {
-									}
-								}
-							}
-						}
-						for(int i=0;i<Inventory.size();i++) {
-							if(Inventory.get(i).isPassive()) {
-								try {
-									Inventory.get(i).doEffect("turnStart",player,enemies,null,(byte) 0);
-								} catch (Exception e1) {
-								}
-							}
-							else {
-								hasActiveItem=true;
-							}
-						}
 						if(Floor.level!=0) {
 							System.out.println("1. Struggle");
 						}
@@ -721,7 +726,7 @@ public class Room {
 					System.out.println("You are frozen. Your turn is skipped.");
 				}
 			}
-			cleanDeadEnemies(enemies);
+			cleanDeadEnemies(enemies,false);
 			for(Enemy e:enemies) {
 				Thread.sleep(800);
 				e.doMove(player, enemies);
