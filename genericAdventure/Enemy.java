@@ -174,6 +174,9 @@ public class Enemy {
 					break;
 			}
 		}
+		else if(biome!=null) {
+			nameSelector(biome);
+		}
 		else {
 			switch(Floor.level) {
 				case 3:
