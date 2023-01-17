@@ -748,7 +748,7 @@ public class Room {
 		} catch (Exception e) {
 		}
 		try {
-			Inventory.get(input-1).doEffect("placeholder",player,enemies,new Integer[]{0},target);
+			battleInv.get(input-1).doEffect("placeholder",player,enemies,new Integer[]{0},target);
 		} catch (Exception e) {
 		}
 	}
@@ -794,6 +794,7 @@ public class Room {
 				try {
 					Inventory.get(input-1).doEffect("placeholder",player,null,new Integer[]{0},(byte)0);
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {
@@ -951,6 +952,9 @@ public class Room {
 			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (y == xCoord && x == yCoord){
        				System.out.print("()");
+           		}
+           		else if(floor.map.get(x).get(y).exitRoom) {
+           			System.out.println("<>");
            		}
        			else {
                 	System.out.print("::");
