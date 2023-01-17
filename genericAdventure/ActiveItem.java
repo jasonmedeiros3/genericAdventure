@@ -194,7 +194,7 @@ public class ActiveItem implements Item {
 	}
 	private void cheapSpear(Player player,Enemy enemy) throws Exception {
 		System.out.println("Thrust the $8 spear.");
-		enemy.damage(65*player.getDef()/100.0,player);
+		enemy.damage(65*player.getAtk()/100.0,player);
 		damage(1,player);
 	}
 	private void butterKnife(Player player,Enemy enemy) throws Exception {
@@ -345,7 +345,7 @@ public class ActiveItem implements Item {
 	}
 	private void expensiveSpear(Player player,Enemy enemy) {
 		System.out.println("Thrust the $15 spear.");
-		enemy.damage(85*player.getDef()/100.0, player);
+		enemy.damage(85*player.getAtk()/100.0, player);
 	}
 	private void needle(Player player,Enemy enemy) {
 		System.out.println("Swung the sewing needle.");

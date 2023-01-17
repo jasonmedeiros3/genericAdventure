@@ -62,7 +62,7 @@ public class Player {
 				break;
 			case 4:
 				className="Paladin";
-				maxhp=200;
+				maxhp=300;
 				atk=77;
 				def=195;
 				if(getStartingItems) {
