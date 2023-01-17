@@ -872,7 +872,8 @@ public class Enemy {
 				case "Florida Man":
 					if (seed1 > 50) {
 						brokenBottle(player);
-						atk += 15;
+						charge=false;
+						atk += 6;
 					} else {
 						nothing();
 						charge=true;
