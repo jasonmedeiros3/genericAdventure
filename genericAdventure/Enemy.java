@@ -132,7 +132,7 @@ public class Enemy {
 					} else if (seed <= 96) {
 						nameSelector("Water");
 					} else {
-						nameSelector("Willify");
+						nameSelector("Local Ax Murderer");
 					}
 					break;
 				case "hell":
@@ -415,7 +415,7 @@ public class Enemy {
 					def = (int) (120 + Floor.level);
 					setWeight(1);
 					break;
-				case "Willify":
+				case "Local Ax Murderer":
 					maxhp = (int) (80 + 2.3 * Floor.level);
 					atk = (int) (19 + 1.2 * Floor.level);
 					def = (int) (100 + Floor.level);
@@ -951,10 +951,10 @@ public class Enemy {
 						annoyance(player);
 					}
 					break;
-				case "Willify":
+				case "Local Ax Murderer":
 					if (seed1 >= 30) {
 						confuse(player);
-						System.out.println("What is this even supposed to be?");
+						System.out.println("You are confused by the fact that this one fake beach has multiple different ax murderers.");
 					} else if (seed2 >= 90) {
 						annoyance(player);
 					} else {
