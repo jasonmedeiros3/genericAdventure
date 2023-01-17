@@ -199,8 +199,13 @@ public class ActiveItem implements Item {
 	}
 	private void butterKnife(Player player,Enemy enemy) throws Exception {
 		System.out.println("Swung the butterknife.");
-		if(enemy.getUnaware()>0) {
+		if(enemy.getUnaware()>0&&enemy.isBoss) {
 			enemy.damage(enemy.getHp()/6.3+32*player.getAtk()/96.0,player);
+			System.out.println("A backstab.");
+			damage(2,player);
+		}
+		else if(enemy.getUnaware()>0) {
+			enemy.damage(enemy.getMaxHp()/2.7+32*player.getAtk()/96.0,player);
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
@@ -284,6 +289,9 @@ public class ActiveItem implements Item {
 	}
 	private void kunai(Player player,Enemy enemy) {
 		double damage=enemy.getHp()/5.9+32*player.getAtk()/90.0;
+		if(!enemy.isBoss) {
+			damage=enemy.getHp()/2.4+32*player.getAtk()/90.0;
+		}
 		System.out.println("Swung the kunai.");
 		if(enemy.getUnaware()>0) {
 			if(enemy.damage(damage,player)) {
@@ -362,8 +370,13 @@ public class ActiveItem implements Item {
 	}
 	private void needle(Player player,Enemy enemy) {
 		System.out.println("Swung the sewing needle.");
-		if(enemy.getUnaware()>0) {
+		if(enemy.getUnaware()>0&&enemy.isBoss) {
 			enemy.damage(enemy.getHp()/4.9+54*player.getAtk()/96.0,player);
+			System.out.println("A backstab.");
+			damage(2,player);
+		}
+		else if(enemy.getUnaware()>0) {
+			enemy.damage(enemy.getHp()/1.6+54*player.getAtk()/96.0,player);
 			System.out.println("A backstab.");
 			damage(2,player);
 		}
