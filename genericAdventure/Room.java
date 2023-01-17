@@ -947,7 +947,7 @@ public class Room {
 		}
 	}
 	public void displayMap(Floor floor) {
-		for (int x = floor.map.size(); x > 0; x--) {
+		for (int x = floor.map.size()-1; x >= 0; x--) {
 			for (int y = 0;y < floor.map.get(0).size(); y++) {
            		if (y == xCoord && x == yCoord){
        				System.out.print("()");
