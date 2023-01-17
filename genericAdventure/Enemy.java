@@ -1037,12 +1037,12 @@ public class Enemy {
 	}
 
 	private void heatUp () {
-		System.out.println(name + " heats up for the next time");
+		System.out.println(name + " heats up using nuclear fusion.");
 		atk += 5;
 	}
 
 	private void sunburn (Player player) {
-		System.out.println(name + " burns you. ");
+		System.out.println(name + " burns you.");
 		player.setAfterburn(2);
 		player.damage(3 * atk/10);
 	}
