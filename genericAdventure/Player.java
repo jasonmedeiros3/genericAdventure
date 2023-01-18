@@ -107,7 +107,6 @@ public class Player {
 		if(getInvuln()>0&&damage[0]>0) {
 			damage[0]=0;
 		}
-		Integer[]arrayDamage={damage[0]};
 		if(damage[0]>0) {
 			Inventory.eventFlagHandler("damage", this, enemyList, damage);
 		}
