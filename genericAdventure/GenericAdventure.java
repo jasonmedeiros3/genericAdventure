@@ -317,16 +317,16 @@ public class GenericAdventure {
 				}
 				player.setHp(player.getMaxHp()-player.getHp());
 				player.clearStatus();
+				System.out.println("Floor "+(Floor.level));
 				while(true) {
 					try {
-						System.out.println("Floor "+(Floor.level));
 						main.advent(new Floor(),player,itempool,false);
 						break;
 					}
 					catch(Exception e) {
-						continue;
 					}
 				}
+				
 			}
 		}
 		else {
@@ -428,17 +428,14 @@ public class GenericAdventure {
 			while(true) {
 				player.setHp(player.getMaxHp()-player.getHp());
 				player.clearStatus();
+				System.out.println("Floor "+(Floor.level));
 				while(true) {
 					try {
-						System.out.println("Floor "+(Floor.level));
-						
 						main.advent(new Floor(),player,itempool,gameLoaded);
 						gameLoaded=false;
 						break;
 					}
 					catch(Exception e) {
-						System.out.println(e.getMessage()==null?"Something went wrong. Try again.":e.getMessage());
-						continue;
 					}
 				}
 				if(!dealRefused) {
