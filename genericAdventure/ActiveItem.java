@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class ActiveItem implements Item {
 	private String name;
-	private boolean isPassive;
 	private short weight;
 	private int durability;
 	private int maxDurability;
@@ -25,7 +24,6 @@ public class ActiveItem implements Item {
 		maxDurability=d;
 		type=t;
 		mapCompatible=m;
-		isPassive=false;
 	}
 	public ActiveItem(Item i) {
 		name=i.getName();
@@ -34,7 +32,6 @@ public class ActiveItem implements Item {
 		maxDurability=i.getMaxDurability();
 		type=i.getType();
 		mapCompatible=i.getMapCompatibility();
-		isPassive=false;
 	}
 	@Override
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception {
@@ -449,16 +446,12 @@ public class ActiveItem implements Item {
 		maxDurability=value;
 	}
 	@Override
-	public void setPassive(boolean passive) {
-		isPassive=passive;
-	}
-	@Override
 	public byte getType() {
 		return type;
 	}
 	@Override
 	public boolean isPassive() {
-		return isPassive;
+		return false;
 	}
 	@Override
 	public boolean getMapCompatibility() {

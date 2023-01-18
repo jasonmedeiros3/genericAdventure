@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class PassiveItem implements Item {
 	private String name;
-	private boolean isPassive;
 	private short weight;
 	private int durability;
 	private int maxDurability;
@@ -19,7 +18,6 @@ public class PassiveItem implements Item {
 		maxDurability=d;
 		durability=d;
 		type=t;
-		isPassive=true;
 		shimmeringVeil=true;
 		mantle=true;
 		deadRingerCounter=0;
@@ -30,7 +28,6 @@ public class PassiveItem implements Item {
 		durability=i.getMaxDurability();
 		maxDurability=i.getMaxDurability();
 		type=i.getType();
-		isPassive=false;
 	}
 	@Override
 	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception {
@@ -358,16 +355,12 @@ public class PassiveItem implements Item {
 		maxDurability=value;
 	}
 	@Override
-	public void setPassive(boolean passive) {
-		isPassive=passive;
-	}
-	@Override
 	public byte getType() {
 		return type;
 	}
 	@Override
 	public boolean isPassive() {
-		return isPassive;
+		return true;
 	}
 	@Override
 	public boolean getMapCompatibility() {
