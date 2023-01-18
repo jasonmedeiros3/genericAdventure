@@ -26,7 +26,7 @@ public class Enemy {
 	private static boolean droneRepair=false;
 	private static boolean canDroneRepair=true;
 	private static boolean charge = false;
-	private static boolean blight = false;
+	private boolean blight = false;
 	public final boolean isBoss;
 	public Enemy(String biome,boolean isBoss) {
 		Random rand=new Random();
@@ -843,12 +843,15 @@ public class Enemy {
 					}
 					if (hasDrunkard > 0 && seed1 <= 40 * hasDrunkard) {
 						giveWine(enemyList);
-					} else if (seed2 >= 60 && charge) {
+					} else if (seed1 <= 60 && charge) {
 						healingWine(enemyList);
 					} else if (hp > 80 && charge == false) {
 						ferment();
-					} else {
+					} else if(seed1<=80&&intang==0&&hp<15) {
 						hide();
+					}
+					else {
+						fight(player);
 					}
 					break;
 				case "Rat":
@@ -1376,7 +1379,7 @@ public class Enemy {
 	}
 
 	private void healingStim (int n){
-		System.out.println(name + " used a healing stim");
+		System.out.println(name + " used a healing stim.");
 		hp += 10;
 		hp += n;
 	}
