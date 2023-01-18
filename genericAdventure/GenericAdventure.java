@@ -310,7 +310,7 @@ public class GenericAdventure {
 				else {
 					Floor.level=0;
 				}
-				player.setHp(player.getMaxHp());
+				player.setHp(player.getMaxHp()-player.getHp());
 				player.clearStatus();
 				while(true) {
 					try {
@@ -421,7 +421,7 @@ public class GenericAdventure {
 			}
 			gameLoaded=true;
 			while(true) {
-				player.setHp(player.getMaxHp());
+				player.setHp(player.getMaxHp()-player.getHp());
 				player.clearStatus();
 				while(true) {
 					try {
