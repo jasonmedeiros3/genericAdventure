@@ -1,0 +1,200 @@
+ROCKET LAUNCHER:
+Default weapon for the Soldier.
+Reliable 50 base damage with area of effect.
+--------------------------------------------------
+STAFF OF LOWER BACK PAIN:
+Default weapon for the Wizard.
+High durability and lowers enemy ATK slightly.
+Low base damage of 25.
+--------------------------------------------------
+LAWSUIT
+Default weapon for the Lawyer.
+Deals only 30 damage but marks enemies for death.
+Mark-for-death lasts 2 turns.
+--------------------------------------------------
+$8 SPEAR
+Default weapon for the Paladin.
+65 base damage, but uses DEF to attack instead of ATK.
+--------------------------------------------------
+BUTTER KNIFE
+Default weapon for the Spy.Only 32 base damage but deals extra damage to unaware enemies.
+Extra damage depends on the enemy's health.
+--------------------------------------------------
+SIX SHOOTER
+Weapon for the Spy.
+32 base damage, but deals 50% more damage to unaware enemies.
+Only 6 durabiity, as the name implies.
+--------------------------------------------------
+STAFF OF ARTHRITIS
+Weapon for the Wizard.
+Deals more damage to enemies with high DEF.
+--------------------------------------------------
+PAPER-THIN DISGUISE
+Passive item for the Spy.
+Inflicts 1 turn of Unaware on all enemies.
+Triggers at the start of each battle.
+--------------------------------------------------
+CARDBOARD SHIELD
+Passive item for the Paladin.
+Increases DEF by 5. Nullifies all damage less than 3.
+--------------------------------------------------
+BLACK BOX
+Weapon for the Soldier.
+Mostly identical to the Rocket Launcher.
+Less weapon durability, but heals self on attack.
+--------------------------------------------------
+FOUNTAIN PEN
+Weapon for the Lawyer.
+Alright base damage of 47. No special effects.
+--------------------------------------------------
+RIOT SHIELD
+Passive item for the Paladin.
+Increases DEF by 25 and nullifies all damage less than 10.
+--------------------------------------------------
+HEAT DEATH-PROOF VEST
+Passive item for the Soldier.
+Increases DEF by 20. Respectable 40 durability.
+--------------------------------------------------
+SHIMMERING VEIL
+Passive item for the Wizard.
+Increases DEF by 10. Decreases DEF by 15 after breaking.
+Blocks the first hit each battle.
+Regenerates 3 durability per floor.
+--------------------------------------------------
+WATER CANTEEN
+Weapon for all classes.
+Heals 8 health. Good for 25 uses.
+--------------------------------------------------
+UBER CANTEEN
+Weapon for the Soldier and the Spy.
+Gives 3 turns of complete invincibility.
+Good for 3 uses.
+--------------------------------------------------
+MULTICLASS MANUAL
+Passive item for all classes.
+Increases chance of getting off-class items.
+--------------------------------------------------
+DEAD RINGER
+Weapon for the Spy.
+Single-use. Reduce damage of next hit by 75%.
+When triggered, makes all enemies unaware.
+--------------------------------------------------
+HOLY MANTLE
+Passive item for the Paladin.
+Blocks the first hit each battle.
+--------------------------------------------------
+SYNTHOL
+Passive item for all classes.
+Increases ATK by 3.
+--------------------------------------------------
+BRASS KNUCKLES
+Passive item for all classes.
+Increases ATK by 8.
+--------------------------------------------------
+RED FLASK
+Weapon for the Wizard and the Paladin.
+Heals 40% of max health. Good for 5 uses.
+--------------------------------------------------
+M1911
+Weapon for the Lawyer.
+Simple and effective 60 base damage.
+Extremely strong against marked-for-death enemies.
+--------------------------------------------------
+STAPLE GUN
+Weapon for the Lawyer.
+Deals 40 base damage.
+--------------------------------------------------
+CONNIVER KUNAI
+Weapon for the Spy.
+Deals 40 base damage and extra damage to unaware enemies.
+Heal after killing an unaware enemy.
+--------------------------------------------------
+DIRECT HIT
+Weapon for the Soldier.
+Deals 76 base direct damage but much lower splash damage.
+--------------------------------------------------
+POT LID
+Passive item for the Paladin.
+Increases DEF by 10. Decreases incoming damage by 1.
+--------------------------------------------------
+SYRUP OF IPECAC
+Active item for all classes.
+Poisons yourself for 5 turns.
+--------------------------------------------------
+IMMUNE DEFICIENCY
+Passive item for all classes.
+If attacking while poisoned, inflict the same amount of poison on the enemy.
+--------------------------------------------------
+SOLAR PANEL ARMOUR
+Passive item for the Paladin.
+Increases DEF by 4.
+Taking burn damage increases ATK by 1 permanently.
+--------------------------------------------------
+WEIGHTED COIN
+Weapon for the Spy.
+Inflicts 2 turns of Unaware on all enemies.
+You get 3 coins.
+--------------------------------------------------
+TAUNTON DART GUN
+Weapon for the Spy.
+Emetic Mode: Inflict 5 turns of Poison.
+Sedative Mode: Inflict 2 turns of Freeze.
+--------------------------------------------------
+BOOSTER SHOT
+Passive item for all classes.
+Grants immunity to Poison. 25 durability.
+--------------------------------------------------
+BLOWGUN
+Weapon for all classes.
+Emetic Mode: Inflict 5 turns of Poison.
+Sedative Mode: Inflict 2 turns of Freeze.
+--------------------------------------------------
+SHOTGUN
+Weapon for the Soldier.
+90 base damage with 8 base recoil.
+--------------------------------------------------
+POISON PEN
+Weapon for the Lawyer and the Spy.
+Pitiful 5 base damage. Inflicts 1 Poison.
+If the enemy is unaware, inflicts 5 Poison instead.
+--------------------------------------------------
+LAW LICENSE
+Passive item for the Lawyer.
+When the player inflicts Mark-For-Death, increases it by 1.
+--------------------------------------------------
+BALACLAVA
+Passive item for the Spy.
+Causes all player attacks to inflict 1 Unaware.
+--------------------------------------------------
+SEWING NEEDLE
+Weapon for the Spy.
+Strongest attack of any knife-type weapon.
+Only 9 durability.
+--------------------------------------------------
+PLAN C
+Weapon for all classes.
+Deal 199 damage to every enemy.
+If the battle does not end within 3 turns, you die.
+--------------------------------------------------
+NESTED UNIVERSE
+Passive item for all classes.
+Revive instantly on death with full health.
+Clears all status effects on revive.
+--------------------------------------------------
+SWEDISH PASSPORT
+Passive item for all classes.
+Makes Consulate enemies less difficult.
+--------------------------------------------------
+PINOT NOIR
+Weapon for the Lawyer and the Spy.
+Increases ATK by 10 permanently.
+Self-inflicts 5 Unaware and 3 Mark-For-Death.
+--------------------------------------------------
+THICK SKIN
+Passive item for all classes.
+Increases DEF by 1 and HP by 10.
+--------------------------------------------------
+HEART CONTAINER
+Passive item for the Wizard and the Paladin.
+Increases max HP by 33% permanently.
+--------------------------------------------------

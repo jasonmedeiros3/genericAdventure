@@ -178,6 +178,7 @@ public class Boss extends Enemy {
 					else {
 						charge();
 					}
+					break;
 				case "The Druid":
 					if(seed1<=90&&(poison>0||markedForDeath>0)) {
 						aromatherapy(seed2);
@@ -194,6 +195,7 @@ public class Boss extends Enemy {
 					else {
 						poisonOak(player);
 					}
+					break;
 				case "The Trash Compactor":
 					if((seed1<=20&&hp<=300)||afterburn>0||poison>0||markedForDeath>0||(seed1<=50&&hp<=125)) {
 						selfRepair();
@@ -201,6 +203,7 @@ public class Boss extends Enemy {
 					else {
 						compact(player);
 					}
+					break;
 				case "The Cube of Gelatin":
 					if(seed1<=45) {
 						gelatinPunch(player);
@@ -211,6 +214,7 @@ public class Boss extends Enemy {
 					else {
 						gelatinTherapy();
 					}
+					break;
 				case "The British Guy":
 					if(Room.turn%5==0) {
 						teaBreak(player);
@@ -227,6 +231,7 @@ public class Boss extends Enemy {
 					else {
 						lunch(player);
 					}
+					break;
 				case "The Engineer":
 					Boss building=null;
 					boolean buildingDamaged=false;
@@ -275,6 +280,7 @@ public class Boss extends Enemy {
 					else {
 						wrench(player);
 					}
+					break;
 				case "Sentry Gun":
 					if(buildingLevel<3||seed1<=60) {
 						sentryShot(player);
@@ -294,6 +300,7 @@ public class Boss extends Enemy {
 						}
 					}
 					dispense(engi);
+					break;
 				case "The Fighter":
 					if(seed1<=72&&hp<=100&&!justBlocked) {
 						justBlocked=true;
@@ -324,8 +331,10 @@ public class Boss extends Enemy {
 						counterStrike(player);
 					}
 					csgo=0;
+					break;
 				case "The Supercomputer":
 					calculation();
+					break;
 				case "The Ophan":
 					if(seed1<=15||(seed1<=77&hp<=154)) {
 						salvation();
@@ -342,6 +351,7 @@ public class Boss extends Enemy {
 					else {
 						benediction();
 					}
+					break;
 				case "The Abstract Concept":
 					switch(attackCycle) {
 						case 0:
@@ -396,6 +406,7 @@ public class Boss extends Enemy {
 							attackCycle=0;
 					}
 					attackCycle++;
+					break;
 				case "The Devil":
 					Boss beast=null;
 					for(Enemy b:bossList) {
@@ -434,6 +445,7 @@ public class Boss extends Enemy {
 					else {
 						blackCandle();
 					}
+					break;
 				case "The Beast":
 					if(seed1<=60&&hp<=111) {
 						beastLunch();
@@ -447,6 +459,7 @@ public class Boss extends Enemy {
 					else {
 						hornAttack(player);
 					}
+					break;
 			}
 		}
 	}
