@@ -266,7 +266,7 @@ public class GenericAdventure {
 				bw.write("--------------------------------------------------\n");
 				bw.write("HEART CONTAINER\n");
 				bw.write("Passive item for the Wizard and the Paladin.\n");
-				bw.write("Increases max HP by 33% permanently.");
+				bw.write("Increases max HP by 33% permanently.\n");
 				bw.write("--------------------------------------------------\n");
 				bw.flush();
 			}
