@@ -35,6 +35,7 @@ public class Inventory {
 				try {
 					item.doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -87,6 +88,7 @@ public class Inventory {
 							try {
 								item.doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
 							} catch (Exception e) {
+								e.printStackTrace();
 							}
 						}
 					}
