@@ -33,7 +33,7 @@ public class Inventory {
 			inventory.add(item);
 			if(item.isPassive()) {
 				try {
-					inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+					item.doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
 				} catch (Exception e) {
 				}
 			}
@@ -73,7 +73,7 @@ public class Inventory {
 			inventory.add(item);
 			if(item.isPassive()) {
 				try {
-					inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+					item.doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
 				} catch (Exception e) {
 				}
 			}
@@ -85,7 +85,7 @@ public class Inventory {
 						inventory.add(item);
 						if(item.isPassive()) {
 							try {
-								inventory.get(inventory.size()-1).doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
+								item.doEffect("addItem", player, null, new Integer[]{0}, (byte)0);
 							} catch (Exception e) {
 							}
 						}
