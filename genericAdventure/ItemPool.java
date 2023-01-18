@@ -10,7 +10,7 @@ public class ItemPool {
 		short s;
 		pool.add(new ActiveItem("Rocket Launcher",s=10,20,b=1,false)); //0
 		pool.add(new ActiveItem("Staff of Lower Back Pain",s=6,125,b=2,false)); //1
-		pool.add(new ActiveItem("Lawsuit",s=0,10,b=3,false)); //2
+		pool.add(new ActiveItem("Lawsuit",s=0,26,b=3,false)); //2
 		pool.add(new ActiveItem("$8 Spear",s=12,32,b=4,false)); //3
 		pool.add(new ActiveItem("Butter Knife",s=2,65,b=5,false)); //4
 		pool.add(new ActiveItem("Six Shooter",s=8,6,b=5,false)); //5
