@@ -33,7 +33,7 @@ public class PassiveItem implements Item {
 		isPassive=false;
 	}
 	@Override
-	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) {
+	public void doEffect(String eventFlag,Player player,ArrayList<Enemy> enemyList,Integer[] damage,byte target) throws Exception {
 		switch(getName()) {
 			case "Paper-Thin Disguise":
 				paperThinDisguise(eventFlag,player,enemyList);
@@ -94,6 +94,9 @@ public class PassiveItem implements Item {
 				break;
 			case "Thick Skin":
 				thickSkin(eventFlag,player);
+				break;
+			case "Heart Container":
+				heartContainer(eventFlag,player);
 				break;
 			default:
 		}
@@ -303,6 +306,13 @@ public class PassiveItem implements Item {
 		else if(eventFlag.equals("removeItem")) {
 			player.setDef(-1);
 			player.setMaxHp(-10);
+		}
+	}
+	private void heartContainer(String eventFlag,Player player) throws Exception {
+		if(eventFlag.equals("addItem")) {
+			player.setMaxHp(player.getMaxHp()/3);
+			System.out.println("The "+name+" increases your max HP and vanishes without a trace.");
+			Inventory.directRemove(this,player);
 		}
 	}
 	public static boolean getLawLicense() {

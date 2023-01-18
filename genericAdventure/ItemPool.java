@@ -53,6 +53,7 @@ public class ItemPool {
 		pool.add(new PassiveItem("Swedish Passport",s=1,100,b=0)); //42
 		pool.add(new ActiveItem("Pinot Noir",s=5,5,b=8,false)); //43
 		pool.add(new PassiveItem("Thick Skin",s=0,256,b=0)); //44
+		pool.add(new PassiveItem("Heart Container",s=0,1,b=7)); //45
 	}
 	public Item get(int index) {
 		if(pool.get(index).isPassive()) {
