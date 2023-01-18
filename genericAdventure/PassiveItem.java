@@ -310,6 +310,7 @@ public class PassiveItem implements Item {
 	private void heartContainer(String eventFlag,Player player) throws Exception {
 		if(eventFlag.equals("addItem")) {
 			player.setMaxHp(player.getMaxHp()/3);
+			player.damage(-50);
 			System.out.println("The "+name+" increases your max HP and vanishes without a trace.");
 			Inventory.directRemove(this,player);
 		}
