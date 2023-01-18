@@ -949,9 +949,9 @@ public class Room {
 		}
 	}
 	public void displayMap(Floor floor) {
-		for (int x = floor.map.size()-1; x >= 0; x--) {
-			for (int y = 0;y < floor.map.get(0).size(); y++) {
-           		if (y == xCoord && x == yCoord){
+		for (int y=floor.map.get(0).size()-1;y>=0;y--) {
+			for(int x=0;x<floor.map.size();x++) {
+           		if (x == xCoord && y == yCoord){
        				System.out.print("()");
            		}
            		else if(floor.map.get(x).get(y).exitRoom) {
@@ -960,8 +960,8 @@ public class Room {
        			else {
                 	System.out.print("::");
            		}
-          	}
-         	System.out.println();
- 		}
+			}
+			System.out.println();
+      	}
  	}	
 }
