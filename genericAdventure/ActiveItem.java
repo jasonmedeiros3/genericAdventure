@@ -134,9 +134,13 @@ public class ActiveItem implements Item {
 			case "Pinot Noir":
 				pinotNoir(player);
 				break;
+			case "Whiskey":
+				whiskey(player);
+				break;
 			default:
 		}
 	}
+
 	private boolean selectDartMode() {
 		Scanner s=new Scanner(System.in);
 		byte input=0;
@@ -415,6 +419,18 @@ public class ActiveItem implements Item {
 		player.setUnaware(5);
 		damage(1,player);
 	}
+
+	private void whiskey (Player player) {
+		Random rand=new Random();
+		System.out.println("Drank some strong whiskey. ");
+		System.out.println("The whiskey is very "+wineTastingAdjectives[rand.nextInt(wineTastingAdjectives.length)]);
+		System.out.println("The "+wineTastingNouns[rand.nextInt(wineTastingNouns.length)]+" is pretty decent.");
+		player.damage(-30);
+		player.setMarkForDeath(5);
+		player.setUnaware(durability);
+		damage(1, player);
+	}
+
 	@Override
 	public String getName() {
 		return name;

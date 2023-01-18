@@ -268,6 +268,11 @@ public class GenericAdventure {
 				bw.write("Passive item for the Wizard and the Paladin.\n");
 				bw.write("Increases max HP by 33% permanently.\n");
 				bw.write("--------------------------------------------------\n");
+				bw.write("WHISKEY\n");
+				bw.write("Weapon for all classes.\n");
+				bw.write("Heals the player for 30 HP.\n");
+				bw.write("Self-inflicts 7 Unaware and 5 Mark-For-Death. \n");
+				bw.write("--------------------------------------------------\n");
 				bw.flush();
 			}
 		}
