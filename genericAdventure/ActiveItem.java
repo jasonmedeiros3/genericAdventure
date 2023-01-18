@@ -133,6 +133,7 @@ public class ActiveItem implements Item {
 				break;
 			case "Pinot Noir":
 				pinotNoir(player);
+				break;
 			default:
 		}
 	}
