@@ -911,7 +911,4 @@ public class Boss extends Enemy {
 			System.out.println("The black candles are extinguished by ice.");
 		}
 	}
-	public int getFreeze() {
-		return freeze;
-	}
 }
