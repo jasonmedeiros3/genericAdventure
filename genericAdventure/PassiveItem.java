@@ -69,7 +69,9 @@ public class PassiveItem implements Item {
 				potLid(eventFlag,player,damage);
 				break;
 			case "Immune Deficiency":
-				immuneDeficiency(eventFlag,player,enemyList.get(0));
+				if(enemyList!=null) {
+					immuneDeficiency(eventFlag,player,enemyList.get(0));
+				}
 				break;
 			case "Solar Panel Armour":
 				solarArmour(eventFlag,player);
