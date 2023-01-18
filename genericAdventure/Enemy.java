@@ -1,6 +1,5 @@
 package genericAdventure;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -513,7 +512,7 @@ public class Enemy {
 					setWeight(3);
 					break;
 			}
-			atk = (int) (atk/1.5);
+			atk = (int) (atk/1.75);
 		}
 		else {
 			switch(name) {
