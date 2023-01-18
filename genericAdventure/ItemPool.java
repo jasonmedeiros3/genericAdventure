@@ -54,7 +54,7 @@ public class ItemPool {
 		pool.add(new ActiveItem("Pinot Noir",s=5,5,b=8,false)); //43
 		pool.add(new PassiveItem("Thick Skin",s=0,256,b=0)); //44
 		pool.add(new PassiveItem("Heart Container",s=0,1,b=7)); //45
-		pool.add(new ActiveItem("Whiskey", s=1, d=10, b=1, true)); // 46
+		pool.add(new ActiveItem("Whiskey",s=1,10,b=1,true)); // 46
 	}
 	public Item get(int index) {
 		if(pool.get(index).isPassive()) {
