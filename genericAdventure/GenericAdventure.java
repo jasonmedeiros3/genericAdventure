@@ -426,8 +426,10 @@ public class GenericAdventure {
 			}
 			gameLoaded=true;
 			while(true) {
-				player.setHp(player.getMaxHp()-player.getHp());
-				player.clearStatus();
+				if(!gameLoaded) {
+					player.setHp(player.getMaxHp()-player.getHp());
+					player.clearStatus();
+				}
 				System.out.println("Floor "+(Floor.level));
 				while(true) {
 					try {
