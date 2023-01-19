@@ -364,6 +364,7 @@ public class Player {
 				System.out.println("You died.");
 				System.out.println("You escape into a nested universe where you're still alive and continue playing.");
 				hp=maxhp;
+				reviveType=0;
 				clearNegativeStatus();
 			}
 		}
