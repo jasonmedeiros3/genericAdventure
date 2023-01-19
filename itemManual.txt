@@ -198,3 +198,8 @@ HEART CONTAINER
 Passive item for the Wizard and the Paladin.
 Increases max HP by 33% permanently.
 --------------------------------------------------
+WHISKEY
+Weapon for all classes.
+Heals the player for 30 HP.
+Self-inflicts 7 Unaware and 5 Mark-For-Death. 
+--------------------------------------------------
