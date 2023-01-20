@@ -1209,7 +1209,7 @@ public class Enemy {
 	}
 
 	private void throwSelf (Player player, ArrayList<Enemy>enemyList) {
-		System.out.println(name+ " throws himself at you");
+		System.out.println(name+ " throws himself at you.");
 		enemyList.remove(this);
 		player.damage(45 * atk/100);
 	}
